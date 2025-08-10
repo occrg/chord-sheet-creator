@@ -49,3 +49,9 @@ h2 {
     margin-top: 0rem;
     margin-bottom: 0.5rem;
 }
+
+#song-details {
+    text-align: center;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+}
