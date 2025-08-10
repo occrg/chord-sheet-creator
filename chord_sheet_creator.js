@@ -9,6 +9,7 @@ const CHORD_SHEET_TEMPLATE_HTML = `
         <h1 id="song-title"></h1>
         <h2 id="song-artist"></h2>
         <p id="song-details"></p>
+        <div id="chord-section"></div>
     </div>
 </body>
 `
@@ -38,10 +39,49 @@ function insertSongDetails(chordSheetHTML) {
     return chordSheetHTML;
 }
 
-async function createChordSheet() {
+function getHTMLForSongSegment(songSegment, ind) {
+    let segmentDiv = document.createElement("div");
+    segmentDiv.classList.add("segment");
+
+    let segmentTitle = document.createElement("p");
+    segmentTitle.classList.add("segment-title");
+    segmentTitle.innerHTML = `Segment ${ind}`;
+
+    let segmentContents = document.createElement("div");
+    segmentContents.classList.add("segment-contents");
+
+    let segmentLyricLines = songSegment.split("\n");
+
+    segmentLyricLines.forEach(function (segmentLyricLine, ind) {
+        let segmentLyricLineHTML = document.createElement("p");
+        segmentLyricLineHTML.classList.add("lyric-line");
+        segmentLyricLineHTML.innerHTML = segmentLyricLine;
+        segmentContents.appendChild(segmentLyricLineHTML);
+    });
+
+    segmentDiv.appendChild(segmentTitle);
+    segmentDiv.appendChild(segmentContents);
+
+    return segmentDiv;
+}
+
+function insertSongSegments(chordSheetHTML) {
+    songLyrics = document.getElementById("song-lyrics-input").value;
+    let songSegments = songLyrics.split("\n\n");
+
+    songSegments.forEach(function (songSegment, ind) {
+        let songSegmentHTML = getHTMLForSongSegment(songSegment, ind);
+        chordSheetHTML.querySelector("#chord-section").appendChild(songSegmentHTML);
+    });
+
+    return chordSheetHTML;
+}
+
+function createChordSheet() {
     const parser = new DOMParser();
     chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
     chordSheetHTML = insertSongDetails(chordSheetHTML);
+    chordSheetHTML = insertSongSegments(chordSheetHTML);
     console.log(chordSheetHTML)
 }
 
