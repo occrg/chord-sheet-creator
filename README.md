@@ -17,7 +17,7 @@ You can enter the title, artists, key, bpm, time signature and lyrics of a song 
 None.
 
 ## Instructions
-1. Open `chord_sheet_creator.html` file.
+1. Run Vue project.
 1. Type in the title of the song and paste in the lyrics.
 1. Optionally, type in the artist, key, bpm, time signature of the song.
 1. Go to the console log and copy the HTML.
