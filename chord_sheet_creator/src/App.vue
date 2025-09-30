@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
   const CHORD_SHEET_TEMPLATE_HTML = `
     <!DOCTYPE html>
     <html>
@@ -43,12 +43,12 @@ export default {
   name: "app",
   data () {
     return {
-      title: null,
-      artist: null,
-      key: null,
-      bpm: null,
-      time_signature: null,
-      lyrics: null
+      title: null as string | null,
+      artist: null as string | null,
+      key: null as string | null,
+      bpm: null as string | null,
+      time_signature: null as string | null,
+      lyrics: null as string | null
     }
   },
   methods: {
@@ -59,9 +59,12 @@ export default {
       chordSheetHTML = this.insertSongSegments(chordSheetHTML);
       console.log(chordSheetHTML)
     },
-    insertSongDetails: function (chordSheetHTML) {
-      chordSheetHTML.querySelector("#song-title").innerHTML = this.$data.title;
-      chordSheetHTML.querySelector("#song-artist").innerHTML = this.$data.artist;
+    insertSongDetails: function (chordSheetHTML: Document) {
+      let songTitleHTML: Element | null = chordSheetHTML.querySelector("#song-title");
+      if (songTitleHTML) songTitleHTML.innerHTML = `${this.$data.title}`;
+
+      let songArtistHTML: Element | null = chordSheetHTML.querySelector("#song-artist");
+      if (songArtistHTML) songArtistHTML.innerHTML = `${this.$data.artist}`;
       
       let songDetailsInnerHTML = "";
       if (this.$data.key) {
@@ -75,25 +78,30 @@ export default {
         if (songDetailsInnerHTML != "") songDetailsInnerHTML += "; ";
         songDetailsInnerHTML += `Time: ${this.$data.time_signature}`;
       }
-      if (songDetailsInnerHTML == "") {
-        chordSheetHTML.querySelector("#song-details").remove()
-      } else {
-        chordSheetHTML.querySelector("#song-details").innerHTML = songDetailsInnerHTML
-      }
       
+      let songDetailsHTML: Element | null = chordSheetHTML.querySelector("#song-details");
+      if (songDetailsHTML) {
+        if (songDetailsInnerHTML == "") {
+          songDetailsHTML.remove()
+        } else {
+          songDetailsHTML.innerHTML = songDetailsInnerHTML
+        }
+      }
       return chordSheetHTML;
     },
-    insertSongSegments: function (chordSheetHTML) {
-        let songSegments = this.$data.lyrics.split("\n\n");
-  
-        songSegments.forEach((songSegment, ind) => {
-            let songSegmentHTML = this.getHTMLForSongSegment(songSegment, ind);
-            chordSheetHTML.querySelector("#chord-section").appendChild(songSegmentHTML);
-        });
-  
+    insertSongSegments: function (chordSheetHTML: Document) {
+        if (this.$data.lyrics) {
+          let songSegments = this.$data.lyrics.split("\n\n");
+    
+          songSegments.forEach((songSegment, ind) => {
+              let songSegmentHTML = this.getHTMLForSongSegment(songSegment, ind);
+              let chordSectionHTML: Element | null = chordSheetHTML.querySelector("#chord-section");
+              if (chordSectionHTML) chordSectionHTML.appendChild(songSegmentHTML);
+          });
+        } 
         return chordSheetHTML;
     },
-    getHTMLForSongSegment: function (songSegment, ind) {
+    getHTMLForSongSegment: function (songSegment: string, ind: number) {
         let segmentDiv = document.createElement("div");
         segmentDiv.classList.add("segment");
 
@@ -106,7 +114,7 @@ export default {
 
         let segmentLyricLines = songSegment.split("\n");
 
-        segmentLyricLines.forEach(function (segmentLyricLine, ind) {
+        segmentLyricLines.forEach(function (segmentLyricLine) {
             let segmentLyricLineHTML = document.createElement("p");
             segmentLyricLineHTML.classList.add("lyric-line");
             segmentLyricLineHTML.innerHTML = segmentLyricLine;
