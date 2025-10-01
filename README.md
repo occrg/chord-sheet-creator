@@ -27,5 +27,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
+1. Move storage into Pinia with proper data structures.
 1. Ensure long lines work well.
 1. Do validation on inputs.
