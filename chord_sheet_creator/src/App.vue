@@ -18,7 +18,7 @@
             <label for="song-bpm-input">Bpm:</label>
             <input type="text" id="song-bpm-input" name="song-bpm-input" v-model="chordSheetStore.bpm"><br>
             <label for="song-time-signature-input">Time signature:</label>
-            <input type="text" id="song-time-signature-input" name="song-time-signature-input" v-model="chordSheetStore.time_signature"><br>
+            <input type="text" id="song-time-signature-input" name="song-time-signature-input" v-model="chordSheetStore.timeSignature"><br>
             <label for="song-lyrics-input">Lyrics:</label>
             <textarea id="song-lyrics-input" name="song-lyrics-input" rows="40" cols="60" required v-model="lyrics"></textarea><br>
             <button type="submit">Create</button>
@@ -50,11 +50,11 @@ export default {
   name: "app",
   data () {
     return {
-      lyrics: null as string | null
+      lyrics: "" as string
     }
   },
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "time_signature"])
+    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature"])
   },
   methods: {
     createChordSheet: function () {
@@ -79,9 +79,9 @@ export default {
         if (songDetailsInnerHTML != "") songDetailsInnerHTML += "; ";
         songDetailsInnerHTML += `Tempo: ${this.bpm}bpm`;
       }
-      if (this.time_signature) {
+      if (this.timeSignature) {
         if (songDetailsInnerHTML != "") songDetailsInnerHTML += "; ";
-        songDetailsInnerHTML += `Time: ${this.time_signature}`;
+        songDetailsInnerHTML += `Time: ${this.timeSignature}`;
       }
       
       let songDetailsHTML: Element | null = chordSheetHTML.querySelector("#song-details");
