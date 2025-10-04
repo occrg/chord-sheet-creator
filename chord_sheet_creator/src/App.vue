@@ -7,12 +7,13 @@
 
 <template>
     <div class="main">
+      <div id="input-section">
         <h1>Chord Sheet Creator</h1>
         <form v-on:submit.prevent="createChordSheet">
             <label for="song-title-input">Title:</label>
             <input type="text" id="song-title-input" name="song-title-input" required v-model="chordSheetStore.title"><br>
             <label for="song-artist-input">Artist:</label>
-            <input type="text" id="song-artist-input" name="song-artist-input" v-model="chordSheetStore.artist"><br>
+            <input type="text" id="song-artist-input" name="song-artist-input" required v-model="chordSheetStore.artist"><br>
             <label for="song-key-input">Key:</label>
             <input type="text" id="song-key-input" name="song-key-input" v-model="chordSheetStore.key"><br>
             <label for="song-bpm-input">Bpm:</label>
@@ -23,9 +24,7 @@
             <textarea id="song-lyrics-input" name="song-lyrics-input" rows="40" cols="60" required v-model="lyrics"></textarea><br>
             <button type="submit">Create</button>
         </form>
-        <div id="input-section">
-
-        </div>
+      </div>
     </div>
 </template>
 
@@ -59,17 +58,23 @@ export default {
   methods: {
     createChordSheet: function () {
       const parser = new DOMParser();
-      let chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
-      chordSheetHTML = this.insertSongDetails(chordSheetHTML);
-      chordSheetHTML = this.insertSongSegments(chordSheetHTML);
-      console.log(chordSheetHTML)
+      try {
+        let chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
+        chordSheetHTML = this.insertSongDetails(chordSheetHTML);
+        chordSheetHTML = this.insertSongSegments(chordSheetHTML);
+        console.log(chordSheetHTML)
+      } catch (err) {
+        console.error(err);
+      }
     },
     insertSongDetails: function (chordSheetHTML: Document) {
       let songTitleHTML: Element | null = chordSheetHTML.querySelector("#song-title");
       if (songTitleHTML) songTitleHTML.innerHTML = `${this.title}`;
+      else throw new Error("Song title element not found in chord sheet template HTML.");
 
       let songArtistHTML: Element | null = chordSheetHTML.querySelector("#song-artist");
       if (songArtistHTML) songArtistHTML.innerHTML = `${this.artist}`;
+      else throw new Error("Song artist element not found in chord sheet template HTML.");
       
       let songDetailsInnerHTML = "";
       if (this.key) {
@@ -91,7 +96,8 @@ export default {
         } else {
           songDetailsHTML.innerHTML = songDetailsInnerHTML
         }
-      }
+      } else throw new Error("Song details element not found in chord sheet template HTML.");
+
       return chordSheetHTML;
     },
     insertSongSegments: function (chordSheetHTML: Document) {

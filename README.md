@@ -28,8 +28,7 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Create an input component that does validation, automatically shows errors and puts required *.
-1. There should be validation ensuring that the chord sheet template has what's needed.
 1. Move storage into Pinia with proper data structures. This should include splitting inserting individual sections and lines into data structure.
+1. Denote which fields are required.
+1. Potentially: Create an input component that does validation, automatically shows errors and puts required *.
 1. Ensure long lines work well.
-1. Do validation on inputs.
