@@ -11,6 +11,7 @@ You can enter the title, artists, key, bpm, time signature and lyrics of a song 
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
 1. Allow PDF download of finished chord sheet.
 1. Ability to cope with more than one page.
+1. Allow export and import of data so user can pick up where they left off.
 1. Host this online.
 1. Mobile friendly.
 
@@ -28,7 +29,9 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Move storage into Pinia with proper data structures. This should include splitting inserting individual sections and lines into data structure.
+1. Separate out the functions that build the chord sheet HTML into a service file.
+1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.
 1. Potentially: Create an input component that does validation, automatically shows errors and puts required *.
+1. Potentially: Use the Composition API over the Options API for Pinia.
 1. Ensure long lines work well.

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-    import { mapState } from "pinia";
+    import { mapState, mapActions } from "pinia";
     import { useChordSheetStore } from "@/stores/ChordSheetStore";
+    import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
 
     const chordSheetStore = useChordSheetStore();
 </script>
@@ -53,13 +54,16 @@ export default {
     }
   },
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature"])
+    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"])
   },
   methods: {
+    ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromLyrics"]),
     createChordSheet: function () {
       const parser = new DOMParser();
       try {
         let chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
+        this.storeChordSheetSegmentsFromLyrics(this.lyrics);
+
         chordSheetHTML = this.insertSongDetails(chordSheetHTML);
         chordSheetHTML = this.insertSongSegments(chordSheetHTML);
         console.log(chordSheetHTML)
@@ -100,35 +104,31 @@ export default {
 
       return chordSheetHTML;
     },
-    insertSongSegments: function (chordSheetHTML: Document) {
-        if (this.$data.lyrics) {
-          let songSegments = this.$data.lyrics.split("\n\n");
-    
-          songSegments.forEach((songSegment, ind) => {
-              let songSegmentHTML = this.getHTMLForSongSegment(songSegment, ind);
-              let chordSectionHTML: Element | null = chordSheetHTML.querySelector("#chord-section");
-              if (chordSectionHTML) chordSectionHTML.appendChild(songSegmentHTML);
-          });
-        } 
-        return chordSheetHTML;
+    insertSongSegments: function (chordSheetHTML: Document) {  
+      let chordSectionHTML: Element | null = chordSheetHTML.querySelector("#chord-section");
+      if (!chordSectionHTML) throw new Error("Song chord section element not found in chord sheet template HTML.");
+
+      this.segments.forEach((segment) => {
+          chordSectionHTML.appendChild(this.getHTMLForSongSegment(segment));
+      });
+
+      return chordSheetHTML;
     },
-    getHTMLForSongSegment: function (songSegment: string, ind: number) {
+    getHTMLForSongSegment: function (segment: ChordSheetSegment) {
         let segmentDiv = document.createElement("div");
         segmentDiv.classList.add("segment");
 
         let segmentTitle = document.createElement("p");
         segmentTitle.classList.add("segment-title");
-        segmentTitle.innerHTML = `Segment ${ind}`;
+        segmentTitle.innerHTML = segment.segmentTitle;
 
         let segmentContents = document.createElement("div");
         segmentContents.classList.add("segment-contents");
 
-        let segmentLyricLines = songSegment.split("\n");
-
-        segmentLyricLines.forEach(function (segmentLyricLine) {
+        segment.segmentLines.forEach(function (segmentLine) {
             let segmentLyricLineHTML = document.createElement("p");
             segmentLyricLineHTML.classList.add("lyric-line");
-            segmentLyricLineHTML.innerHTML = segmentLyricLine;
+            segmentLyricLineHTML.innerHTML = segmentLine.lyricLine;
             segmentContents.appendChild(segmentLyricLineHTML);
         });
 
