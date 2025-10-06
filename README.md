@@ -6,8 +6,8 @@ A tool that assists in the creation of chord simple and compact chord sheets.
 You can enter the title, artists, key, bpm, time signature and lyrics of a song and have them outputted into the console log as HTML ina  neat format so chords can be added separately.
 
 ## Future functionality
-1. Add chords directly in the tool.
 1. Preview HTML as you're pasting in.
+1. Add chords directly in the tool.
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
 1. Allow PDF download of finished chord sheet.
 1. Ability to cope with more than one page.
@@ -29,7 +29,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Separate out the functions that build the chord sheet HTML into a service file.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.
 1. Potentially: Create an input component that does validation, automatically shows errors and puts required *.
