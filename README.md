@@ -6,14 +6,13 @@ A tool that assists in the creation of chord simple and compact chord sheets.
 You can enter the title, artists, key, bpm, time signature and lyrics of a song and have them outputted into the console log as HTML ina  neat format so chords can be added separately.
 
 ## Future functionality
-1. Preview HTML as you're pasting in.
 1. Add chords directly in the tool.
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
 1. Allow PDF download of finished chord sheet.
 1. Ability to cope with more than one page.
 1. Allow export and import of data so user can pick up where they left off.
+1. Handles all screen sizes.
 1. Host this online.
-1. Mobile friendly.
 
 ## Pre-requisites
 None.
@@ -31,6 +30,7 @@ None.
 This is a list of things to do for the project, not including implementing the "future functionality" above.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.
+1. Ensure segments stay on same column/page together.
 1. Potentially: Create an input component that does validation, automatically shows errors and puts required *.
 1. Potentially: Use the Composition API over the Options API for Pinia.
 1. Ensure long lines work well.
