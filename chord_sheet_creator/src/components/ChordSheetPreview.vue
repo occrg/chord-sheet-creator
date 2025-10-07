@@ -63,6 +63,12 @@ export default {
     background: white;
 }
 
+.page-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 h1 {
     text-align: center;
     margin-top: 0rem;
@@ -84,15 +90,18 @@ h2 {
 }
 
 #chord-section {
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     width: 100%;
-    height: 100vh;
-    column-count: 2;
-    column-fill: auto;
-    column-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-content: space-between;
 }
 
 .segment {
+    width: 49%;
     margin-bottom: 1.5rem;
 }
 
