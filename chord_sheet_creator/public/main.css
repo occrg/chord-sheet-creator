@@ -1,0 +1,67 @@
+:root {
+    --primary-colour: #FF8B61;
+    --primary-colour-highlight: #FFC0A9;
+    --secondary-colour: #3F1E00;
+    --neutral-colour: #F0F0F0;
+    --primary-font: "Roboto Condensed";
+}
+
+.horizontal-layout {
+    display: flex;
+}
+
+.spread-out {
+    justify-content: space-between;
+}
+
+.small-gap {
+    gap: 0.5rem;
+}
+
+.vertical-middle {
+    display: flex;
+    align-items: center;
+}
+
+.xxl-text {
+    font-size: 2rem;
+    line-height: 2.5rem;
+}
+
+.large-text {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+
+.primary-background {
+    background-color: var(--primary-colour);
+    color: var(--secondary-colour);
+    text-decoration: none;
+}
+
+a.primary-background:hover {
+    background-color: var(--primary-colour-highlight);
+}
+
+.large-horizontal-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.large-right-padding {
+    padding-right: 1rem;
+}
+
+.medium-horizontal-padding {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.large-vertical-padding {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.drop-shadow {
+    filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0,0,0,0.06));
+}
