@@ -8,11 +8,13 @@ import NavButton from "./NavButton.vue";
         small-gap">
         <NavButton 
             buttonText="Contact"
-            buttonURL="mailto:occrg@outlook.com">
+            buttonURL="mailto:occrg@outlook.com"
+            openInNewTab>
         </NavButton>
         <NavButton 
             buttonText="Donate"
-            buttonURL="https://ko-fi.com/occrg">
+            buttonURL="https://ko-fi.com/occrg"
+            openInNewTab>
         </NavButton>
     </div>
 </template>

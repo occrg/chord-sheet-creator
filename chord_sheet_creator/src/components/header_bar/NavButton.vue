@@ -1,5 +1,6 @@
 <template>
-    <a :href=buttonURL 
+    <a :href=buttonURL
+        :target=targetValue 
         class="vertical-middle
         primary-background 
         large-vertical-padding 
@@ -14,7 +15,13 @@ export default {
     name: "nav-button",
     props: {
         buttonText: String,
-        buttonURL: String
+        buttonURL: String,
+        openInNewTab: Boolean
+    },
+    computed: {
+        targetValue() {
+            return this.openInNewTab ? "_blank" : "_self";
+        }
     }
 };
 </script>
