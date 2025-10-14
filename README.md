@@ -28,8 +28,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Make appropriate navigations open in new tab.
-1. Update favicon to match logo.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.
 1. Simplify code so similar logic isn't repeated in different places.
