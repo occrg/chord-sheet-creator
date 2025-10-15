@@ -19,10 +19,3 @@ export default {
     name: "title-bar"
 };
 </script>
-
-<style scoped>
-#title-bar {
-    display: flex;
-    gap: 0.5rem;
-}
-</style>
