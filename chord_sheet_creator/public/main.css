@@ -1,6 +1,7 @@
 :root {
     --primary-colour: #FF8B61;
     --primary-colour-highlight: #FFC0A9;
+    --primary-colour-light: #FFF0EA;
     --secondary-colour: #3F1E00;
     --neutral-colour: #F0F0F0;
     --primary-font: "Roboto Condensed";
@@ -8,6 +9,19 @@
 
 .horizontal-layout {
     display: flex;
+}
+
+.vertical-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.fill-space {
+    flex-grow: 1;
+}
+
+.vertical-scroll {
+    overflow-y: auto;
 }
 
 .spread-out {
@@ -31,6 +45,10 @@
 .large-text {
     font-size: 1.25rem;
     line-height: 1.5rem;
+}
+
+.primary-background-light {
+    background-color: var(--primary-colour-light);
 }
 
 .primary-background {

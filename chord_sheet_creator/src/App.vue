@@ -5,10 +5,15 @@ import HeaderBar from "./components/header_bar/HeaderBar.vue";
 </script>
 
 <template>
-  <HeaderBar></HeaderBar>
-  <div id="content-container">
-    <ChordSheetInput></ChordSheetInput>
-    <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
+  <div id="app-container" class="vertical-layout">
+    <HeaderBar></HeaderBar>
+    <div id="content-container" 
+      class="horizontal-layout
+      fill-space
+      vertical-scroll">
+      <ChordSheetInput></ChordSheetInput>
+      <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
+    </div>
   </div>
 </template>
 
@@ -23,18 +28,13 @@ export default {
 
 body {
   margin: 0;
-  background-color: #FAFAFA;
-  font-family: var(--primary-font);
 }
 
-#content-container {
-  height: 100%;
-  width: 100%;
+#app-container {
+  background-color: #FAFAFA;
+  font-family: var(--primary-font);
+  height: 100vh;
   display: flex;
-  justify-content: left;
-  padding: 1rem;
-  column-gap: 1rem;
-  row-gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 </style>

@@ -7,7 +7,11 @@ const chordSheetStore = useChordSheetStore();
 </script>
 
 <template>
-    <div id="input-section">
+    <div id="input-section" 
+      class="fill-space
+      vertical-scroll
+      large-vertical-padding
+      large-horizontal-padding">
         <form v-on:submit.prevent="createChordSheet">
             <label for="song-title-input">Title:</label>
             <input type="text" id="song-title-input" name="song-title-input" required v-model="chordSheetStore.title"><br>

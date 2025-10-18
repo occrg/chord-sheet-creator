@@ -57,8 +57,7 @@ export default {
     font: 0.9rem "Tahoma";
     display: flex;
     flex-direction: column;
-    width: 210mm;
-    height: 297mm;
+    aspect-ratio: 0.7071;
     padding: 1cm;
     background: white;
 }
