@@ -2,6 +2,7 @@
 import ChordSheetInput from "./components/ChordSheetInput.vue";
 import ChordSheetPreviewContainer from "./components/ChordSheetPreviewContainer.vue";
 import HeaderBar from "./components/header_bar/HeaderBar.vue";
+import WindowPropertiesGenerator from "./components/WindowPropertiesGenerator.vue";
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import HeaderBar from "./components/header_bar/HeaderBar.vue";
       vertical-scroll">
       <ChordSheetInput></ChordSheetInput>
       <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
+      <WindowPropertiesGenerator></WindowPropertiesGenerator>
     </div>
   </div>
 </template>

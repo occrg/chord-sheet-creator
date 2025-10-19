@@ -28,7 +28,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Adjust font size of preview with size of preview.
 1. Move URLs linked in application to be environment variables.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.

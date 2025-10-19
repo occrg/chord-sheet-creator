@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { mapState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
 
 const chordSheetStore = useChordSheetStore();
+const windowPropertiesStore = useWindowPropertiesStore();
 </script>
 
 <template>
-  <div class="page">
+  <div class="page" ref="chordSheetPreviewPage">
     <div class="page-content">
       <h1 id="song-title">{{ chordSheetStore.title }}</h1>
       <h2 id="song-artist">{{ chordSheetStore.artist }}</h2>
@@ -26,10 +28,18 @@ const chordSheetStore = useChordSheetStore();
 </template>
 
 <script lang="ts">
+const A4_HEIGHT_IN_MM = 297;
+
 export default {
   name: "chord-sheet-preview",
+  data () {
+    return {
+      resizeObserver: null as ResizeObserver | null
+    }
+  },
   computed: {
     ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
+    ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
     songDetailsText() {
       let songDetailsText = "";
       if (this.key) {
@@ -46,6 +56,29 @@ export default {
 
       return songDetailsText;
     }
+  },
+  mounted () {
+    this.setupResizeObserver();
+  },
+  methods: {
+    setupResizeObserver: function () {
+      this.resizeObserver = new ResizeObserver(this.onChordSheetPreviewResize);
+      const chordSheetPreviewPageElement: HTMLElement = this.$refs.chordSheetPreviewPage as HTMLElement;
+      if (chordSheetPreviewPageElement) {
+        this.resizeObserver.observe(chordSheetPreviewPageElement);
+      } else throw new Error("Chord sheet preview element not found.");
+    },
+    onChordSheetPreviewResize: function (resizeObserverEntries: ResizeObserverEntry[]) {
+      if (resizeObserverEntries.length != 1 
+        || !(resizeObserverEntries[0] instanceof ResizeObserverEntry)
+        || resizeObserverEntries[0].target.children[0] == undefined) 
+        throw new Error("Unexpected input from resize observer.");
+      const resizeObserverEntry: ResizeObserverEntry = resizeObserverEntries[0];
+      const pageContentElement: HTMLElement = resizeObserverEntry.target.children[0] as HTMLElement; 
+      const chordSheetPreviewHeightMM = resizeObserverEntry.contentRect.height / this.pixelsInAMilimetre;
+      const ratioOfChordSheetPreviewToA4 = chordSheetPreviewHeightMM / A4_HEIGHT_IN_MM;
+      pageContentElement.style.zoom = `${ratioOfChordSheetPreviewToA4}`;
+    }
   }
 }
 </script>
@@ -58,12 +91,12 @@ export default {
     display: flex;
     flex-direction: column;
     aspect-ratio: 0.7071;
-    padding: 1cm;
     background: white;
 }
 
 .page-content {
     height: 100%;
+    margin: 1cm;
     display: flex;
     flex-direction: column;
 }
