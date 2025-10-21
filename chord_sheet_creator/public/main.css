@@ -9,6 +9,8 @@
     --primary-font: "Roboto Condensed";
 }
 
+
+/* Layout styles (parent) */
 .horizontal-layout {
     display: flex;
 }
@@ -18,20 +20,12 @@
     flex-direction: column;
 }
 
-.fill-space {
-    flex-grow: 1;
-}
-
-.vertical-scroll {
-    overflow-y: auto;
+.small-gap {
+    gap: 8px;
 }
 
 .spread-out {
     justify-content: space-between;
-}
-
-.small-gap {
-    gap: 0.5rem;
 }
 
 .vertical-middle {
@@ -39,32 +33,22 @@
     align-items: center;
 }
 
-.xxl-text {
+.vertical-scroll {
+    overflow-y: auto;
+}
+
+
+/* Layout styles (children) */
+.fill-space {
+    flex-grow: 1;
+}
+
+
+/* Text styles */
+.site-heading-text {
+    color: var(--secondary-colour);
     font-size: 2rem;
     line-height: 2.5rem;
-}
-
-.large-text {
-    font-size: 1.25rem;
-    line-height: 1.5rem;
-}
-
-.primary-background-light {
-    background-color: var(--primary-colour-light);
-}
-
-.primary-background {
-    background-color: var(--primary-colour);
-    color: var(--secondary-colour);
-    text-decoration: none;
-}
-
-.primary-background-shade {
-    background-color: var(--primary-background-shade);
-}
-
-a.primary-background:hover {
-    background-color: var(--primary-colour-highlight);
 }
 
 .key-text {
@@ -79,30 +63,56 @@ a.primary-background:hover {
     line-height: 1.25rem;
 }
 
+.no-text-decoration {
+    text-decoration: none;
+}
+
+
+/* Background colour styles */
+.primary-background-light {
+    background-color: var(--primary-colour-light);
+}
+
+.primary-background {
+    background-color: var(--primary-colour);
+}
+
+.primary-background-shade {
+    background-color: var(--primary-background-shade);
+}
+
+a.primary-background:hover {
+    background-color: var(--primary-colour-highlight);
+}
+
+
+/* Padding styles */
 .large-horizontal-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .large-right-padding {
-    padding-right: 1rem;
+    padding-right: 16px;
 }
 
 .medium-horizontal-padding {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .large-vertical-padding {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 .medium-vertical-padding {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
+
+/* Size styles */
 .medium-min-width {
     min-width: 16rem;
 }
@@ -111,14 +121,20 @@ a.primary-background:hover {
     min-width: 8rem;
 }
 
+
+/* Shadow styles */
 .drop-shadow {
-    filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0,0,0,0.06));
+    filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06));
 }
 
+
+/* Border radius styles */
 .medium-border-radius {
     border-radius: 4px;
 }
 
+
+/* Input styles */
 .text-selection * {
     cursor: text;
 }

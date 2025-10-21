@@ -5,7 +5,8 @@
         primary-background 
         large-vertical-padding 
         medium-horizontal-padding
-        large-text">
+        key-text
+        no-text-decoration">
         {{ buttonText }}
     </a>
 </template>

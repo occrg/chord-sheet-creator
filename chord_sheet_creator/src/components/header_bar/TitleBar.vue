@@ -8,7 +8,7 @@
             width="72"
             height="72"></img>
         <div id="title-text" 
-            class="xxl-text 
+            class="site-heading-text 
             vertical-middle">
             Chord Sheet Creator</div>
     </div>
