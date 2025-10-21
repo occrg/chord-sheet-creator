@@ -30,6 +30,7 @@ None.
 This is a list of things to do for the project, not including implementing the "future functionality" above.
 1. Ensure consistent code formatting.
 1. Experiment with when absolute units should be used. Current thinking is that they should be used for padding and margins. Font sizes, minimum widths should use relative.
+1. Split CSS classes into sensible groups. This should include splitting the background colour and font style classes.
 1. Clean up file structure.
 1. Move URLs linked in application to be environment variables.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.

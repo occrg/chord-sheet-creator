@@ -3,13 +3,22 @@ import type { PropType } from "vue";
 </script>
 
 <template>
-  <div :id=id 
-    class=""
-    :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]">
-    <label>{{label}}
-      <input type="text" 
-        :required=required 
-        v-model="value">
+  <div class="primary-background-shade
+    medium-vertical-padding
+    medium-horizontal-padding
+    medium-border-radius
+    text-selection">
+    <label :id=id 
+      :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]">
+      <div class="support-text">
+        {{label}}
+      </div>
+      <div class="horizontal-layout">
+        <input type="text" 
+          :required=required 
+          v-model="value"
+          class="key-text fill-space">
+      </div>
     </label>
   </div>
 </template>

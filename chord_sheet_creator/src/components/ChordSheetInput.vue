@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import InputField from "./InputField.vue";
 import { InputFieldSize } from "./InputField.vue";
+import InputField from "./InputField.vue";
 
 import { mapState, mapActions } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
@@ -16,33 +16,33 @@ const chordSheetStore = useChordSheetStore();
       large-vertical-padding
       large-horizontal-padding">
         <form v-on:submit.prevent="createChordSheet">
-            <InputField label="Title:" 
+            <InputField label="Title"
               id="song-title-input" 
               :modelValue="chordSheetStore.title"
               @update:modelValue="newValue => chordSheetStore.title = newValue"
               required>
             </InputField><br>
-            <InputField label="Artist:" 
+            <InputField label="Artist"
               id="song-artist-input" 
               :modelValue="chordSheetStore.artist"
               @update:modelValue="newValue => chordSheetStore.artist = newValue"
               required>
             </InputField><br>
-            <InputField label="Key:" 
+            <InputField label="Key"
               id="song-key-input" 
               :modelValue="chordSheetStore.key"
               @update:modelValue="newValue => chordSheetStore.key = newValue"
               required
               :minSize="InputFieldSize.SMALL">
             </InputField><br>
-            <InputField label="Bpm:" 
+            <InputField label="Bpm"
               id="song-bpm-input" 
               :modelValue="chordSheetStore.bpm"
               @update:modelValue="newValue => chordSheetStore.bpm = newValue"
               required
               :minSize="InputFieldSize.SMALL">
             </InputField><br>
-            <InputField label="Time signature:" 
+            <InputField label="Time signature"
               id="song-time-signature-input" 
               :modelValue="chordSheetStore.timeSignature"
               @update:modelValue="newValue => chordSheetStore.timeSignature = newValue"

@@ -2,8 +2,10 @@
     --primary-colour: #FF8B61;
     --primary-colour-highlight: #FFC0A9;
     --primary-colour-light: #FFF0EA;
+    --primary-background-shade: #FFF8F5;
     --secondary-colour: #3F1E00;
-    --neutral-colour: #F0F0F0;
+    --neutral-colour-light: #F0F0F0;
+    --neutral-colour-dark: #4B4239;
     --primary-font: "Roboto Condensed";
 }
 
@@ -57,8 +59,24 @@
     text-decoration: none;
 }
 
+.primary-background-shade {
+    background-color: var(--primary-background-shade);
+}
+
 a.primary-background:hover {
     background-color: var(--primary-colour-highlight);
+}
+
+.key-text {
+    color: var(--secondary-colour);
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+
+.support-text {
+    color: var(--neutral-colour-dark);
+    font-size: 1rem;
+    line-height: 1.25rem;
 }
 
 .large-horizontal-padding {
@@ -80,6 +98,11 @@ a.primary-background:hover {
     padding-bottom: 1rem;
 }
 
+.medium-vertical-padding {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 .medium-min-width {
     min-width: 16rem;
 }
@@ -90,4 +113,18 @@ a.primary-background:hover {
 
 .drop-shadow {
     filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0,0,0,0.06));
+}
+
+.medium-border-radius {
+    border-radius: 4px;
+}
+
+.text-selection * {
+    cursor: text;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
