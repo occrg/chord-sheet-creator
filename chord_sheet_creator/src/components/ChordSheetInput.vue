@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import InputField from "./InputField.vue";
+
 import { mapState, mapActions } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
@@ -13,16 +15,36 @@ const chordSheetStore = useChordSheetStore();
       large-vertical-padding
       large-horizontal-padding">
         <form v-on:submit.prevent="createChordSheet">
-            <label for="song-title-input">Title:</label>
-            <input type="text" id="song-title-input" name="song-title-input" required v-model="chordSheetStore.title"><br>
-            <label for="song-artist-input">Artist:</label>
-            <input type="text" id="song-artist-input" name="song-artist-input" required v-model="chordSheetStore.artist"><br>
-            <label for="song-key-input">Key:</label>
-            <input type="text" id="song-key-input" name="song-key-input" v-model="chordSheetStore.key"><br>
-            <label for="song-bpm-input">Bpm:</label>
-            <input type="text" id="song-bpm-input" name="song-bpm-input" v-model="chordSheetStore.bpm"><br>
-            <label for="song-time-signature-input">Time signature:</label>
-            <input type="text" id="song-time-signature-input" name="song-time-signature-input" v-model="chordSheetStore.timeSignature"><br>
+            <InputField label="Title:" 
+              id="song-title-input" 
+              :modelValue="chordSheetStore.title"
+              @update:modelValue="newValue => chordSheetStore.title = newValue"
+              required>
+            </InputField><br>
+            <InputField label="Artist:" 
+              id="song-artist-input" 
+              :modelValue="chordSheetStore.artist"
+              @update:modelValue="newValue => chordSheetStore.artist = newValue"
+              required>
+            </InputField><br>
+            <InputField label="Key:" 
+              id="song-key-input" 
+              :modelValue="chordSheetStore.key"
+              @update:modelValue="newValue => chordSheetStore.key = newValue"
+              required>
+            </InputField><br>
+            <InputField label="Bpm:" 
+              id="song-bpm-input" 
+              :modelValue="chordSheetStore.bpm"
+              @update:modelValue="newValue => chordSheetStore.bpm = newValue"
+              required>
+            </InputField><br>
+            <InputField label="Time signature:" 
+              id="song-time-signature-input" 
+              :modelValue="chordSheetStore.timeSignature"
+              @update:modelValue="newValue => chordSheetStore.timeSignature = newValue"
+              required>
+            </InputField><br>
             <label for="song-lyrics-input">Lyrics:</label>
             <textarea id="song-lyrics-input" name="song-lyrics-input" rows="40" cols="60" required v-model="lyrics"></textarea><br>
             <button type="submit">Create</button>
