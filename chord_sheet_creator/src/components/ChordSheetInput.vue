@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputField from "./InputField.vue";
+import { InputFieldSize } from "./InputField.vue";
 
 import { mapState, mapActions } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
@@ -31,20 +32,24 @@ const chordSheetStore = useChordSheetStore();
               id="song-key-input" 
               :modelValue="chordSheetStore.key"
               @update:modelValue="newValue => chordSheetStore.key = newValue"
-              required>
+              required
+              :minSize="InputFieldSize.SMALL">
             </InputField><br>
             <InputField label="Bpm:" 
               id="song-bpm-input" 
               :modelValue="chordSheetStore.bpm"
               @update:modelValue="newValue => chordSheetStore.bpm = newValue"
-              required>
+              required
+              :minSize="InputFieldSize.SMALL">
             </InputField><br>
             <InputField label="Time signature:" 
               id="song-time-signature-input" 
               :modelValue="chordSheetStore.timeSignature"
               @update:modelValue="newValue => chordSheetStore.timeSignature = newValue"
-              required>
-            </InputField><br>
+              required
+              :minSize="InputFieldSize.SMALL">
+            </InputField>
+            <br><br><br>
             <label for="song-lyrics-input">Lyrics:</label>
             <textarea id="song-lyrics-input" name="song-lyrics-input" rows="40" cols="60" required v-model="lyrics"></textarea><br>
             <button type="submit">Create</button>

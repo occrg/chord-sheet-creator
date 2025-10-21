@@ -80,6 +80,14 @@ a.primary-background:hover {
     padding-bottom: 1rem;
 }
 
+.medium-min-width {
+    min-width: 16rem;
+}
+
+.small-min-width {
+    min-width: 8rem;
+}
+
 .drop-shadow {
     filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0,0,0,0.06));
 }

@@ -14,8 +14,14 @@
 export default {
     name: "nav-button",
     props: {
-        buttonText: String,
-        buttonURL: String,
+        buttonText: {
+            type: String,
+            required: true
+        },
+        buttonURL: {
+            type: String,
+            required: true
+        },
         openInNewTab: Boolean
     },
     computed: {
