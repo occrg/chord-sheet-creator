@@ -4,20 +4,23 @@ import type { PropType } from "vue";
 
 <template>
   <div class="primary-background-shade
-    medium-vertical-padding
-    medium-horizontal-padding
     medium-border-radius
     text-selection">
     <label :id=id 
       :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]">
-      <div class="support-text">
+      <div class="support-text
+        medium-top-padding
+        medium-horizontal-padding">
         {{label}}
       </div>
       <div class="horizontal-layout">
         <input type="text" 
           :required=required 
           v-model="value"
-          class="key-text fill-space">
+          class="key-text
+          fill-space
+          medium-bottom-padding
+          medium-horizontal-padding">
       </div>
     </label>
   </div>
