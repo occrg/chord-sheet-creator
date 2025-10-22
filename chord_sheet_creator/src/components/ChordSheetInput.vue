@@ -2,6 +2,8 @@
 import { InputFieldSize } from "./InputField.vue";
 import InputField from "./InputField.vue";
 
+import Accordion from "./Accordion.vue";
+
 import { mapState, mapActions } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
@@ -15,6 +17,7 @@ const chordSheetStore = useChordSheetStore();
       vertical-scroll
       large-vertical-padding
       large-horizontal-padding">
+      <Accordion :stepNumber=1 title="Enter song details">
         <form v-on:submit.prevent="createChordSheet">
             <InputField label="Title"
               id="song-title-input" 
@@ -49,11 +52,12 @@ const chordSheetStore = useChordSheetStore();
               required
               :minSize="InputFieldSize.SMALL">
             </InputField>
+          </form>
+      </Accordion>
             <br><br><br>
             <label for="song-lyrics-input">Lyrics:</label>
             <textarea id="song-lyrics-input" name="song-lyrics-input" rows="40" cols="60" required v-model="lyrics"></textarea><br>
             <button type="submit">Create</button>
-        </form>
     </div>
 </template>
 

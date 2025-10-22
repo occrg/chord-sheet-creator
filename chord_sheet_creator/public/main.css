@@ -6,6 +6,7 @@
     --secondary-colour: #3F1E00;
     --neutral-colour-light: #F0F0F0;
     --neutral-colour-dark: #4B4239;
+    --white-colour: #FFFFFF;
     --primary-font: "Roboto Condensed";
 }
 
@@ -22,6 +23,10 @@
 
 .small-gap {
     gap: 8px;
+}
+
+.medium-gap {
+    gap: 16px;
 }
 
 .spread-out {
@@ -85,6 +90,10 @@ a.primary-background:hover {
     background-color: var(--primary-colour-highlight);
 }
 
+.white-background {
+    background-color: var(--white-colour);
+}
+
 
 /* Padding styles */
 .large-horizontal-padding {
@@ -109,6 +118,14 @@ a.primary-background:hover {
 .medium-vertical-padding {
     padding-top: 8px;
     padding-bottom: 8px;
+}
+
+.large-bottom-padding {
+    padding-bottom: 16px;
+}
+
+.medium-top-padding {
+    padding-top: 8px;
 }
 
 
