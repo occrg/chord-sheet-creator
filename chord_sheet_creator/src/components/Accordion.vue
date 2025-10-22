@@ -22,8 +22,7 @@ import ChevronIcon from "./ChevronIcon.vue";
         </ChevronIcon>
       </div>
       <div v-if="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[accordionState]"
-        class="large-horizontal-padding
-        medium-bottom-padding">
+        class="large-horizontal-padding">
         <slot></slot>
       </div>
   </div>

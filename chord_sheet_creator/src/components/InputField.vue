@@ -3,7 +3,8 @@ import type { PropType } from "vue";
 </script>
 
 <template>
-  <div class="primary-background-shade
+  <div class="fill-space
+    primary-background-shade
     medium-border-radius
     text-selection">
     <label :id=id 
