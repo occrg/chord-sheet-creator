@@ -6,12 +6,13 @@ import ChevronIcon from "./ChevronIcon.vue";
 <template>
   <div class="vertical-layout
     white-background
-    large-horizontal-padding
-    medium-vertical-padding
     medium-border-radius">
-      <div class="horizontal-layout
-        large-vertical-padding
-        medium-gap">
+      <div @click="toggleAccordionState" 
+        class="horizontal-layout
+        extra-large-vertical-padding
+        large-horizontal-padding
+        medium-gap
+        non-text-clickable">
         <div class="fill-space
           key-text">
           Step {{ stepNumber }}: {{ title }}
@@ -20,7 +21,9 @@ import ChevronIcon from "./ChevronIcon.vue";
             :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[accordionState]">
         </ChevronIcon>
       </div>
-      <div>
+      <div v-if="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[accordionState]"
+        class="large-horizontal-padding
+        medium-bottom-padding">
         <slot></slot>
       </div>
   </div>
@@ -35,6 +38,11 @@ enum AccordionState {
 const ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION = {
   [`${AccordionState.CLOSED}`]: ChevronIconDirection.DOWN,
   [`${AccordionState.OPEN}`]: ChevronIconDirection.UP
+};
+
+const ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN = {
+  [`${AccordionState.CLOSED}`]: false,
+  [`${AccordionState.OPEN}`]: true
 };
 
 export default {
@@ -52,6 +60,12 @@ export default {
   data () {
     return {
         accordionState: AccordionState.CLOSED as AccordionState 
+    }
+  },
+  methods: {
+    toggleAccordionState: function () {
+      if (this.accordionState == AccordionState.CLOSED) this.accordionState = AccordionState.OPEN;
+      else if (this.accordionState == AccordionState.OPEN) this.accordionState = AccordionState.CLOSED;
     }
   }
 };

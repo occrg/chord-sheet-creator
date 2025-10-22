@@ -120,8 +120,17 @@ a.primary-background:hover {
     padding-bottom: 8px;
 }
 
+.extra-large-vertical-padding {
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
 .large-bottom-padding {
     padding-bottom: 16px;
+}
+
+.medium-bottom-padding {
+    padding-bottom: 8px;
 }
 
 .medium-top-padding {
@@ -150,10 +159,19 @@ a.primary-background:hover {
     border-radius: 4px;
 }
 
+/* Transformation styles */
+.rotate-180 {
+    transform: rotate(180deg);
+    transform-origin: 50% 50%;
+}
 
-/* Input styles */
+/* Interactive element styles */
 .text-selection * {
     cursor: text;
+}
+
+.non-text-clickable {
+    cursor: pointer;
 }
 
 input {

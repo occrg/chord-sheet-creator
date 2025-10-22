@@ -33,9 +33,10 @@ This is a list of things to do for the project, not including implementing the "
 1. Ensure HTML elements are identifiable from dev tools.
 1. Ensure appropriate HTML elements are used everywhere.
 1. Move URLs linked in application to be environment variables.
+1. Add animations for toggling of accorion (accordion open and chevron rotating).
+1. Abstract styling of ChevronIcon so it can be used more flexibly later.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines.
 1. Denote which fields are required.
 1. Simplify code so similar logic isn't repeated in different places.
-1. Potentially: Create an input component that does validation, automatically shows errors and puts required *.
 1. Potentially: Use the Composition API over the Options API for Pinia.
 1. Ensure long lines work well.
