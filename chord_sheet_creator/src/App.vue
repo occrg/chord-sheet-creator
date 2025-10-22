@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ChordSheetInput from "./components/ChordSheetInput.vue";
-import ChordSheetPreviewContainer from "./components/ChordSheetPreviewContainer.vue";
+import ChordSheetInput from "./components/chord_sheet_input/ChordSheetInput.vue";
+import ChordSheetPreviewContainer from "./components/chord_sheet_preview/ChordSheetPreviewContainer.vue";
 import HeaderBar from "./components/header_bar/HeaderBar.vue";
-import WindowPropertiesGenerator from "./components/WindowPropertiesGenerator.vue";
+import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGenerator.vue";
 </script>
 
 <template>

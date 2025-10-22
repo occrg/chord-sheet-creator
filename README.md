@@ -29,7 +29,6 @@ None.
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
-1. Clean up file structure.
 1. Ensure HTML elements are identifiable from dev tools.
 1. Ensure appropriate HTML elements are used everywhere.
 1. Move URLs linked in application to be environment variables.
