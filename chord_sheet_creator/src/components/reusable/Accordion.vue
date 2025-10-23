@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PropType } from "vue";
+
 import { ChevronIconDirection } from "./ChevronIcon.vue";
 import ChevronIcon from "./ChevronIcon.vue";
 </script>
@@ -29,7 +31,7 @@ import ChevronIcon from "./ChevronIcon.vue";
 </template>
 
 <script lang="ts">
-enum AccordionState {
+export enum AccordionState {
     OPEN,
     CLOSED
 };
@@ -54,11 +56,16 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    defaultState: {
+      type: Number as PropType<AccordionState>,
+      required: false,
+      default: AccordionState.CLOSED
     }
   },
   data () {
     return {
-        accordionState: AccordionState.CLOSED as AccordionState 
+        accordionState: this.defaultState as AccordionState 
     }
   },
   methods: {

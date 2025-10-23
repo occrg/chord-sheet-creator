@@ -2,6 +2,7 @@
 import { InputFieldSize } from "../reusable/InputField.vue";
 import InputField from "../reusable/InputField.vue";
 
+import { AccordionState } from "../reusable/Accordion.vue";
 import Accordion from "../reusable/Accordion.vue";
 
 import { mapState } from "pinia";
@@ -11,7 +12,9 @@ const chordSheetStore = useChordSheetStore();
 </script>
 
 <template>
-    <Accordion :stepNumber=1 title="Enter song details">
+    <Accordion :stepNumber=1 
+        title="Enter song details"
+        :defaultState=AccordionState.OPEN>
         <div id="step-1-section-content" 
             class="vertical-layout
             small-gap
