@@ -94,6 +94,10 @@ a.primary-background:hover {
     background-color: var(--white-colour);
 }
 
+.neutral-light-background {
+    background-color: var(--neutral-colour-light);
+}
+
 
 /* Padding styles */
 .large-horizontal-padding {
@@ -149,14 +153,32 @@ a.primary-background:hover {
 
 
 /* Shadow styles */
-.drop-shadow {
-    filter: drop-shadow(-0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.06));
+.close-to-back-shadow {
+    box-shadow: -0.5px 1px 2px 1px rgba(0, 0, 0, 0.02);
+}
+
+.medium-shadow {
+    box-shadow: -0.5px 1px 2px 0px rgba(0, 0, 0, 0.02),
+    -1px 2px 4px 0.5px rgba(0, 0, 0, 0.02),
+    -2px 4px 8px 1px rgba(0, 0, 0, 0.02);
+}
+
+.far-from-back-shadow {
+    box-shadow: -0.5px 1px 2px 0px rgba(0, 0, 0, 0.02),
+    -1px 2px 4px 0.25px rgba(0, 0, 0, 0.02),
+    -2px 4px 8px 1px rgba(0, 0, 0, 0.02),
+    -4px 8px 16px 2px rgba(0, 0, 0, 0.02),
+    -8px 16px 2rem 4px rgba(0, 0, 0, 0.02); 
 }
 
 
-/* Border radius styles */
+/* Border styles */
 .medium-border-radius {
     border-radius: 4px;
+}
+
+.bottom-border {
+    border-bottom: 2px solid var(--secondary-colour);
 }
 
 /* Transformation styles */

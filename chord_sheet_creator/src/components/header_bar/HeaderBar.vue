@@ -9,7 +9,7 @@ import TitleBar from "./TitleBar.vue";
         spread-out
         primary-background
         large-horizontal-padding
-        drop-shadow">
+        far-from-back-shadow">
         <TitleBar></TitleBar>
         <NavBar></NavBar>
     </div>

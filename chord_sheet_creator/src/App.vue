@@ -6,7 +6,9 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
 </script>
 
 <template>
-  <div id="app-container" class="vertical-layout">
+  <div id="app-container" 
+    class="vertical-layout
+    neutral-light-background">
     <HeaderBar></HeaderBar>
     <div id="content-container" 
       class="horizontal-layout
@@ -33,7 +35,6 @@ body {
 }
 
 #app-container {
-  background-color: #FAFAFA;
   font-family: var(--primary-font);
   height: 100vh;
   display: flex;

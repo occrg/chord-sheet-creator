@@ -8,7 +8,8 @@ import ChevronIcon from "./ChevronIcon.vue";
 <template>
   <div class="vertical-layout
     white-background
-    medium-border-radius">
+    medium-border-radius
+    medium-shadow">
       <div @click="toggleAccordionState" 
         class="horizontal-layout
         extra-large-vertical-padding

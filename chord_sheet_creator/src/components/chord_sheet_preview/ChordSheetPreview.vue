@@ -8,7 +8,7 @@ const windowPropertiesStore = useWindowPropertiesStore();
 </script>
 
 <template>
-  <div class="page" ref="chordSheetPreviewPage">
+  <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
     <div class="page-content">
       <h1 id="song-title">{{ chordSheetStore.title }}</h1>
       <h2 id="song-artist">{{ chordSheetStore.artist }}</h2>

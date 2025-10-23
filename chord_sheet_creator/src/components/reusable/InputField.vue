@@ -6,7 +6,9 @@ import type { PropType } from "vue";
   <div class="fill-space
     primary-background-shade
     medium-border-radius
-    text-selection">
+    text-selection
+    medium-shadow
+    bottom-border">
     <label :id=id 
       :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]">
       <div class="support-text

@@ -28,8 +28,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Add more styling to elements (box shadow, bottom line for input fields).
-1. Change background grey to a darker grey.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
 1. Ensure HTML elements are identifiable from dev tools.
 1. Ensure appropriate HTML elements are used everywhere.
