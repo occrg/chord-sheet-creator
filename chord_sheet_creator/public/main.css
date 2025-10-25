@@ -151,6 +151,11 @@ a.primary-background:hover {
     min-width: 8rem;
 }
 
+.large-height {
+    height: 28.5rem;
+    max-height: 70vh;
+}
+
 
 /* Shadow styles */
 .close-to-back-shadow {
@@ -200,4 +205,11 @@ input {
     background-color: transparent;
     border: none;
     outline: none;
+}
+
+textarea {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
 }

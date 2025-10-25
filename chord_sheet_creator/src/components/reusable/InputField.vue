@@ -17,13 +17,23 @@ import type { PropType } from "vue";
         {{label}}
       </div>
       <div class="horizontal-layout">
-        <input type="text" 
+        <input v-if="inputType == InputType.SINGLELINE"
+          type="text" 
           :required=required 
           v-model="value"
           class="key-text
           fill-space
           medium-bottom-padding
           medium-horizontal-padding">
+        <textarea v-if="inputType == InputType.MULTILINE"
+          type="text" 
+          :required=required 
+          v-model="value"
+          class="key-text
+          large-height
+          fill-space
+          medium-bottom-padding
+          medium-horizontal-padding"></textarea>
       </div>
     </label>
   </div>
@@ -33,6 +43,11 @@ import type { PropType } from "vue";
 export enum InputFieldSize {
     SMALL,
     MEDIUM
+}
+
+export enum InputType {
+    SINGLELINE,
+    MULTILINE
 }
 
 const INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING = {
@@ -60,7 +75,12 @@ export default {
       type: Number as PropType<InputFieldSize>,
       required: false,
       default: InputFieldSize.MEDIUM
-    } 
+    },
+    inputType: {
+      type: Number as PropType<InputType>,
+      required: false,
+      default: InputType.SINGLELINE
+    }
   },
   emits: ["update:modelValue"],
   computed: {
