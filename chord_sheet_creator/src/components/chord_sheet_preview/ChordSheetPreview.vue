@@ -99,6 +99,7 @@ export default {
     margin: 1cm;
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
 h1 {
