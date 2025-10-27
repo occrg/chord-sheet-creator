@@ -8,12 +8,17 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
 <template>
   <div id="app-container" 
     class="vertical-layout
+    fix-to-screen-height
+    auto-screen-height-for-non-large
     neutral-light-background">
     <HeaderBar></HeaderBar>
     <div id="content-container" 
       class="horizontal-layout
+      split-between-two
+      wrap-around
       fill-space
-      vertical-scroll">
+      vertical-scroll
+      no-scroll-for-non-large">
       <ChordSheetInput></ChordSheetInput>
       <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
       <WindowPropertiesGenerator></WindowPropertiesGenerator>
@@ -36,7 +41,6 @@ body {
 
 #app-container {
   font-family: var(--primary-font);
-  height: 100vh;
   display: flex;
   flex-direction: column;
 }

@@ -92,6 +92,7 @@ export default {
     flex-direction: column;
     aspect-ratio: 0.7071;
     background: white;
+    width: 100%;
 }
 
 .page-content {

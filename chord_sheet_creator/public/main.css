@@ -18,6 +18,10 @@
     display: flex;
 }
 
+.split-between-two > * {
+    flex-basis: auto;
+}
+
 .vertical-layout {
     display: flex;
     flex-direction: column;
@@ -45,6 +49,10 @@
 
 .vertical-scroll {
     overflow-y: auto;
+}
+
+.wrap-around {
+    flex-wrap: wrap;
 }
 
 
@@ -161,6 +169,10 @@
 
 
 /* Size styles */
+.fix-to-screen-height {
+    height: 100vh;
+}
+
 .medium-min-width {
     min-width: 16rem;
 }
@@ -238,4 +250,23 @@ textarea {
     border: none;
     outline: none;
     resize: none;
+}
+
+
+@media (max-width: 1151px) {
+    .split-between-two {
+        flex-wrap: wrap;
+    }
+
+    .split-between-two > * {
+        flex-basis: 100%;
+    }
+
+    .auto-screen-height-for-non-large {
+        height: auto;
+    }
+
+    .no-scroll-for-non-large {
+        overflow-y: auto;
+    }
 }

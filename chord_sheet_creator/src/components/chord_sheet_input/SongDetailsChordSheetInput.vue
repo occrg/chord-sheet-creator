@@ -13,7 +13,9 @@ const chordSheetStore = useChordSheetStore();
         class="vertical-layout
         small-gap
         medium-vertical-padding">
-        <div class="horizontal-layout small-gap">
+        <div class="horizontal-layout
+          small-gap
+          wrap-around">
             <InputField label="Title"
             id="song-title-input" 
             :modelValue="chordSheetStore.title"
@@ -27,7 +29,9 @@ const chordSheetStore = useChordSheetStore();
             required>
             </InputField>
         </div>
-        <div class="horizontal-layout small-gap">
+        <div class="horizontal-layout
+          small-gap
+          wrap-around">
             <InputField label="Key"
             id="song-key-input" 
             :modelValue="chordSheetStore.key"
