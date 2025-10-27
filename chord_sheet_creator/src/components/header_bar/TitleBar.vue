@@ -1,12 +1,13 @@
 <template>
     <div id="title-bar" 
         class="horizontal-layout
-        small-gap
+        small-horiztonal-gap
+        secondary-middle
         large-right-padding">
-        <img src="/csc_logo.png" 
-            alt="Chord Sheet Creator logo - three ovals placed vertically on top of each other"
-            width="72"
-            height="72"></img>
+            <img src="/csc_logo.png" 
+                alt="Chord Sheet Creator logo - three ovals placed vertically on top of each other"
+                width="72"
+                height="72"></img>
         <div id="title-text" 
             class="site-heading-text 
             vertical-layout

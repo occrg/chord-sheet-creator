@@ -15,7 +15,6 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
     <div id="content-container" 
       class="horizontal-layout
       split-between-two
-      wrap-around
       fill-space
       vertical-scroll
       no-scroll-for-non-large">

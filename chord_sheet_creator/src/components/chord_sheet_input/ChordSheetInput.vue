@@ -12,7 +12,7 @@ import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
 <template>
     <div id="input-section" 
       class="vertical-layout
-      medium-gap
+      medium-vertical-gap
       fill-space
       vertical-scroll
       large-vertical-padding

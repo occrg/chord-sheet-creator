@@ -11,10 +11,11 @@ const chordSheetStore = useChordSheetStore();
 <template>
     <div id="step-1-section-content" 
         class="vertical-layout
-        small-gap
+        small-vertical-gap
         medium-vertical-padding">
         <div class="horizontal-layout
-          small-gap
+          small-vertical-gap
+          small-horizontal-gap
           wrap-around">
             <InputField label="Title"
             id="song-title-input" 
@@ -30,7 +31,8 @@ const chordSheetStore = useChordSheetStore();
             </InputField>
         </div>
         <div class="horizontal-layout
-          small-gap
+          small-vertical-gap
+          small-horizontal-gap
           wrap-around">
             <InputField label="Key"
             id="song-key-input" 

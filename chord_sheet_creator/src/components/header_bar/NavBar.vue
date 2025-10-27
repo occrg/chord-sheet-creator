@@ -5,7 +5,9 @@ import NavButton from "./NavButton.vue";
 <template>
     <div id="nav-bar"
         class="horizontal-layout
-        small-gap">
+        wrap-around
+        small-horizontal-gap
+        medium-horizontal-gap-small-only">
         <NavButton 
             buttonText="Contact"
             buttonURL="mailto:occrg@outlook.com"

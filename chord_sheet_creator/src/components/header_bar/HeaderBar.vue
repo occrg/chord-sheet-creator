@@ -6,7 +6,11 @@ import TitleBar from "./TitleBar.vue";
 <template>
     <div id="header-bar"
         class="horizontal-layout
+        wrap-around
         spread-out
+        primary-middle-small-only
+        large-horizontal-gap
+        small-vertical-gap
         primary-background
         large-horizontal-padding
         far-from-back-shadow">

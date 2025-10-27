@@ -17,7 +17,7 @@ import Button from "./Button.vue";
         class="horizontal-layout
         extra-large-vertical-padding
         large-horizontal-padding
-        medium-gap
+        medium-vertical-gap
         non-text-clickable">
         <div class="fill-space
           key-text">
@@ -34,18 +34,20 @@ import Button from "./Button.vue";
       <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state] && completeButtonText"
         class="horizontal-layout
         primary-right
-        small-gap
+        small-horizontal-gap
         large-horizontal-padding
         small-top-padding
         medium-bottom-padding">
         <Button v-if="showSkipButton"
           @buttonClicked="$emit('skip', accordionOrder)"
           :buttonStyle="ButtonStyle.SECONDARY"
-          text="Skip"></Button>
+          text="Skip"
+          class="fill-space-small-only"></Button>
         <Button v-if="completeButtonText"
           @buttonClicked="$emit('complete', accordionOrder)"
           :buttonStyle="ButtonStyle.PRIMARY"
-          :text="completeButtonText"></Button>
+          :text="completeButtonText"
+          class="fill-space-small-only"></Button>
       </div>
   </div>
 </template>
