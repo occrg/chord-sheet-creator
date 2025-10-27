@@ -3,7 +3,7 @@ import type { PropType } from "vue";
 </script>
 
 <template>
-  <div class="vertical-middle"
+  <div class="vertical-layout primary-middle"
     :class="{ 'rotate-180': direction == ChevronIconDirection.UP }">
       <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 2L14 14L26 2" stroke="#3F1E00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>

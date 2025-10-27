@@ -9,7 +9,8 @@
             height="72"></img>
         <div id="title-text" 
             class="site-heading-text 
-            vertical-middle">
+            vertical-layout
+            primary-middle">
             Chord Sheet Creator</div>
     </div>
 </template>

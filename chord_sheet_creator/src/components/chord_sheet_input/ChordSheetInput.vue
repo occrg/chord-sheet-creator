@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
-import ChordSheetInputStep1 from "./ChordSheetInputStep1.vue";
-import ChordSheetInputStep2 from "./ChordSheetInputStep2.vue";
+import type { Component } from "vue";
+import { markRaw } from "vue";
 
-const chordSheetStore = useChordSheetStore();
+import Accordion from "../reusable/Accordion.vue";
+import { AccordionState } from "../reusable/Accordion.vue";
+
+import SongDetailsChordSheetInput from "./SongDetailsChordSheetInput.vue";
+import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
 </script>
 
 <template>
@@ -14,13 +17,133 @@ const chordSheetStore = useChordSheetStore();
       vertical-scroll
       large-vertical-padding
       large-horizontal-padding">
-      <ChordSheetInputStep1></ChordSheetInputStep1>
-      <ChordSheetInputStep2></ChordSheetInputStep2>
+      <Accordion v-for="(step, ind) in CHORD_SHEET_INPUT_STEPS"
+        :accordionOrder="ind"
+        :title="step.title"
+        :completeButtonText="step.completeButtonText"
+        :showSkipButton="step.showSkipButton"
+        :state="getAccordionState(ind)"
+        @complete="completeAccordion"
+        @skip="skipAccordion"
+        @toggle="toggleAccordion">
+        <component :is="step.component" 
+          :ref="step.componentRef"
+          :completeProcessTrigger="getCompleteProcessTrigger(ind)"
+          :stepOrder="ind"
+          @completeProcessFinished="completeProcessFinished"></component>
+      </Accordion>
     </div>
 </template>
 
 <script lang="ts">
+interface ChordSheetInputStep {
+    component: Component,
+    componentRef: string,
+    title: string,
+    completeButtonText: string,
+    showSkipButton: boolean
+};
+
+interface ChordSheetInputStepProp {
+  accordionState: AccordionState,
+  completeProcessTrigger: boolean
+}
+
+const CHORD_SHEET_INPUT_STEPS: ChordSheetInputStep[] = [
+  {
+    component: SongDetailsChordSheetInput,
+    componentRef: "SongDetailsChordSheetInput",
+    title: "Enter song details",
+    completeButtonText: "Continue",
+    showSkipButton: true
+  },
+  {
+    component: PrefillChordSheetInput,
+    componentRef: "PrefillChordSheetInput",
+    title: "Prefill chord sheet",
+    completeButtonText: "Create",
+    showSkipButton: false
+  }
+]
+
 export default {
   name: "chord-sheet-input",
+  data () {
+    return {
+      stepProperties: [
+        {
+          accordionState: AccordionState.OPEN,
+          completeProcessTrigger: false
+        },
+        {
+          accordionState: AccordionState.CLOSED,
+          completeProcessTrigger: false
+        }
+      ] as ChordSheetInputStepProp[]
+    }
+  },
+  methods: {
+    getAccordionState: function (accordionOrder: number): AccordionState {
+      if (accordionOrder > (this.stepProperties.length - 1)) {
+        throw new ReferenceError("Accordion to get doesn't exist");
+      }
+
+      // Asserting that this isn't undefined because of length check above.
+      let accordionState: AccordionState = this.stepProperties[accordionOrder]!.accordionState;
+      return accordionState;
+    },
+    getCompleteProcessTrigger: function (stepOrder: number): boolean {
+      if (stepOrder > (this.stepProperties.length - 1)) {
+        throw new ReferenceError("Step to get doesn't exist");
+      }
+
+      // Asserting that this isn't undefined because of length check above.
+      let completeProcessTrigger: boolean = this.stepProperties[stepOrder]!.completeProcessTrigger;
+      return completeProcessTrigger;
+    },
+    completeAccordion: function (accordionOrderCompleted: number) {
+      this.closedAccordionOpenNextAccordion(accordionOrderCompleted);
+      this.getCompleteProcessTrigger(accordionOrderCompleted);
+      // Asserting as not undefined because of check for this in above function.
+      this.stepProperties[accordionOrderCompleted]!.completeProcessTrigger = true;
+    },
+    skipAccordion: function (accordionOrderSkipped: number) {
+      this.closedAccordionOpenNextAccordion(accordionOrderSkipped);
+    },
+    completeProcessFinished: function (stepOrderCompleted: number) {
+      this.getCompleteProcessTrigger(stepOrderCompleted);
+      // Asserting as not undefined because of check for this in above function.
+      this.stepProperties[stepOrderCompleted]!.completeProcessTrigger = false;
+    },
+    toggleAccordion: function (accordionOrderToggled: number) {
+      // Checking that accordion state exists here means I'm asserting that it 
+      // isn't undefined in the rest of the function.
+      const currentState = this.getAccordionState(accordionOrderToggled);
+      if (currentState == AccordionState.CLOSED) {
+        for (let currentAccordionOrder = 0; 
+          currentAccordionOrder < this.stepProperties.length; 
+          currentAccordionOrder++) {
+          this.stepProperties[currentAccordionOrder]!.accordionState = AccordionState.CLOSED;
+        }
+        this.stepProperties[accordionOrderToggled]!.accordionState = AccordionState.OPEN;
+      }
+      else if (currentState == AccordionState.OPEN) 
+        this.stepProperties[accordionOrderToggled]!.accordionState = AccordionState.CLOSED;
+    },
+    closedAccordionOpenNextAccordion: function (accordionOrderToClose: number) {
+      this.getAccordionState(accordionOrderToClose);
+      // Asserting as not undefined because of check for this in above function.
+      this.stepProperties[accordionOrderToClose]!.accordionState = AccordionState.CLOSED;
+      
+      try {
+        this.getAccordionState(accordionOrderToClose + 1);
+        // Asserting as not undefined because of check for this in above function.
+        this.stepProperties[accordionOrderToClose + 1]!.accordionState = AccordionState.OPEN;
+      } catch (ReferenceError) {
+        // No need to take action on error since the last accordion was closed 
+        // and so there was no subsequent accordion to open. 
+      }
+    }
+  }
 };
 </script>

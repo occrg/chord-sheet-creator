@@ -2,9 +2,6 @@
 import { InputType } from "../reusable/InputField.vue";
 import InputField from "../reusable/InputField.vue";
 
-import { AccordionState } from "../reusable/Accordion.vue";
-import Accordion from "../reusable/Accordion.vue";
-
 import { mapState, mapActions } from "pinia";
 import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
@@ -13,20 +10,15 @@ const chordSheetStore = useChordSheetStore();
 </script>
 
 <template>
-    <Accordion :stepNumber=2 
-        title="Prefill chord sheet"
-        :defaultState=AccordionState.OPEN>
-        <div id="step-2-section-content" 
-            class="">
-            <InputField label="Chord Sheet Content"
-                id="chord-sheet-content-input" 
-                :modelValue="lyrics"
-                @update:modelValue="newValue => lyrics = newValue"
-                required
-                :inputType="InputType.MULTILINE"></InputField>
-            <button type="submit" @click="createChordSheet">Create</button>
-        </div>
-    </Accordion>
+  <div id="step-2-section-content" 
+      class="medium-bottom-padding">
+      <InputField label="Chord Sheet Content"
+          id="chord-sheet-content-input" 
+          :modelValue="chordSheetStore.userEnteredLyrics"
+          @update:modelValue="newValue => chordSheetStore.userEnteredLyrics = newValue"
+          required
+          :inputType="InputType.MULTILINE"></InputField>
+  </div>
 </template>
 
 <script lang="ts">
@@ -47,14 +39,33 @@ const CHORD_SHEET_TEMPLATE_HTML = `
 `
 
 export default {
-    name: "chord-sheet-input-step2",
+    name: "prefill-chord-sheet-input",
     data () {
       return {
         lyrics: "" as string
       }
     },
+  props: {
+    completeProcessTrigger: Boolean,
+    stepOrder: {
+      type: Number,
+      required: true
+    }
+  },
+  watch: {
+    completeProcessTrigger: {
+      handler(newValue: boolean) {
+        if (newValue) {
+          this.createChordSheet();
+          this.$emit('completeProcessFinished', this.stepOrder)
+        }
+      },
+      immediate: true
+    }
+  },
+  emits: ["completeProcessFinished"],
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"])
+    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments", "userEnteredLyrics"])
   },
   methods: {
     ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromLyrics"]),
@@ -62,11 +73,11 @@ export default {
       const parser = new DOMParser();
       try {
         let chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
+        this.lyrics = this.userEnteredLyrics;
         this.storeChordSheetSegmentsFromLyrics(this.lyrics);
 
         chordSheetHTML = this.insertSongDetails(chordSheetHTML);
         chordSheetHTML = this.insertSongSegments(chordSheetHTML);
-        console.log(chordSheetHTML)
       } catch (err) {
         console.error(err);
       }

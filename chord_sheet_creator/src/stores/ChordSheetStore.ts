@@ -18,7 +18,8 @@ export const useChordSheetStore = defineStore("chord-sheet", {
             key: "" as string,
             bpm: "" as string,
             timeSignature: "" as string,
-            segments: [] as ChordSheetSegment[]
+            segments: [] as ChordSheetSegment[],
+            userEnteredLyrics: "" as string
         }
     },
     actions: {

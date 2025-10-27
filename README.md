@@ -31,6 +31,7 @@ This is a list of things to do for the project, not including implementing the "
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
 1. Ensure HTML elements are identifiable from dev tools.
 1. Ensure appropriate HTML elements are used everywhere.
+1. Refactor convoluted way to call complete functions.
 1. Move URLs linked in application to be environment variables.
 1. Add animations for toggling of accorion (accordion open and chevron rotating).
 1. Abstract styling of ChevronIcon so it can be used more flexibly later.

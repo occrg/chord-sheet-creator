@@ -1,8 +1,10 @@
 <template>
     <a :href=buttonURL
         :target=targetValue 
-        class="vertical-middle
-        primary-background 
+        class="vertical-layout
+        primary-middle
+        primary-background
+        change-on-hover 
         large-vertical-padding 
         medium-horizontal-padding
         key-text
