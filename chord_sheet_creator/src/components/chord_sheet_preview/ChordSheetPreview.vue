@@ -87,7 +87,7 @@ export default {
 .page {
     margin: 0;
     padding: 0;
-    font: 0.9rem "Tahoma";
+    font: 12px "Tahoma";
     display: flex;
     flex-direction: column;
     aspect-ratio: 0.7071;
@@ -105,22 +105,23 @@ export default {
 
 h1 {
     text-align: center;
-    margin-top: 0rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-size: 24px;
 }
 
 h2 {
     text-align: center;
     font-weight: normal;
-    font-size: 1.2rem;
-    margin-top: 0rem;
-    margin-bottom: 0.5rem;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 8px;
 }
 
 #song-details {
     text-align: center;
     margin-top: 0rem;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 #chord-section {
@@ -136,38 +137,38 @@ h2 {
 
 .segment {
     width: 49%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 }
 
 .segment-title {
     margin-top: 0;
-    margin-bottom: 0.2rem;
+    margin-bottom: 4px;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 16px;
 }
 
 .segment-contents {
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .chord-line {
     margin-top: 0;
-    margin-bottom: 0.1rem;
+    margin-bottom: 2px;
     font-weight: bold;
 }
 
 .chord {
-    margin-right: 1rem;
+    margin-right: 16px;
 }
 
 .lyric-line {
     margin-top: 0;
-    margin-bottom: 0.4rem;
+    margin-bottom: 8px;
 }
 
 .flat-chord {
-    letter-spacing: -0.2rem;
-    margin-right: 0.1rem;
+    letter-spacing: -4px;
+    margin-right: 2px;
 }
 </style>
