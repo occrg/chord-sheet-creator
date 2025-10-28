@@ -27,10 +27,7 @@ import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
         @skip="skipAccordion"
         @toggle="toggleAccordion">
         <component :is="step.component" 
-          :ref="step.componentRef"
-          :completeProcessTrigger="getCompleteProcessTrigger(ind)"
-          :stepOrder="ind"
-          @completeProcessFinished="completeProcessFinished"></component>
+          :completeProcessTrigger="getCompleteProcessTrigger(ind)"></component>
       </Accordion>
     </div>
 </template>
@@ -38,7 +35,6 @@ import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
 <script lang="ts">
 interface ChordSheetInputStep {
     component: Component,
-    componentRef: string,
     title: string,
     completeButtonText: string,
     showSkipButton: boolean
@@ -46,20 +42,18 @@ interface ChordSheetInputStep {
 
 interface ChordSheetInputStepProp {
   accordionState: AccordionState,
-  completeProcessTrigger: boolean
+  completeProcessTrigger: number
 }
 
 const CHORD_SHEET_INPUT_STEPS: ChordSheetInputStep[] = [
   {
     component: SongDetailsChordSheetInput,
-    componentRef: "SongDetailsChordSheetInput",
     title: "Enter song details",
     completeButtonText: "Continue",
     showSkipButton: true
   },
   {
     component: PrefillChordSheetInput,
-    componentRef: "PrefillChordSheetInput",
     title: "Prefill chord sheet",
     completeButtonText: "Create",
     showSkipButton: false
@@ -73,11 +67,11 @@ export default {
       stepProperties: [
         {
           accordionState: AccordionState.OPEN,
-          completeProcessTrigger: false
+          completeProcessTrigger: 0
         },
         {
           accordionState: AccordionState.CLOSED,
-          completeProcessTrigger: false
+          completeProcessTrigger: 0
         }
       ] as ChordSheetInputStepProp[]
     }
@@ -92,28 +86,23 @@ export default {
       let accordionState: AccordionState = this.stepProperties[accordionOrder]!.accordionState;
       return accordionState;
     },
-    getCompleteProcessTrigger: function (stepOrder: number): boolean {
+    getCompleteProcessTrigger: function (stepOrder: number): number {
       if (stepOrder > (this.stepProperties.length - 1)) {
         throw new ReferenceError("Step to get doesn't exist");
       }
 
       // Asserting that this isn't undefined because of length check above.
-      let completeProcessTrigger: boolean = this.stepProperties[stepOrder]!.completeProcessTrigger;
+      let completeProcessTrigger: number = this.stepProperties[stepOrder]!.completeProcessTrigger;
       return completeProcessTrigger;
     },
     completeAccordion: function (accordionOrderCompleted: number) {
       this.closedAccordionOpenNextAccordion(accordionOrderCompleted);
       this.getCompleteProcessTrigger(accordionOrderCompleted);
       // Asserting as not undefined because of check for this in above function.
-      this.stepProperties[accordionOrderCompleted]!.completeProcessTrigger = true;
+      this.stepProperties[accordionOrderCompleted]!.completeProcessTrigger += 1;
     },
     skipAccordion: function (accordionOrderSkipped: number) {
       this.closedAccordionOpenNextAccordion(accordionOrderSkipped);
-    },
-    completeProcessFinished: function (stepOrderCompleted: number) {
-      this.getCompleteProcessTrigger(stepOrderCompleted);
-      // Asserting as not undefined because of check for this in above function.
-      this.stepProperties[stepOrderCompleted]!.completeProcessTrigger = false;
     },
     toggleAccordion: function (accordionOrderToggled: number) {
       // Checking that accordion state exists here means I'm asserting that it 

@@ -14,8 +14,8 @@ const chordSheetStore = useChordSheetStore();
       class="medium-bottom-padding">
       <InputField label="Chord Sheet Content"
           id="chord-sheet-content-input" 
-          :modelValue="chordSheetStore.userEnteredLyrics"
-          @update:modelValue="newValue => chordSheetStore.userEnteredLyrics = newValue"
+          :modelValue="lyrics"
+          @update:modelValue="newValue => lyrics = newValue"
           required
           :inputType="InputType.MULTILINE"></InputField>
   </div>
@@ -46,26 +46,21 @@ export default {
       }
     },
   props: {
-    completeProcessTrigger: Boolean,
-    stepOrder: {
-      type: Number,
-      required: true
-    }
+    completeProcessTrigger: Number
   },
   watch: {
     completeProcessTrigger: {
       handler(newValue: boolean) {
+        console.log(newValue)
         if (newValue) {
           this.createChordSheet();
-          this.$emit('completeProcessFinished', this.stepOrder)
         }
       },
       immediate: true
     }
   },
-  emits: ["completeProcessFinished"],
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments", "userEnteredLyrics"])
+    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"])
   },
   methods: {
     ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromLyrics"]),
@@ -73,7 +68,6 @@ export default {
       const parser = new DOMParser();
       try {
         let chordSheetHTML = parser.parseFromString(CHORD_SHEET_TEMPLATE_HTML, "text/html");
-        this.lyrics = this.userEnteredLyrics;
         this.storeChordSheetSegmentsFromLyrics(this.lyrics);
 
         chordSheetHTML = this.insertSongDetails(chordSheetHTML);

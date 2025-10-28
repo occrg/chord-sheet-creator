@@ -66,20 +66,14 @@ export default {
     ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature"])
   },
   props: {
-    completeProcessTrigger: Boolean,
-    stepOrder: {
-      type: Number,
-      required: true
-    }
+    completeProcessTrigger: Number
   },
   watch: {
     completeProcessTrigger(newValue: boolean) {
       if (newValue) {
         // Do nothing.
-        this.$emit('completeProcessFinished', this.stepOrder)
       }
     }
-  },
-  emits: ["completeProcessFinished"]
+  }
 };
 </script>
