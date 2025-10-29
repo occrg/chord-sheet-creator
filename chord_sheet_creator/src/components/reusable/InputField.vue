@@ -9,8 +9,9 @@ import type { PropType } from "vue";
     text-selection
     medium-shadow
     bottom-border">
-    <label :id=id 
-      :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]">
+    <label 
+      :class="INPUT_FIELD_SIZE_TO_MIN_WIDTH_CLASS_MAPPING[minSize]"
+      :for=id>
       <div class="support-text
         medium-top-padding
         medium-horizontal-padding">
@@ -18,6 +19,7 @@ import type { PropType } from "vue";
       </div>
       <div class="horizontal-layout">
         <input v-if="inputType == InputType.SINGLELINE"
+          :id=id 
           type="text" 
           :required=required 
           v-model="value"
@@ -26,6 +28,7 @@ import type { PropType } from "vue";
           medium-bottom-padding
           medium-horizontal-padding">
         <textarea v-if="inputType == InputType.MULTILINE"
+          :id=id 
           type="text" 
           :required=required 
           v-model="value"

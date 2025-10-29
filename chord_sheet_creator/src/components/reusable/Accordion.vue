@@ -19,10 +19,10 @@ import Button from "./Button.vue";
         large-horizontal-padding
         medium-vertical-gap
         non-text-clickable">
-        <div class="fill-space
+        <h2 class="fill-space
           key-text">
           Step {{ accordionOrder + 1 }}: {{ title }}
-        </div>
+        </h2>
         <ChevronIcon 
             :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[state]">
         </ChevronIcon>

@@ -10,10 +10,10 @@ const windowPropertiesStore = useWindowPropertiesStore();
 <template>
   <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
     <div class="page-content">
-      <h1 id="song-title">{{ chordSheetStore.title }}</h1>
-      <h2 id="song-artist">{{ chordSheetStore.artist }}</h2>
-      <p id="song-details">{{ songDetailsText }}</p>
-      <div id="chord-section">
+      <h1 v-if="title" id="song-title">{{ chordSheetStore.title }}</h1>
+      <h2 v-if="artist" id="song-artist">{{ chordSheetStore.artist }}</h2>
+      <p v-if="songDetailsText" id="song-details">{{ songDetailsText }}</p>
+      <div v-if="segments.length > 0" id="chord-section">
         <div class="segment" v-for="segment in segments">
           <p class="segment-title">{{ segment.segmentTitle }}</p>
           <div class="segment-contents">
@@ -103,14 +103,15 @@ export default {
     min-height: 0;
 }
 
-h1 {
+#song-title {
+    font-weight: bold;
     text-align: center;
     margin-top: 0px;
     margin-bottom: 8px;
     font-size: 24px;
 }
 
-h2 {
+#song-artist {
     text-align: center;
     font-weight: normal;
     font-size: 20px;

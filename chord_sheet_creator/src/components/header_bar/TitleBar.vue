@@ -8,11 +8,11 @@
                 alt="Chord Sheet Creator logo - three ovals placed vertically on top of each other"
                 width="72"
                 height="72"></img>
-        <div id="title-text" 
+        <h1 id="title-text" 
             class="site-heading-text 
             vertical-layout
             primary-middle">
-            Chord Sheet Creator</div>
+            Chord Sheet Creator</h1>
     </div>
 </template>
     
