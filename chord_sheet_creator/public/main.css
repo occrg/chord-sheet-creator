@@ -15,13 +15,7 @@
 
 
 /* Resetting default HTML where necessary */
-h1 {
-    font-weight: normal;
-    margin-block-start: 0px;
-    margin-block-end: 0px;
-}
-
-h2 {
+h1, h2, p, ul {
     font-weight: normal;
     margin-block-start: 0px;
     margin-block-end: 0px;
@@ -188,9 +182,12 @@ h2 {
     padding-bottom: 4px;
 }
 
-.extra-large-vertical-padding {
-    padding-top: 24px;
+.extra-large-bottom-padding {
     padding-bottom: 24px;
+}
+
+.large-top-padding {
+    padding-top: 16px;
 }
 
 .large-bottom-padding {

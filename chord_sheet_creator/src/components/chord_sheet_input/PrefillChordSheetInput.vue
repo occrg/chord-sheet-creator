@@ -10,7 +10,7 @@ const chordSheetStore = useChordSheetStore();
 </script>
 
 <template>
-  <div id="step-2-section-content" 
+  <div id="prefill-chord-sheet-input" 
       class="medium-bottom-padding">
       <InputField label="Chord Sheet Content"
           id="chord-sheet-content-input" 
@@ -51,7 +51,6 @@ export default {
   watch: {
     completeProcessTrigger: {
       handler(newValue: boolean) {
-        console.log(newValue)
         if (newValue) {
           this.createChordSheet();
         }

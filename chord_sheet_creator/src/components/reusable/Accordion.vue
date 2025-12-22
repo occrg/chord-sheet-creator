@@ -12,11 +12,12 @@ import Button from "./Button.vue";
   <div class="vertical-layout
     white-background
     medium-border-radius
+    medium-vertical-padding
+    large-horizontal-padding
     medium-shadow">
       <div @click="$emit('toggle', accordionOrder)" 
         class="horizontal-layout
-        extra-large-vertical-padding
-        large-horizontal-padding
+        large-vertical-padding
         medium-vertical-gap
         non-text-clickable">
         <h2 class="fill-space
@@ -27,17 +28,14 @@ import Button from "./Button.vue";
             :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[state]">
         </ChevronIcon>
       </div>
-      <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state]"
-        class="large-horizontal-padding">
+      <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state]">
         <slot></slot>
       </div>
       <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state] && completeButtonText"
         class="horizontal-layout
         primary-right
         small-horizontal-gap
-        large-horizontal-padding
-        small-top-padding
-        medium-bottom-padding">
+        small-top-padding">
         <Button v-if="showSkipButton"
           @buttonClicked="$emit('skip', accordionOrder)"
           :buttonStyle="ButtonStyle.SECONDARY"

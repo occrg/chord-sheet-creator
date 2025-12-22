@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Component } from "vue";
-import { markRaw } from "vue";
 
 import Accordion from "../reusable/Accordion.vue";
 import { AccordionState } from "../reusable/Accordion.vue";
 
 import SongDetailsChordSheetInput from "./SongDetailsChordSheetInput.vue";
 import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
+import DownloadChordSheetHelperText from "./DownloadChordSheetHelperText.vue";
 </script>
 
 <template>
@@ -36,7 +36,7 @@ import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
 interface ChordSheetInputStep {
     component: Component,
     title: string,
-    completeButtonText: string,
+    completeButtonText: string | undefined,
     showSkipButton: boolean
 };
 
@@ -57,6 +57,12 @@ const CHORD_SHEET_INPUT_STEPS: ChordSheetInputStep[] = [
     title: "Prefill chord sheet",
     completeButtonText: "Create",
     showSkipButton: false
+  },
+  {
+    component: DownloadChordSheetHelperText,
+    title: "Download chord sheet",
+    completeButtonText: undefined,
+    showSkipButton: false
   }
 ]
 
@@ -64,19 +70,26 @@ export default {
   name: "chord-sheet-input",
   data () {
     return {
-      stepProperties: [
-        {
-          accordionState: AccordionState.OPEN,
-          completeProcessTrigger: 0
-        },
-        {
-          accordionState: AccordionState.CLOSED,
-          completeProcessTrigger: 0
-        }
-      ] as ChordSheetInputStepProp[]
+      stepProperties: [] as ChordSheetInputStepProp[]
     }
   },
+  created () {
+    this.setStepProperties();
+  },
   methods: {
+    setStepProperties: function () {
+      this.stepProperties.push({
+        accordionState: AccordionState.OPEN,
+        completeProcessTrigger: 0
+      })
+
+      for (let i = 1; i < CHORD_SHEET_INPUT_STEPS.length; i++) {
+        this.stepProperties.push({
+          accordionState: AccordionState.CLOSED,
+          completeProcessTrigger: 0
+        })      
+      }      
+    },
     getAccordionState: function (accordionOrder: number): AccordionState {
       if (accordionOrder > (this.stepProperties.length - 1)) {
         throw new ReferenceError("Accordion to get doesn't exist");
