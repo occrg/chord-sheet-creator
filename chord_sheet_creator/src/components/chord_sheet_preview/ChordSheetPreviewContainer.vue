@@ -7,6 +7,7 @@ import ChordSheetPreview from "./ChordSheetPreview.vue";
     class="horizontal-layout
     large-horizontal-padding
     large-vertical-padding
+    no-top-padding-for-non-large
     primary-background-light
     far-from-back-shadow">
     <ChordSheetPreview></ChordSheetPreview>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ChordSheetInput from "./components/chord_sheet_input/ChordSheetInput.vue";
+import ChordSheetControls from "./components/chord_sheet_controls/ChordSheetControls.vue";
 import ChordSheetPreviewContainer from "./components/chord_sheet_preview/ChordSheetPreviewContainer.vue";
 import HeaderBar from "./components/header_bar/HeaderBar.vue";
 import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGenerator.vue";
@@ -18,7 +19,12 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
       fill-space
       vertical-scroll
       no-scroll-for-non-large">
-      <ChordSheetInput></ChordSheetInput>
+      <div id="chord-sheet-interactions" 
+        class="vertical-layout
+          fill-space">
+        <ChordSheetInput></ChordSheetInput>
+        <ChordSheetControls></ChordSheetControls>
+      </div>
       <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
       <WindowPropertiesGenerator></WindowPropertiesGenerator>
     </div>

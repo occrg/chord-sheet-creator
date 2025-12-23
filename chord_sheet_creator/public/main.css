@@ -304,6 +304,10 @@ textarea {
     .no-scroll-for-non-large {
         overflow-y: auto;
     }
+
+    .no-top-padding-for-non-large {
+        padding-top: 0px;
+    }
 }
 
 @media (width <= 703px) {
