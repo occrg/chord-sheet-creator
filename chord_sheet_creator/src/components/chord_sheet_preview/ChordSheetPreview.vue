@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { mapState } from "pinia";
+import { mapState, mapWritableState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
+import { useDOMStore } from "@/stores/DOMStore";
 
 const chordSheetStore = useChordSheetStore();
-const windowPropertiesStore = useWindowPropertiesStore();
 </script>
 
 <template>
@@ -40,6 +40,7 @@ export default {
   computed: {
     ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
     ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
+    ...mapWritableState(useDOMStore, ["chordSheetPreviewRef"]),
     songDetailsText() {
       let songDetailsText = "";
       if (this.key) {
@@ -59,6 +60,7 @@ export default {
   },
   mounted () {
     this.setupResizeObserver();
+    this.addChordSheetPreviewRefToStore();
   },
   methods: {
     setupResizeObserver: function () {
@@ -78,6 +80,11 @@ export default {
       const chordSheetPreviewHeightMM = resizeObserverEntry.contentRect.height / this.pixelsInAMilimetre;
       const ratioOfChordSheetPreviewToA4 = chordSheetPreviewHeightMM / A4_HEIGHT_IN_MM;
       pageContentElement.style.zoom = `${ratioOfChordSheetPreviewToA4}`;
+    },
+    addChordSheetPreviewRefToStore: function () {
+      if (this.$refs.chordSheetPreviewPage == null)
+        throw new Error("Chord sheet preview page element not found for storage");
+      this.chordSheetPreviewRef = this.$refs.chordSheetPreviewPage as HTMLElement;
     }
   }
 }

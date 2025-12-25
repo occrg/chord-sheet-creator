@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { mapState } from "pinia";
+import { useDOMStore } from "@/stores/DOMStore";
+
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
 </script>
@@ -23,9 +26,23 @@ import Button from "../reusable/Button.vue";
 <script lang="ts">
 export default {
   name: "chord-sheet-controls",
+  computed: {
+    ...mapState(useDOMStore, ["chordSheetPreviewRef"])
+  },
   methods: {
     downloadHTML: function () {
-      console.log("download HTML button clicked");
+      console.log(typeof this.chordSheetPreviewRef)
+      if (this.chordSheetPreviewRef == null)
+        throw new Error("Chord sheet preview page element not found in storage");
+      let chordSheetPreviewForExport = this.chordSheetPreviewRef.cloneNode(true) as HTMLElement;
+
+      let chordSheetPreviewPageContentElement = chordSheetPreviewForExport.children[0];
+      if (chordSheetPreviewPageContentElement == null ||
+        chordSheetPreviewPageContentElement.className !== "page-content")
+      throw new Error("Chord sheet preview page element not as expected");
+      
+      chordSheetPreviewPageContentElement.setAttribute("style", "");
+      console.log(chordSheetPreviewForExport);
     }
   }
 };
