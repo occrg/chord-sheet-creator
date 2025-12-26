@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     downloadHTML: function () {
-      console.log(typeof this.chordSheetPreviewRef)
       if (this.chordSheetPreviewRef == null)
         throw new Error("Chord sheet preview page element not found in storage");
       let chordSheetPreviewForExport = this.chordSheetPreviewRef.cloneNode(true) as HTMLElement;
@@ -41,8 +40,20 @@ export default {
         chordSheetPreviewPageContentElement.className !== "page-content")
       throw new Error("Chord sheet preview page element not as expected");
       
-      chordSheetPreviewPageContentElement.setAttribute("style", "");
-      console.log(chordSheetPreviewForExport);
+      chordSheetPreviewPageContentElement.removeAttribute("style");
+
+      let filename = "chord_sheet.html";
+      let element = document.createElement("a");
+      element.setAttribute("href", "data:application/html;charset=utf-8," + encodeURIComponent(chordSheetPreviewForExport.outerHTML));
+      element.setAttribute("download", filename);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+      
+      element.click();
+      document.body.removeChild(element); 
+      
+      console.log(chordSheetPreviewForExport.outerHTML);
     }
   }
 };

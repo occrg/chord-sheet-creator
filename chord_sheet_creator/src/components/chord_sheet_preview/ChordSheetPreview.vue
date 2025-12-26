@@ -9,6 +9,7 @@ const chordSheetStore = useChordSheetStore();
 
 <template>
   <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
+    <!-- Do not add any style attribute to this div because it's removed upon download -->
     <div class="page-content">
       <h1 v-if="title" id="song-title">{{ chordSheetStore.title }}</h1>
       <h2 v-if="artist" id="song-artist">{{ chordSheetStore.artist }}</h2>
