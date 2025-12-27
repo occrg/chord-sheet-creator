@@ -1,0 +1,85 @@
+.page {
+    padding: 0;
+    font: 12px "Tahoma";
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.page-content {
+    height: 100%;
+    margin: 1cm;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#song-title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+#song-artist {
+    text-align: center;
+    font-weight: normal;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+
+#song-details {
+    text-align: center;
+    margin-top: 0rem;
+    margin-bottom: 16px;
+}
+
+#chord-section {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-content: space-between;
+}
+
+.segment {
+    width: 49%;
+    margin-bottom: 24px;
+}
+
+.segment-title {
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.segment-contents {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.chord-line {
+    margin-top: 0;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.chord {
+    margin-right: 16px;
+}
+
+.lyric-line {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.flat-chord {
+    letter-spacing: -4px;
+    margin-right: 2px;
+}
