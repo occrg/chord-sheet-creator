@@ -33,7 +33,16 @@ const chordSheetStore = useChordSheetStore();
             :minSize="InputFieldSize.SMALL">
           </InputField>
           <div v-for="(line, lineInd) in segment.segmentLines"
-            :id="'chord-input-line-s'+segmentInd+'l'+lineInd">
+            :id="'chord-input-line-s'+segmentInd+'l'+lineInd"
+            class="vertical-layout
+            extra-small-vertical-gap
+            medium-left-padding">
+            <InputField label="Chord Line"
+              :id="'chord-input-chord-line-s'+segmentInd+'l'+lineInd" 
+              :modelValue="line.chordLine"
+              @update:modelValue="newValue => line.chordLine = newValue"
+              required>
+           </InputField>
            <InputField label="Lyric Line"
               :id="'chord-input-lyric-line-s'+segmentInd+'l'+lineInd" 
               :modelValue="line.lyricLine"

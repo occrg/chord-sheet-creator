@@ -18,8 +18,13 @@ const chordSheetStore = useChordSheetStore();
         <div class="segment" v-for="segment in segments">
           <p class="segment-title">{{ segment.segmentTitle }}</p>
           <div class="segment-contents">
-            <div class="lyric-line" v-for="segmentLine in segment.segmentLines">
-              {{ segmentLine.lyricLine }}
+            <div class="line" v-for="segmentLine in segment.segmentLines">
+              <div class="chord-line">
+                {{ segmentLine.chordLine.replace(/ /gi, "&nbsp;") }}
+              </div>
+              <div class="lyric-line">
+                {{ segmentLine.lyricLine.replace(/ /gi, "&nbsp;") }}
+              </div>
             </div>
           </div>
         </div>
