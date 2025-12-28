@@ -31,7 +31,6 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
-1. Refactor folder structure so Vue project isn't unnecessarily one folder down.
 1. Fix issue with resubmitting lyrics resulting in adding lines rather than replacing.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
 1. Ensure HTML elements are identifiable from dev tools.
