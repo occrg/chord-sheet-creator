@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { mapState } from "pinia";
 import { useDOMStore } from "@/stores/DOMStore";
+import { useChordSheetStore } from "@/stores/ChordSheetStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -27,10 +28,32 @@ import Button from "../reusable/Button.vue";
 const CSS_CHORD_SHEET_FILEPATH = "/public/chord_sheet.css";
 const CSS_CHORD_SHEET_DOWNLOAD_FILEPATH = "/public/chord_sheet_download.css";
 
+const HTML_EXTENSION = ".html";
+
 export default {
   name: "chord-sheet-controls",
   computed: {
-    ...mapState(useDOMStore, ["chordSheetPreviewRef"])
+    ...mapState(useDOMStore, ["chordSheetPreviewRef"]),
+    ...mapState(useChordSheetStore, ["title", "artist"]),
+    filename () {
+      let cleanedTitle = this.title.replace(/[^0-9a-z ]/gi, '');
+      let cleanedArtist = this.artist.replace(/[^0-9a-z ]/gi, '');
+      let filename = "";
+      if (cleanedTitle != "") {
+        filename += cleanedTitle;
+      }
+      if (cleanedArtist != "") {
+        if (filename && filename.length > 0) {
+          filename += " - ";
+        }
+        filename += cleanedArtist;
+      }
+      if (filename && filename.length > 0) {
+        filename += " - ";
+      }
+      filename += "Chord Sheet";
+      return filename;
+    }
   },
   methods: {
     downloadHTML: async function () {
@@ -38,7 +61,7 @@ export default {
         throw new Error("Chord sheet preview page element not found in storage");
       let chordSheetPreviewForExport: HTMLElement = this.prepareElementForHTMLDownload(this.chordSheetPreviewRef)
       let styledchordSheetPreviewForExport = await this.amendHTMLStyling(chordSheetPreviewForExport);
-      this.downloadElementAsHTML("chord_sheet.html", styledchordSheetPreviewForExport);
+      this.downloadElementAsHTML(this.filename+HTML_EXTENSION, styledchordSheetPreviewForExport);
     },
     prepareElementForHTMLDownload: function (elementToDownload: HTMLElement): HTMLElement {
       let htmlElement = document.createElement("html");
