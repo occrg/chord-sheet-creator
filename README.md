@@ -31,9 +31,13 @@ None.
 
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
+1. Fix typescript error with input fields.
+1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
+1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
+1. Strip prefill input of leading and trailing spaces and new lines.
+1. Ensure HTML elements are identifiable from dev tools. Can use dynamic IDs to make dynamically generated elements unique.
 1. Fix issue with resubmitting lyrics resulting in adding lines rather than replacing.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
-1. Ensure HTML elements are identifiable from dev tools.
 1. Ensure appropriate HTML elements are used everywhere.
 1. Refactor convoluted way to call complete functions.
 1. Move URLs linked in application to be environment variables.

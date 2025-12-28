@@ -6,6 +6,7 @@ import { AccordionState } from "../reusable/Accordion.vue";
 
 import SongDetailsChordSheetInput from "./SongDetailsChordSheetInput.vue";
 import PrefillChordSheetInput from "./PrefillChordSheetInput.vue";
+import ChordInput from "./ChordInput.vue";
 import DownloadChordSheetHelperText from "./DownloadChordSheetHelperText.vue";
 </script>
 
@@ -56,6 +57,12 @@ const CHORD_SHEET_INPUT_STEPS: ChordSheetInputStep[] = [
     component: PrefillChordSheetInput,
     title: "Prefill chord sheet",
     completeButtonText: "Create",
+    showSkipButton: true
+  },
+  {
+    component: ChordInput,
+    title: "Complete chord sheet",
+    completeButtonText: "Done",
     showSkipButton: false
   },
   {

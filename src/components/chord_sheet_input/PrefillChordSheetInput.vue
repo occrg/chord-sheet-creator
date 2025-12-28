@@ -9,7 +9,7 @@ const chordSheetStore = useChordSheetStore();
 </script>
 
 <template>
-  <div id="prefill-chord-sheet-input" 
+  <div id="prefill-chord-sheet-input-accordion-content" 
       class="medium-bottom-padding">
       <InputField label="Chord Sheet Content"
           id="chord-sheet-content-input" 
