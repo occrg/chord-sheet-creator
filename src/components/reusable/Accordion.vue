@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Prop, PropType } from "vue";
 
-import { ChevronIconDirection } from "./ChevronIcon.vue";
-import ChevronIcon from "./ChevronIcon.vue";
+import { IconDirection, IconAxis } from "./Icon.vue";
+import Icon from "./Icon.vue";
 
 import { ButtonStyle } from "./Button.vue";
 import Button from "./Button.vue";
@@ -24,9 +24,11 @@ import Button from "./Button.vue";
           key-text">
           Step {{ accordionOrder + 1 }}: {{ title }}
         </h2>
-        <ChevronIcon 
-            :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[state]">
-        </ChevronIcon>
+        <Icon 
+            :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[state]"
+            proportionOfAxis=60
+            :scalesWithAxis=IconAxis.HEIGHT>
+        </Icon>
       </div>
       <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state]">
         <slot></slot>
@@ -57,8 +59,8 @@ export enum AccordionState {
 };
 
 const ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION = {
-  [`${AccordionState.CLOSED}`]: ChevronIconDirection.DOWN,
-  [`${AccordionState.OPEN}`]: ChevronIconDirection.UP
+  [`${AccordionState.CLOSED}`]: IconDirection.FLIPPED_VERTICALLY,
+  [`${AccordionState.OPEN}`]: IconDirection.DEFAULT
 };
 
 const ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN = {
