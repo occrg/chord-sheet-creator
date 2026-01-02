@@ -42,13 +42,19 @@ export const useChordSheetStore = defineStore("chord-sheet", {
             });
         },
         moveLineUp: function (segmentInd: number, lineInd: number) {
+            if (lineInd == 0)
+                throw new Error(`Line (segment index: ${segmentInd}; line index: ${lineInd}) requested 
+                in moveLineUp function cannot be moved up as it's already the first line of its segment.`);
+
             if (this.segments[segmentInd] == null)
-                throw new Error(`Segment index (${segmentInd}) requested in moveLineUp function doesn't exist. Array length: ${this.segments.length}.`);
+                throw new Error(`Segment index (${segmentInd}) requested in moveLineUp 
+                function doesn't exist. Array length: ${this.segments.length}.`);
             const segment = this.segments[segmentInd];
             const segmentLines = segment.segmentLines;
 
             if (segmentLines[lineInd] == null)
-                throw new Error(`Line index (${lineInd}) requested in moveLineUp function doesn't exist. Array length: ${segmentLines.length}.`);
+                throw new Error(`Line index (${lineInd}) requested in moveLineUp function 
+                doesn't exist. Array length: ${segmentLines.length}.`);
             const lineToMoveUp = segmentLines[lineInd];
 
             segmentLines.splice(lineInd, 1);
@@ -56,13 +62,19 @@ export const useChordSheetStore = defineStore("chord-sheet", {
         },
         moveLineDown: function (segmentInd: number, lineInd: number) {
             if (this.segments[segmentInd] == null)
-                throw new Error(`Segment index (${segmentInd}) requested in moveLineDown function doesn't exist. Array length: ${this.segments.length}.`);
+                throw new Error(`Segment index (segment index: ${segmentInd}) requested 
+                in moveLineDown function doesn't exist. Array length: ${this.segments.length}.`);
             const segment = this.segments[segmentInd];
             const segmentLines = segment.segmentLines;
 
             if (segmentLines[lineInd] == null)
-                throw new Error(`Line index (${lineInd}) requested in moveLineDown function doesn't exist. Array length: ${segmentLines.length}.`);
+                throw new Error(`Line (segment index: ${segmentInd}; line index: ${lineInd}) requested 
+                in moveLineDown function doesn't exist. Array length: ${segmentLines.length}.`);
             const lineToMoveUp = segmentLines[lineInd];
+
+            if (lineInd == segmentLines.length-1)
+                throw new Error(`Line (segment index: ${segmentInd}; line index: ${lineInd}) requested 
+                in moveLineDown function cannot be moved down as it's already the last line of its segment.`);
 
             segmentLines.splice(lineInd, 1);
             segmentLines.splice(lineInd+1, 0, lineToMoveUp);
