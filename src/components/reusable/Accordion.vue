@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Prop, PropType } from "vue";
 
-import { IconDirection, IconAxis } from "./Icon.vue";
+import { IconChoice, IconAxis } from "./Icon.vue";
 import Icon from "./Icon.vue";
 
 import { ButtonStyle } from "./Button.vue";
@@ -25,8 +25,8 @@ import Button from "./Button.vue";
           Step {{ accordionOrder + 1 }}: {{ title }}
         </h2>
         <Icon 
-            :direction="ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION[state]"
-            proportionOfAxis=60
+            :iconChoice="ACCORDION_STATE_TO_ICON_CHOICE[state]"
+            :proportionOfAxis=60
             :scalesWithAxis=IconAxis.HEIGHT>
         </Icon>
       </div>
@@ -58,9 +58,9 @@ export enum AccordionState {
     CLOSED
 };
 
-const ACCORDION_STATE_TO_CHEVRON_ICON_DIRECTION = {
-  [`${AccordionState.CLOSED}`]: IconDirection.FLIPPED_VERTICALLY,
-  [`${AccordionState.OPEN}`]: IconDirection.DEFAULT
+const ACCORDION_STATE_TO_ICON_CHOICE = {
+  [`${AccordionState.CLOSED}`]: IconChoice.CHEVRON_DOWN,
+  [`${AccordionState.OPEN}`]: IconChoice.CHEVRON_UP
 };
 
 const ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN = {

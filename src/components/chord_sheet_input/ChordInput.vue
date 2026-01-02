@@ -5,6 +5,10 @@ import InputField from "../reusable/InputField.vue";
 import { mapState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 
+import { ButtonStyle } from "../reusable/Button.vue";
+import Button from "../reusable/Button.vue";
+import { IconChoice } from "../reusable/Icon.vue";
+
 const chordSheetStore = useChordSheetStore();
 </script>
 
@@ -34,21 +38,40 @@ const chordSheetStore = useChordSheetStore();
           </InputField>
           <div v-for="(line, lineInd) in segment.segmentLines"
             :id="'chord-input-line-s'+segmentInd+'l'+lineInd"
-            class="vertical-layout
-            extra-small-vertical-gap
-            medium-left-padding">
-            <InputField label="Chord Line"
-              :id="'chord-input-chord-line-s'+segmentInd+'l'+lineInd" 
-              :modelValue="line.chordLine"
-              @update:modelValue="newValue => line.chordLine = newValue"
-              required>
-           </InputField>
-           <InputField label="Lyric Line"
-              :id="'chord-input-lyric-line-s'+segmentInd+'l'+lineInd" 
-              :modelValue="line.lyricLine"
-              @update:modelValue="newValue => line.lyricLine = newValue"
-              required>
-           </InputField>
+            class="horizontal-layout
+            medium-horizontal-gap
+            extra-small-vertical-gap">
+            <div :id="'chord-input-line-lines-s'+segmentInd+'l'+lineInd"
+              class="vertical-layout
+              fill-space
+              extra-small-vertical-gap
+              medium-left-padding">
+              <InputField label="Chord Line"
+                :id="'chord-input-chord-line-s'+segmentInd+'l'+lineInd" 
+                :modelValue="line.chordLine"
+                @update:modelValue="newValue => line.chordLine = newValue"
+                required>
+             </InputField>
+             <InputField label="Lyric Line"
+                :id="'chord-input-lyric-line-s'+segmentInd+'l'+lineInd" 
+                :modelValue="line.lyricLine"
+                @update:modelValue="newValue => line.lyricLine = newValue"
+                required>
+             </InputField>
+            </div>
+            <div :id="'chord-input-line-buttons-s'+segmentInd+'l'+lineInd"
+                class="horizontal-layout
+                secondary-middle
+                small-horizontal-gap">
+                <Button @buttonClicked="chordSheetStore.moveLineUp(segmentInd, lineInd)"
+                  :buttonStyle="ButtonStyle.SECONDARY"
+                  :iconChoice="IconChoice.CHEVRON_UP">
+                </Button>
+                <Button @buttonClicked="chordSheetStore.moveLineDown(segmentInd, lineInd)"
+                  :buttonStyle="ButtonStyle.SECONDARY"
+                  :iconChoice="IconChoice.CHEVRON_DOWN">
+                </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -40,6 +40,10 @@ p:not(:last-child) {
     flex-direction: column;
 }
 
+.extra-small-horizontal-gap {
+    column-gap: 4px;
+}
+
 .small-horizontal-gap {
     column-gap: 8px;
 }
@@ -227,6 +231,18 @@ p:not(:last-child) {
 
 .small-min-width {
     min-width: 8rem;
+}
+
+.extra-small-min-width {
+    min-width: 6rem;
+}
+
+.extra-extra-small-min-width {
+    min-width: 3rem;
+}
+
+.touchable-area-height {
+    height: 3rem;
 }
 
 .large-height {
