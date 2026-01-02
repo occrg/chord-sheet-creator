@@ -79,6 +79,13 @@ const chordSheetStore = useChordSheetStore();
                     :iconChoice="IconChoice.CHEVRON_DOWN">
                   </Button>
                 </div>
+                <div class="touchable-area-height
+                touchable-area-width">
+                  <Button @buttonClicked="chordSheetStore.deleteLine(segmentInd, lineInd)"
+                    :buttonStyle="ButtonStyle.SECONDARY"
+                    :iconChoice="IconChoice.BIN">
+                  </Button>
+                </div>
             </div>
           </div>
         </div>
