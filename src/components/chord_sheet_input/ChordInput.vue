@@ -29,13 +29,28 @@ const chordSheetStore = useChordSheetStore();
           :id="'chord-input-section-'+segmentInd"
           class="vertical-layout
           small-vertical-gap">
-          <InputField label="Section Title"
-            :id="'section-title-'+segmentInd" 
-            :modelValue="segment.segmentTitle"
-            @update:modelValue="newValue => segment.segmentTitle = newValue"
-            required
-            :minSize="InputFieldSize.SMALL">
-          </InputField>
+          <div :id="'chord-input-section-section-'+segmentInd"
+            class="horizontal-layout
+            medium-horizontal-gap
+            extra-small-vertical-gap">
+            <InputField label="Section Title"
+              :id="'section-title-'+segmentInd" 
+              :modelValue="segment.segmentTitle"
+              @update:modelValue="newValue => segment.segmentTitle = newValue"
+              required
+              :minSize="InputFieldSize.SMALL">
+            </InputField>
+            <div :id="'chord-input-section-buttons-s'+segmentInd"
+                class="horizontal-layout
+                secondary-middle
+                small-horizontal-gap">
+                <Button @buttonClicked="chordSheetStore.addLineToEndOfSegment(segmentInd)"
+                  :buttonStyle="ButtonStyle.SECONDARY"
+                  text="Line"
+                  :iconChoice="IconChoice.PLUS">
+                </Button>
+            </div>
+          </div>
           <div v-for="(line, lineInd) in segment.segmentLines"
             :id="'chord-input-line-s'+segmentInd+'l'+lineInd"
             class="horizontal-layout

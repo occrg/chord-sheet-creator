@@ -9,7 +9,6 @@ import { IconChoice, IconAxis } from "./Icon.vue";
     <button @click="$emit('buttonClicked')" 
         class="horizontal-layout
         secondary-middle
-        extra-small-horizontal-gap
         medium-horizontal-padding
         medium-vertical-padding
         change-on-hover
