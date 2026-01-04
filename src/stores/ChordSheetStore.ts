@@ -67,6 +67,13 @@ export const useChordSheetStore = defineStore("chord-sheet", {
             this.segments.splice(segmentInd, 1);
             this.segments.splice(segmentInd+1, 0, segmentToMoveDown);
         },
+        deleteSegment: function (segmentInd: number) {
+            if (this.segments[segmentInd] == null)
+                throw new Error(`Segment index (${segmentInd}) requested 
+                in deleteSegment function doesn't exist. Array length: ${this.segments.length}.`);
+
+            this.segments.splice(segmentInd, 1);
+        },
         moveLineUp: function (segmentInd: number, lineInd: number) {            
             if (this.segments[segmentInd] == null)
                 throw new Error(`Segment index (${segmentInd}) requested in moveLineUp 

@@ -37,7 +37,7 @@ const chordSheetStore = useChordSheetStore();
                 small-horizontal-gap">
                 <div class="touchable-area-height
                     touchable-area-width">
-                    <Button @buttonClicked="chordSheetStore.moveSegmentUp(segmentInd, lineInd)"
+                    <Button @buttonClicked="chordSheetStore.moveSegmentUp(segmentInd)"
                         v-if="segmentInd!=0"
                         :buttonStyle="ButtonStyle.SECONDARY"
                         :iconChoice="IconChoice.CHEVRON_UP">
@@ -45,10 +45,17 @@ const chordSheetStore = useChordSheetStore();
                 </div>
                 <div class="touchable-area-height
                     touchable-area-width">
-                    <Button @buttonClicked="chordSheetStore.moveSegmentDown(segmentInd, lineInd)"
+                    <Button @buttonClicked="chordSheetStore.moveSegmentDown(segmentInd)"
                         v-if="segmentInd!=segmentsLength-1"
                         :buttonStyle="ButtonStyle.SECONDARY"
                         :iconChoice="IconChoice.CHEVRON_DOWN">
+                    </Button>
+                </div>
+                <div class="touchable-area-height
+                    touchable-area-width">
+                    <Button @buttonClicked="chordSheetStore.deleteSegment(segmentInd)"
+                        :buttonStyle="ButtonStyle.SECONDARY"
+                        :iconChoice="IconChoice.BIN">
                     </Button>
                 </div>
                 <Button @buttonClicked="chordSheetStore.addLineToEndOfSegment(segmentInd)"
