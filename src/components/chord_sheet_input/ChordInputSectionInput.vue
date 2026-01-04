@@ -35,6 +35,22 @@ const chordSheetStore = useChordSheetStore();
                 class="horizontal-layout
                 secondary-middle
                 small-horizontal-gap">
+                <div class="touchable-area-height
+                    touchable-area-width">
+                    <Button @buttonClicked="chordSheetStore.moveSegmentUp(segmentInd, lineInd)"
+                        v-if="segmentInd!=0"
+                        :buttonStyle="ButtonStyle.SECONDARY"
+                        :iconChoice="IconChoice.CHEVRON_UP">
+                    </Button>
+                </div>
+                <div class="touchable-area-height
+                    touchable-area-width">
+                    <Button @buttonClicked="chordSheetStore.moveSegmentDown(segmentInd, lineInd)"
+                        v-if="segmentInd!=segmentsLength-1"
+                        :buttonStyle="ButtonStyle.SECONDARY"
+                        :iconChoice="IconChoice.CHEVRON_DOWN">
+                    </Button>
+                </div>
                 <Button @buttonClicked="chordSheetStore.addLineToEndOfSegment(segmentInd)"
                     :buttonStyle="ButtonStyle.SECONDARY"
                     text="Line"
@@ -60,6 +76,10 @@ export default {
             required: true
         },
         segmentInd: {
+            type: Number,
+            required: true
+        },
+        segmentsLength: {
             type: Number,
             required: true
         }

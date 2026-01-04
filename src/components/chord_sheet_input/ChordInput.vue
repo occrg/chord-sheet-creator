@@ -26,7 +26,8 @@ const chordSheetStore = useChordSheetStore();
           small-vertical-gap">
           <ChordInputSectionInput
             :segment="segment"
-            :segmentInd="segmentInd">
+            :segmentInd="segmentInd"
+            :segmentsLength="segments.length">
           </ChordInputSectionInput>
         </div>
       </div>

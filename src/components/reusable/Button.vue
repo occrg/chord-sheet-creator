@@ -10,7 +10,7 @@ import { IconChoice, IconAxis } from "./Icon.vue";
         class="horizontal-layout
         secondary-middle
         medium-horizontal-padding
-        medium-vertical-padding
+        medium-large-vertical-padding
         change-on-hover
         medium-border-radius
         medium-shadow
