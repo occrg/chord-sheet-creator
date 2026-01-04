@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Prop, PropType } from "vue";
 
-import { IconChoice, IconAxis } from "./Icon.vue";
+import { IconChoice, IconSize } from "./Icon.vue";
 import Icon from "./Icon.vue";
 
 import { ButtonStyle } from "./Button.vue";
@@ -26,8 +26,7 @@ import Button from "./Button.vue";
         </h2>
         <Icon 
             :iconChoice="ACCORDION_STATE_TO_ICON_CHOICE[state]"
-            :proportionOfAxis=60
-            :scalesWithAxis=IconAxis.HEIGHT>
+            :iconSize=IconSize.LARGE>
         </Icon>
       </div>
       <div v-show="ACCORDION_STATE_TO_SHOW_CONTENT_BOOLEAN[state]">

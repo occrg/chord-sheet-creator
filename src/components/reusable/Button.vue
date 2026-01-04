@@ -2,13 +2,14 @@
 import type { PropType } from "vue";
 
 import Icon from "./Icon.vue";
-import { IconChoice, IconAxis } from "./Icon.vue";
+import { IconChoice, IconSize } from "./Icon.vue";
 </script>
 
 <template>
     <button @click="$emit('buttonClicked')" 
         class="horizontal-layout
         secondary-middle
+        extra-small-horizontal-gap
         medium-horizontal-padding
         medium-large-vertical-padding
         change-on-hover
@@ -27,8 +28,7 @@ import { IconChoice, IconAxis } from "./Icon.vue";
         <div v-if="iconChoice != undefined"
           class="fill-space">
           <Icon :iconChoice="iconChoice"
-            :proportionOfAxis=60
-            :scalesWithAxis=IconAxis.HEIGHT>
+            :iconSize="buttonHasText ? IconSize.SMALL : IconSize.MEDIUM">
           </Icon>
         </div>
         <div v-if="(text && text.length > 0)"

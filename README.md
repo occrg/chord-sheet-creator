@@ -3,13 +3,12 @@
 A tool that assists in the creation of chord simple and compact chord sheets.
 
 ## Current functionality
-You can enter the title, artists, key, bpm, time signature and lyrics of a song and have them outputted as a HTML file so chords can be added separately.
+You can enter the lyrics and chords of a song to generate a chord sheet as a HTML file which can be printed.
 
 ## Non-functional notes
 * Screen sizes from 320px to 1728px supported.
 
 ## Future functionality
-1. Add chords directly in the tool.
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
 1. Allow export and import of data so user can pick up where they left off.
 1. Host this online.
@@ -25,8 +24,8 @@ None.
 1. Run Vue project.
 1. Type in the title of the song and paste in the lyrics.
 1. Optionally, type in the artist, key, bpm, time signature of the song.
+1. Add the song's chords.
 1. Click to download the HTML file.
-1. Open the HTML in text editor and add the chords to the HTML.
 1. Open the HTML file in a browser and save it as a PDF.
 
 ## To Do

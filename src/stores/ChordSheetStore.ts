@@ -74,6 +74,12 @@ export const useChordSheetStore = defineStore("chord-sheet", {
 
             this.segments.splice(segmentInd, 1);
         },
+        addSegmentToEnd: function () {
+            this.segments.push({
+                segmentTitle: "",
+                segmentLines: []
+            });
+        },
         moveLineUp: function (segmentInd: number, lineInd: number) {            
             if (this.segments[segmentInd] == null)
                 throw new Error(`Segment index (${segmentInd}) requested in moveLineUp 

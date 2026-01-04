@@ -2,6 +2,10 @@
 import { mapState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 
+import { ButtonStyle } from "../reusable/Button.vue";
+import Button from "../reusable/Button.vue";
+import { IconChoice } from "../reusable/Icon.vue";
+
 import ChordInputSectionInput from "./ChordInputSectionInput.vue";
 
 const chordSheetStore = useChordSheetStore();
@@ -31,6 +35,13 @@ const chordSheetStore = useChordSheetStore();
           </ChordInputSectionInput>
         </div>
       </div>
+    <div>
+      <Button @buttonClicked="chordSheetStore.addSegmentToEnd()"
+        :buttonStyle="ButtonStyle.SECONDARY"
+        text="Section"
+        :iconChoice="IconChoice.PLUS">
+      </Button>      
+    </div>
     </div>
 </template>
 
