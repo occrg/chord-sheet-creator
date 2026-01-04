@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { InputFieldSize } from "../reusable/InputField.vue";
-import InputField from "../reusable/InputField.vue";
-
 import { mapState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 
-import { ButtonStyle } from "../reusable/Button.vue";
-import Button from "../reusable/Button.vue";
-import { IconChoice } from "../reusable/Icon.vue";
+import ChordInputSectionInput from "./ChordInputSectionInput.vue";
 
 const chordSheetStore = useChordSheetStore();
 </script>
@@ -29,80 +24,10 @@ const chordSheetStore = useChordSheetStore();
           :id="'chord-input-section-'+segmentInd"
           class="vertical-layout
           small-vertical-gap">
-          <div :id="'chord-input-section-section-'+segmentInd"
-            class="horizontal-layout
-            medium-horizontal-gap
-            extra-small-vertical-gap">
-            <InputField label="Section Title"
-              :id="'section-title-'+segmentInd" 
-              :modelValue="segment.segmentTitle"
-              @update:modelValue="newValue => segment.segmentTitle = newValue"
-              required
-              :minSize="InputFieldSize.SMALL">
-            </InputField>
-            <div :id="'chord-input-section-buttons-s'+segmentInd"
-                class="horizontal-layout
-                secondary-middle
-                small-horizontal-gap">
-                <Button @buttonClicked="chordSheetStore.addLineToEndOfSegment(segmentInd)"
-                  :buttonStyle="ButtonStyle.SECONDARY"
-                  text="Line"
-                  :iconChoice="IconChoice.PLUS">
-                </Button>
-            </div>
-          </div>
-          <div v-for="(line, lineInd) in segment.segmentLines"
-            :id="'chord-input-line-s'+segmentInd+'l'+lineInd"
-            class="horizontal-layout
-            medium-horizontal-gap
-            extra-small-vertical-gap">
-            <div :id="'chord-input-line-lines-s'+segmentInd+'l'+lineInd"
-              class="vertical-layout
-              fill-space
-              extra-small-vertical-gap
-              medium-left-padding">
-              <InputField label="Chord Line"
-                :id="'chord-input-chord-line-s'+segmentInd+'l'+lineInd" 
-                :modelValue="line.chordLine"
-                @update:modelValue="newValue => line.chordLine = newValue"
-                required>
-             </InputField>
-             <InputField label="Lyric Line"
-                :id="'chord-input-lyric-line-s'+segmentInd+'l'+lineInd" 
-                :modelValue="line.lyricLine"
-                @update:modelValue="newValue => line.lyricLine = newValue"
-                required>
-             </InputField>
-            </div>
-            <div :id="'chord-input-line-buttons-s'+segmentInd+'l'+lineInd"
-                class="horizontal-layout
-                secondary-middle
-                small-horizontal-gap">
-                <div class="touchable-area-height
-                touchable-area-width">
-                  <Button @buttonClicked="chordSheetStore.moveLineUp(segmentInd, lineInd)"
-                    v-if="lineInd!=0"
-                    :buttonStyle="ButtonStyle.SECONDARY"
-                    :iconChoice="IconChoice.CHEVRON_UP">
-                  </Button>
-                </div>
-                <div class="touchable-area-height
-                touchable-area-width">
-                  <Button @buttonClicked="chordSheetStore.moveLineDown(segmentInd, lineInd)"
-                    v-if="lineInd!=segment.segmentLines.length-1"
-                    :buttonStyle="ButtonStyle.SECONDARY"
-                    :iconChoice="IconChoice.CHEVRON_DOWN">
-                  </Button>
-                </div>
-                <div class="touchable-area-height
-                touchable-area-width">
-                  <Button @buttonClicked="chordSheetStore.deleteLine(segmentInd, lineInd)"
-                    :buttonStyle="ButtonStyle.SECONDARY"
-                    :iconChoice="IconChoice.BIN">
-                  </Button>
-                </div>
-            </div>
-          </div>
+          <ChordInputSectionInput
+            :segment="segment"
+            :segmentInd="segmentInd">
+          </ChordInputSectionInput>
         </div>
       </div>
     </div>

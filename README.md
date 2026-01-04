@@ -37,6 +37,7 @@ This is a list of things to do for the project, not including implementing the "
 1. Add special formatting for chord lines including right margin for all chords and reduced letter spacing for chord symbols.
 1. Show thrown errors to end users.
 1. Strip prefill input of leading and trailing spaces and new lines.
+1. Use term "section" everywhere instead of "segment".
 1. Ensure HTML elements are identifiable from dev tools. Can use dynamic IDs to make dynamically generated elements unique.
 1. Fix issue with resubmitting lyrics resulting in adding lines rather than replacing.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
