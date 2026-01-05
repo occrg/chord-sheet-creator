@@ -31,6 +31,32 @@ export const useChordSheetStore = defineStore("chord-sheet", {
         }
     },
     actions: {
+        storeChordSheetSegmentsFromPrefillInput: function (prefillInput: string) {
+            const trimmedPrefillInput = prefillInput.trim();
+            if (this.stringIsJsonParsable(trimmedPrefillInput)) {
+                const jsonPrefillInput = JSON.parse(prefillInput);
+                this.storeChordSheetSegmentsFromJsonDataInput(jsonPrefillInput);
+            } else {
+                this.storeChordSheetSegmentsFromLyrics(trimmedPrefillInput);
+            }
+        },
+        stringIsJsonParsable: function (stringToCheck: string): boolean {
+            let stringIsJsonParsable = true;
+            try {
+                JSON.parse(stringToCheck);
+            } catch (err) {
+                stringIsJsonParsable = false;
+            }
+            return stringIsJsonParsable;
+        },
+        storeChordSheetSegmentsFromJsonDataInput: function (jsonDataInput: ChordSheetData) {
+            this.title = jsonDataInput.title;
+            this.artist = jsonDataInput.artist;
+            this.key = jsonDataInput.key;
+            this.bpm = jsonDataInput.bpm;
+            this.timeSignature = jsonDataInput.timeSignature;
+            this.segments = jsonDataInput.segments;
+        },
         storeChordSheetSegmentsFromLyrics: function (lyrics: string) {
             let chordSheetSegmentsFromLyrics = lyrics.split("\n\n");
             chordSheetSegmentsFromLyrics.forEach((chordSheetSegmentFromLyrics, ind) => {

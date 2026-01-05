@@ -42,11 +42,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromLyrics"]),
+    ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromPrefillInput"]),
     createChordSheet: function () {
       const parser = new DOMParser();
       try {
-        this.storeChordSheetSegmentsFromLyrics(this.lyrics);
+        this.storeChordSheetSegmentsFromPrefillInput(this.lyrics);
       } catch (err) {
         console.error(err);
       }

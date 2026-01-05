@@ -10,7 +10,6 @@ You can enter the lyrics and chords of a song to generate a chord sheet as a HTM
 
 ## Future functionality
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
-1. Allow export and import of data so user can pick up where they left off.
 1. Host this online.
 1. Allow PDF download of finished chord sheet.
 1. Ability to cope with more than one page.
@@ -32,10 +31,10 @@ None.
 This is a list of things to do for the project, not including implementing the "future functionality" above.
 1. Fix typescript error with input fields.
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
+1. Ensure step 3 works with small screen sizes.
 1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
 1. Add special formatting for chord lines including right margin for all chords and reduced letter spacing for chord symbols.
 1. Show thrown errors to end users.
-1. Strip prefill input of leading and trailing spaces and new lines.
 1. Use term "section" everywhere instead of "segment".
 1. Ensure HTML elements are identifiable from dev tools. Can use dynamic IDs to make dynamically generated elements unique.
 1. Reduce padding on elements with borders so total size of elements are expected.
