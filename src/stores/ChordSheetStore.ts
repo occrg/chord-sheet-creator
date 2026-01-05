@@ -10,6 +10,15 @@ export interface ChordSheetSegment {
     segmentLines: ChordSheetLine[]
 }
 
+export interface ChordSheetData {
+    title: string,
+    artist: string,
+    key: string,
+    bpm: string,
+    timeSignature: string,
+    segments: ChordSheetSegment[]
+}
+
 export const useChordSheetStore = defineStore("chord-sheet", {
     state: () => {
         return {

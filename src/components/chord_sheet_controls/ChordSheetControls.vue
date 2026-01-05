@@ -2,6 +2,7 @@
 import { mapState } from "pinia";
 import { useDOMStore } from "@/stores/DOMStore";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import type { ChordSheetData } from "@/stores/ChordSheetStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -14,12 +15,20 @@ import Button from "../reusable/Button.vue";
       primary-background-light
       large-vertical-padding
       large-horizontal-padding">
-      <p class="key-text vertical-layout primary-middle">Download:</p>
-      <div id="download-buttons">
+      <div class="key-text vertical-layout primary-middle">Download:</div>
+      <div id="download-buttons" 
+        class="horizontal-layout
+        small-horizontal-gap">
         <Button
           @buttonClicked="downloadHTML"
           :buttonStyle="ButtonStyle.PRIMARY"
-          text="HTML"></Button>
+          text="HTML">
+        </Button>
+        <Button
+          @buttonClicked="downloadData"
+          :buttonStyle="ButtonStyle.PRIMARY"
+          text="Data">
+        </Button>
       </div>
     </div>
 </template>
@@ -29,12 +38,13 @@ const CSS_CHORD_SHEET_FILEPATH = "/public/chord_sheet.css";
 const CSS_CHORD_SHEET_DOWNLOAD_FILEPATH = "/public/chord_sheet_download.css";
 
 const HTML_EXTENSION = ".html";
+const JSON_EXTENSION = ".json";
 
 export default {
   name: "chord-sheet-controls",
   computed: {
     ...mapState(useDOMStore, ["chordSheetPreviewRef"]),
-    ...mapState(useChordSheetStore, ["title", "artist"]),
+    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
     filename () {
       let cleanedTitle = this.title.replace(/[^0-9a-z ]/gi, '');
       let cleanedArtist = this.artist.replace(/[^0-9a-z ]/gi, '');
@@ -59,9 +69,15 @@ export default {
     downloadHTML: async function () {
       if (this.chordSheetPreviewRef == null)
         throw new Error("Chord sheet preview page element not found in storage");
-      let chordSheetPreviewForExport: HTMLElement = this.prepareElementForHTMLDownload(this.chordSheetPreviewRef)
+      let chordSheetPreviewForExport: HTMLElement = this.prepareElementForHTMLDownload(this.chordSheetPreviewRef);
       let styledchordSheetPreviewForExport = await this.amendHTMLStyling(chordSheetPreviewForExport);
       this.downloadElementAsHTML(this.filename+HTML_EXTENSION, styledchordSheetPreviewForExport);
+    },
+    downloadData: function () {
+      if (this.chordSheetPreviewRef == null)
+        throw new Error("Chord sheet preview page element not found in storage");
+      const chordSheetData: ChordSheetData = this.getChordSheetData();
+      this.downloadJSON(this.filename+JSON_EXTENSION, chordSheetData);
     },
     prepareElementForHTMLDownload: function (elementToDownload: HTMLElement): HTMLElement {
       let htmlElement = document.createElement("html");
@@ -155,6 +171,28 @@ export default {
       let downloadHelperElement = document.createElement("a");
       downloadHelperElement.setAttribute("href", 
         "data:application/html;charset=utf-8," + encodeURIComponent(elementToDownload.outerHTML));
+      downloadHelperElement.setAttribute("download", filename);
+
+      downloadHelperElement.style.display = "none";
+      document.body.appendChild(downloadHelperElement);
+      
+      downloadHelperElement.click();
+      document.body.removeChild(downloadHelperElement); 
+    },
+    getChordSheetData: function (): ChordSheetData {
+      return {
+        title: this.title,
+        artist: this.artist,
+        key: this.key,
+        bpm: this.bpm,
+        timeSignature: this.timeSignature,
+        segments: this.segments
+      }
+    },
+    downloadJSON: function (filename: string, json_data: object) {
+      let downloadHelperElement = document.createElement("a");
+      downloadHelperElement.setAttribute("href", 
+        "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json_data)));
       downloadHelperElement.setAttribute("download", filename);
 
       downloadHelperElement.style.display = "none";
