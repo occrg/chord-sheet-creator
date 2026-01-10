@@ -59,6 +59,8 @@ export const useChordSheetStore = defineStore("chord-sheet", {
         },
         storeChordSheetSegmentsFromLyrics: function (lyrics: string) {
             let chordSheetSegmentsFromLyrics = lyrics.split("\n\n");
+            this.segments = [];
+            
             chordSheetSegmentsFromLyrics.forEach((chordSheetSegmentFromLyrics, ind) => {
                 let chordSheetSegment: ChordSheetSegment = {
                     segmentTitle: `Segment ${ind}`,
