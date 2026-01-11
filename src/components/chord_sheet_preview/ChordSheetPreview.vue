@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import ChordSheetPreviewSegment from "./ChordSheetPreviewSegment.vue";
+
 import { mapState, mapWritableState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
@@ -15,19 +17,9 @@ const chordSheetStore = useChordSheetStore();
       <h2 v-if="artist" id="song-artist">{{ chordSheetStore.artist }}</h2>
       <p v-if="songDetailsText" id="song-details">{{ songDetailsText }}</p>
       <div v-if="segments.length > 0" id="chord-section">
-        <div class="segment" v-for="segment in segments">
-          <p class="segment-title">{{ segment.segmentTitle }}</p>
-          <div class="segment-contents">
-            <div class="line" v-for="segmentLine in segment.segmentLines">
-              <div class="chord-line">
-                {{ segmentLine.chordLine.replace(/  /gi, " &nbsp;") }}
-              </div>
-              <div class="lyric-line">
-                {{ segmentLine.lyricLine.replace(/  /gi, " &nbsp;") }}
-              </div>
-            </div>
-          </div>
-        </div>
+        <template v-for="segment in segments">
+          <ChordSheetPreviewSegment :segment="segment"></ChordSheetPreviewSegment>
+        </template>
       </div>
     </div>
   </div>    
