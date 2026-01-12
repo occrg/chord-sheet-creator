@@ -15,7 +15,10 @@ const chordSheetStore = useChordSheetStore();
     <div class="page-content">
       <h1 v-if="title" id="song-title">{{ chordSheetStore.title }}</h1>
       <h2 v-if="artist" id="song-artist">{{ chordSheetStore.artist }}</h2>
-      <p v-if="songDetailsText" id="song-details">{{ songDetailsText }}</p>
+      <p v-if="songDetailsText" id="song-details" 
+        v-html="songDetailsText
+        .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
+      </p>
       <div v-if="segments.length > 0" id="chord-section">
         <template v-for="segment in segments">
           <ChordSheetPreviewSegment :segment="segment"></ChordSheetPreviewSegment>

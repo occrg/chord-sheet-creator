@@ -6,8 +6,9 @@ import type { ChordSheetLine } from "@/stores/ChordSheetStore";
 
 <template>
     <div class="line">
-        <div class="chord-line">
-            {{ line.chordLine.replace(/  /gi, " &nbsp;") }}
+        <div class="chord-line" 
+            v-html="line.chordLine.replace(/  /gi, ` &nbsp;`)
+            .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
         </div>
         <div class="lyric-line">
             {{ line.lyricLine.replace(/  /gi, " &nbsp;") }}

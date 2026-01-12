@@ -74,16 +74,11 @@
     font-weight: bold;
 }
 
-.chord {
-    margin-right: 16px;
-}
-
 .lyric-line {
     margin-top: 0;
     margin-bottom: 8px;
 }
 
 .flat-chord {
-    letter-spacing: -4px;
-    margin-right: 2px;
+    letter-spacing: -3px;
 }
