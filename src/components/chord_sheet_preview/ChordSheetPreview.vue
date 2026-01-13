@@ -6,6 +6,8 @@ import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
 import { useDOMStore } from "@/stores/DOMStore";
 
+import type { ChordSheetSegment, ChordSheetLine } from "@/stores/ChordSheetStore";
+
 const chordSheetStore = useChordSheetStore();
 </script>
 
@@ -20,8 +22,10 @@ const chordSheetStore = useChordSheetStore();
         .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
       </p>
       <div v-if="segments.length > 0" id="chord-section">
-        <template v-for="segment in segments">
-          <ChordSheetPreviewSegment :segment="segment"></ChordSheetPreviewSegment>
+        <template v-for="(segment, ind) in segments">
+          <ChordSheetPreviewSegment :segmentTitle="segment.segmentTitle" 
+            :segmentChunks="segmentsSplitIntoChunks[ind]">
+          </ChordSheetPreviewSegment>
         </template>
       </div>
     </div>
@@ -30,6 +34,12 @@ const chordSheetStore = useChordSheetStore();
 
 <script lang="ts">
 const A4_HEIGHT_IN_MM = 297;
+
+// The number of lines that a section should have for it to be worth splitting between two columns.
+// The first column will have at least MIN_LINES_TO_SPLIT-MIN_LINES_IN_EACH_AFTER_SPLIT lines.
+const MIN_LINES_TO_SPLIT = 5;
+// The number of lines that the next column must at least have for it to be worth splitting.
+const MIN_LINES_IN_CHUNK_AFTER_SPLIT = 2;
 
 export default {
   name: "chord-sheet-preview",
@@ -57,6 +67,9 @@ export default {
       }
 
       return songDetailsText;
+    },
+    segmentsSplitIntoChunks: function (): ChordSheetLine[][][] {
+      return this.segments.map(this.splitSegmentIntoChunks);
     }
   },
   mounted () {
@@ -86,6 +99,51 @@ export default {
       if (this.$refs.chordSheetPreviewPage == null)
         throw new Error("Chord sheet preview page element not found for storage");
       this.chordSheetPreviewRef = this.$refs.chordSheetPreviewPage as HTMLElement;
+    },
+    splitSegmentIntoChunks: function (segment: ChordSheetSegment): ChordSheetLine[][] {
+      let segmentChunks: ChordSheetLine[][] = [];
+
+      let linesInFirstChunk = this.linesInFirstChunk(segment);
+
+      let firstSegmentChunk: ChordSheetLine[] = [];
+      
+      for (let lineNumFirstChunk = 0; lineNumFirstChunk < linesInFirstChunk; lineNumFirstChunk++) {
+        let segmentLineToPushInFirstChunk = segment.segmentLines[lineNumFirstChunk] 
+        if (segmentLineToPushInFirstChunk == null) {
+          throw new Error(`Segment line not found when splitting segment (${segment.segmentTitle})
+            into first chunk (index: ${lineNumFirstChunk}, segment length: ${segment.segmentLines.length}).`);
+        }
+        firstSegmentChunk.push(segmentLineToPushInFirstChunk);
+      }
+
+        segmentChunks.push(firstSegmentChunk);
+
+      for (let chunkNum = 1; chunkNum < this.numberOfChunks(segment); chunkNum++) {
+          let currentSegmentChunk: ChordSheetLine[] = [];
+
+          let firstLineOfChunk = linesInFirstChunk + ((chunkNum-1) * MIN_LINES_IN_CHUNK_AFTER_SPLIT);
+          for (let lineNumFurtherChunk = firstLineOfChunk; lineNumFurtherChunk < (firstLineOfChunk + MIN_LINES_IN_CHUNK_AFTER_SPLIT); 
+          lineNumFurtherChunk++) {
+            let segmentLineToPushInFurtherChunk = segment.segmentLines[lineNumFurtherChunk];
+            if (segmentLineToPushInFurtherChunk == null) {
+              throw new Error(`Segment line not found when splitting segment (${segment.segmentTitle})
+                into furthers chunks (chunk num: ${chunkNum}, line index: ${lineNumFurtherChunk}, 
+                segment length: ${segment.segmentLines.length}).`);
+            }
+            currentSegmentChunk.push(segmentLineToPushInFurtherChunk);
+          }
+            
+          segmentChunks.push(currentSegmentChunk);
+        }
+              
+      return segmentChunks;
+    },
+    linesInFirstChunk: function (segment: ChordSheetSegment) {
+      return Math.min((MIN_LINES_TO_SPLIT-(1+(segment.segmentLines.length % MIN_LINES_IN_CHUNK_AFTER_SPLIT))), 
+        segment.segmentLines.length);
+    },
+    numberOfChunks: function (segment: ChordSheetSegment) {
+      return (1 + Math.floor((segment.segmentLines.length-this.linesInFirstChunk(segment))/MIN_LINES_IN_CHUNK_AFTER_SPLIT));
     }
   }
 }

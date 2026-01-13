@@ -40,6 +40,7 @@ This is a list of things to do for the project, not including implementing the "
 1. Reduce padding on elements with borders so total size of elements are expected.
 1. Add a warning when prefilling chord sheet if this will overwrite any existing data.
 1. Ensure consistent code formatting (including indentation, order of setup/lang).
+1. Test prefilling chord sheet with large amounts of data and consider adding limits and/or loading symbol.
 1. Ensure appropriate HTML elements are used everywhere.
 1. Refactor convoluted way to call complete functions.
 1. Move URLs linked in application to be environment variables.

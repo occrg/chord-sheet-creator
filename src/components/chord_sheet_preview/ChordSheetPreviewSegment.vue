@@ -1,51 +1,37 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 
-import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
+import type { ChordSheetLine } from "@/stores/ChordSheetStore";
 
 import ChordSheetPreviewLine from "./ChordSheetPreviewLine.vue";
 </script>
 
 <template>
     <div class="segment start-of-segment"
-    :class="{ 'end-of-segment': segment.segmentLines.length < MIN_LINES_TO_SPLIT }">
-      <p class="segment-title">{{ segment.segmentTitle }}</p>
-      <ChordSheetPreviewLine v-for="lineNum in linesInFirstSplit"
-        :line="segment.segmentLines[lineNum-1]">
+    :class="{ 'end-of-segment': segmentChunks.length == 1 }">
+      <p class="segment-title">{{ segmentTitle }}</p>
+      <ChordSheetPreviewLine v-for="lineInFirstChunk in segmentChunks[0]" :line="lineInFirstChunk">
       </ChordSheetPreviewLine>
     </div>
-    <div v-if="segment.segmentLines.length >= MIN_LINES_TO_SPLIT" 
-      v-for="furtherSplitNum in numberOfFurtherSplits"
+    <div v-for="chunkNum in (segmentChunks.length - 1)"
       class="segment continuation-of-segment"
-      :class="{ 'end-of-segment': furtherSplitNum==numberOfFurtherSplits }">
-      <ChordSheetPreviewLine v-for="lineNumInFurtherSplit in MIN_LINES_IN_EACH_AFTER_SPLIT"
-        :line="segment.segmentLines[
-        lineNumInFurtherSplit-1+(MIN_LINES_IN_EACH_AFTER_SPLIT*(furtherSplitNum-1))+linesInFirstSplit]">
+      :class="{ 'end-of-segment': chunkNum == (segmentChunks.length - 1) }">
+      <ChordSheetPreviewLine v-for="lineInFurtherChunk in segmentChunks[chunkNum]" :line="lineInFurtherChunk">
       </ChordSheetPreviewLine>
     </div> 
 </template>
 
 <script lang="ts">
-// The number of lines that a section should have for it to be worth splitting between two columns.
-// The first column will have at least MIN_LINES_TO_SPLIT-MIN_LINES_IN_EACH_AFTER_SPLIT lines.
-const MIN_LINES_TO_SPLIT = 5;
-// The number of lines that the next column must at least have for it to be worth splitting.
-const MIN_LINES_IN_EACH_AFTER_SPLIT = 2;
-
 export default {
   name: "chord-sheet-preview-segment",
   props: {
-    segment: {
-        type: Object as PropType<ChordSheetSegment>,
-        required: true
-    }
-  },
-  computed: {
-    linesInFirstSplit () {
-      return Math.min((MIN_LINES_TO_SPLIT-(1+(this.segment.segmentLines.length % MIN_LINES_IN_EACH_AFTER_SPLIT))), this.segment.segmentLines.length);
+    segmentTitle: {
+      type: String,
+      required: true
     },
-    numberOfFurtherSplits() {
-      return Math.floor((this.segment.segmentLines.length-this.linesInFirstSplit)/MIN_LINES_IN_EACH_AFTER_SPLIT);
+    segmentChunks: {
+        type: Array as PropType<Array<ChordSheetLine>>,
+        required: true
     }
   }
 }
