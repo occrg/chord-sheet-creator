@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import ChordSheetPreviewChunk from "./ChordSheetPreviewChunk.vue";
+import type { ChordSheetSegmentChunk } from "./ChordSheetPreviewChunk.vue";
 
 import { mapState, mapWritableState } from "pinia";
 import { useChordSheetStore } from "@/stores/ChordSheetStore";
@@ -22,16 +23,9 @@ const chordSheetStore = useChordSheetStore();
         .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
       </p>
       <div v-if="segments.length > 0" id="chord-section">
-        <template v-for="(segment, segmentInd) in segments">
-          <template v-if="segmentsSplitIntoChunks[segmentInd] != null" 
-            v-for="(chunk, chunkInd) in segmentsSplitIntoChunks[segmentInd]">
-            <ChordSheetPreviewChunk :segmentTitle="segment.segmentTitle" 
-              :segmentChunk="chunk"
-              :indexOfThisChunkInItsSegment="chunkInd"
-              :numberOfChunksInThisChunksSegment="segmentsSplitIntoChunks[segmentInd].length">
-            </ChordSheetPreviewChunk>
-          </template>
-        </template>
+        <ChordSheetPreviewChunk v-for="chunk in segmentsSplitIntoChunks" 
+          :chunk="chunk">
+        </ChordSheetPreviewChunk>
       </div>
     </div>
   </div>    
@@ -73,8 +67,13 @@ export default {
 
       return songDetailsText;
     },
-    segmentsSplitIntoChunks: function (): ChordSheetLine[][][] {
-      return this.segments.map(this.splitSegmentIntoChunks);
+    segmentsSplitIntoChunks: function (): ChordSheetSegmentChunk[] | [] {
+      let chunks: ChordSheetSegmentChunk[] | [] = [];
+
+      for (const segment of this.segments)
+        chunks = [...chunks, ...this.splitSegmentIntoChunks(segment)];
+
+      return chunks;
     }
   },
   mounted () {
@@ -105,12 +104,18 @@ export default {
         throw new Error("Chord sheet preview page element not found for storage");
       this.chordSheetPreviewRef = this.$refs.chordSheetPreviewPage as HTMLElement;
     },
-    splitSegmentIntoChunks: function (segment: ChordSheetSegment): ChordSheetLine[][] {
-      let segmentChunks: ChordSheetLine[][] = [];
+    splitSegmentIntoChunks: function (segment: ChordSheetSegment): ChordSheetSegmentChunk[] {
+      let segmentChunks: ChordSheetSegmentChunk[] = [];
 
-      let linesInFirstChunk = this.linesInFirstChunk(segment);
+      const linesInFirstChunk = this.linesInFirstChunk(segment);
+      const totalNumberOfChunks = this.numberOfChunks(segment);
 
-      let firstSegmentChunk: ChordSheetLine[] = [];
+      let firstSegmentChunk: ChordSheetSegmentChunk = {
+        segmentIndex: 0,
+        chunksSegmentsTitle: segment.segmentTitle,
+        numberOfChunksInSegmentsIndex: totalNumberOfChunks,
+        segmentLines: []
+      };
       
       for (let lineNumFirstChunk = 0; lineNumFirstChunk < linesInFirstChunk; lineNumFirstChunk++) {
         let segmentLineToPushInFirstChunk = segment.segmentLines[lineNumFirstChunk] 
@@ -118,13 +123,18 @@ export default {
           throw new Error(`Segment line not found when splitting segment (${segment.segmentTitle})
             into first chunk (index: ${lineNumFirstChunk}, segment length: ${segment.segmentLines.length}).`);
         }
-        firstSegmentChunk.push(segmentLineToPushInFirstChunk);
+        firstSegmentChunk.segmentLines.push(segmentLineToPushInFirstChunk);
       }
 
-        segmentChunks.push(firstSegmentChunk);
+       segmentChunks.push(firstSegmentChunk);
 
-      for (let chunkNum = 1; chunkNum < this.numberOfChunks(segment); chunkNum++) {
-          let currentSegmentChunk: ChordSheetLine[] = [];
+      for (let chunkNum = 1; chunkNum < totalNumberOfChunks; chunkNum++) {
+          let currentSegmentChunk: ChordSheetSegmentChunk = {
+            segmentIndex: chunkNum,
+            chunksSegmentsTitle: segment.segmentTitle,
+            numberOfChunksInSegmentsIndex: totalNumberOfChunks,
+            segmentLines: []
+          };
 
           let firstLineOfChunk = linesInFirstChunk + ((chunkNum-1) * MIN_LINES_IN_CHUNK_AFTER_SPLIT);
           for (let lineNumFurtherChunk = firstLineOfChunk; lineNumFurtherChunk < (firstLineOfChunk + MIN_LINES_IN_CHUNK_AFTER_SPLIT); 
@@ -135,7 +145,7 @@ export default {
                 into furthers chunks (chunk num: ${chunkNum}, line index: ${lineNumFurtherChunk}, 
                 segment length: ${segment.segmentLines.length}).`);
             }
-            currentSegmentChunk.push(segmentLineToPushInFurtherChunk);
+            currentSegmentChunk.segmentLines.push(segmentLineToPushInFurtherChunk);
           }
             
           segmentChunks.push(currentSegmentChunk);

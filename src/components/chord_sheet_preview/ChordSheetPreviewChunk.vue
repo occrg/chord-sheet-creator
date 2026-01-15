@@ -9,36 +9,32 @@ import ChordSheetPreviewLine from "./ChordSheetPreviewLine.vue";
 <template>
     <div class="segment"
       :class="{
-      'start-of-segment': indexOfThisChunkInItsSegment == 0,
-      'continuation-of-segment': indexOfThisChunkInItsSegment != 0,
-      'end-of-segment': indexOfThisChunkInItsSegment == (numberOfChunksInThisChunksSegment - 1) }">
-      <p v-if="indexOfThisChunkInItsSegment == 0"
-        class="segment-title">{{ segmentTitle }}
+      'start-of-segment': chunk.segmentIndex == 0,
+      'continuation-of-segment': chunk.segmentIndex != 0,
+      'end-of-segment': chunk.segmentIndex == (chunk.numberOfChunksInSegmentsIndex - 1) }">
+      <p v-if="chunk.segmentIndex == 0"
+        class="segment-title">{{ chunk.chunksSegmentsTitle }}
       </p>
-      <ChordSheetPreviewLine v-for="line in segmentChunk" :line="line">
+      <ChordSheetPreviewLine v-for="line in chunk.segmentLines"
+        :line="line">
       </ChordSheetPreviewLine>
     </div>
 </template>
 
 <script lang="ts">
+export interface ChordSheetSegmentChunk {
+    segmentIndex: number,
+    chunksSegmentsTitle: string,
+    numberOfChunksInSegmentsIndex: number,
+    segmentLines: ChordSheetLine[]
+}
+
 export default {
   name: "chord-sheet-preview-chunk",
   props: {
-    segmentTitle: {
-      type: String,
-      required: true
-    },
-    segmentChunk: {
-        type: Array as PropType<Array<ChordSheetLine>>,
+    chunk: {
+        type: Object as PropType<ChordSheetSegmentChunk>,
         required: true
-    },
-    indexOfThisChunkInItsSegment: {
-      type: Number,
-      required: true
-    },
-    numberOfChunksInThisChunksSegment: {
-      type: Number,
-      required: true
     }
   }
 }
