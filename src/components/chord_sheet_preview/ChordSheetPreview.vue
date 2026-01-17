@@ -7,7 +7,7 @@ import { useChordSheetStore } from "@/stores/ChordSheetStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
 import { useDOMStore } from "@/stores/DOMStore";
 
-import type { ChordSheetSegment, ChordSheetLine } from "@/stores/ChordSheetStore";
+import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
 
 const chordSheetStore = useChordSheetStore();
 </script>
@@ -22,8 +22,8 @@ const chordSheetStore = useChordSheetStore();
         v-html="songDetailsText
         .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
       </p>
-      <div v-if="segments.length > 0" id="chord-section">
-        <ChordSheetPreviewChunk v-for="chunk in segmentsSplitIntoChunks" 
+      <div v-if="segments.length > 0" id="chord-section" ref="chordSection">
+        <ChordSheetPreviewChunk v-for="chunk in chunksSplitIntoPages[0]" 
           :chunk="chunk">
         </ChordSheetPreviewChunk>
       </div>
@@ -44,7 +44,8 @@ export default {
   name: "chord-sheet-preview",
   data () {
     return {
-      resizeObserver: null as ResizeObserver | null
+      resizeObserver: null as ResizeObserver | null,
+      chunksSplitIntoPages: [] as ChordSheetSegmentChunk[][]
     }
   },
   computed: {
@@ -76,9 +77,15 @@ export default {
       return chunks;
     }
   },
+  watch: {
+    segmentsSplitIntoChunks() {
+      this.updatePageSplitOfChunksBasedOverflow();
+    }
+  },
   mounted () {
     this.setupResizeObserver();
     this.addChordSheetPreviewRefToStore();
+    this.setupChunksSplitIntoPages();
   },
   methods: {
     setupResizeObserver: function () {
@@ -159,7 +166,38 @@ export default {
     },
     numberOfChunks: function (segment: ChordSheetSegment) {
       return (1 + Math.floor((segment.segmentLines.length-this.linesInFirstChunk(segment))/MIN_LINES_IN_CHUNK_AFTER_SPLIT));
-    }
+    },
+    setupChunksSplitIntoPages: function () {
+      this.chunksSplitIntoPages = [this.segmentsSplitIntoChunks];
+    },
+    updatePageSplitOfChunksBasedOverflow: function () {
+      this.chunksSplitIntoPages = [this.segmentsSplitIntoChunks];
+      const setIntervalId = setInterval(() => {
+        const chordSectionElement = this.$refs.chordSection;
+        if (chordSectionElement == null || !(chordSectionElement instanceof HTMLElement)) {
+          throw new Error("Couldn't find chord section HTML element.");
+        }
+        console.log(chordSectionElement.scrollWidth, chordSectionElement.clientWidth)
+        if (chordSectionElement.scrollWidth > chordSectionElement.clientWidth) {
+          if (this.chunksSplitIntoPages[1] == null)
+            this.chunksSplitIntoPages[1] = []
+          
+          if (this.chunksSplitIntoPages[0] == undefined || 
+            this.chunksSplitIntoPages[0].length < 1) {
+            throw new Error(`Scroll width (${chordSectionElement.scrollWidth}) larger than client width 
+            (${chordSectionElement.clientWidth}) even though there's no chunks on page.`);
+          }
+
+          // Can cast to ChordSheetSegment here since this.chunksSplitIntoPages is a list of lists of 
+          // ChordSheetSegmentChunks and this.chunksSplitIntoPages[0] has a length of 1 or more.
+          const itemToMoveOntoNextPage = this.chunksSplitIntoPages[0].pop() as ChordSheetSegmentChunk;
+          this.chunksSplitIntoPages[1].unshift(itemToMoveOntoNextPage);
+        }
+        if (chordSectionElement.scrollWidth == chordSectionElement.clientWidth) {
+          clearInterval(setIntervalId);
+        }
+      }, 10);
+    },
   }
 }
 </script>
