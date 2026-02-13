@@ -28,7 +28,7 @@ const chordSheetStore = useChordSheetStore();
         </ChordSheetPreviewChunk>
       </div>
     </div>
-  </div>    
+  </div> 
 </template>
 
 <script lang="ts">
@@ -177,7 +177,7 @@ export default {
         if (chordSectionElement == null || !(chordSectionElement instanceof HTMLElement)) {
           throw new Error("Couldn't find chord section HTML element.");
         }
-        console.log(chordSectionElement.scrollWidth, chordSectionElement.clientWidth)
+
         if (chordSectionElement.scrollWidth > chordSectionElement.clientWidth) {
           if (this.chunksSplitIntoPages[1] == null)
             this.chunksSplitIntoPages[1] = []

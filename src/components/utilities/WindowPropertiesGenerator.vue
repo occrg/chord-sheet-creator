@@ -40,6 +40,6 @@ export default {
     position: absolute;
     height: 100mm;
     width: 1mm;
-    opacity: 0;
+    visibility: hidden;
 }
 </style>

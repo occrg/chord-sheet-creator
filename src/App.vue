@@ -26,8 +26,8 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
         <ChordSheetControls></ChordSheetControls>
       </div>
       <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
-      <WindowPropertiesGenerator></WindowPropertiesGenerator>
     </div>
+    <WindowPropertiesGenerator></WindowPropertiesGenerator>
   </div>
 </template>
 
@@ -45,8 +45,12 @@ body {
 }
 
 #app-container {
-  font-family: var(--primary-font);
   display: flex;
   flex-direction: column;
+  position:relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: clip;
+  font-family: var(--primary-font);
 }
 </style>
