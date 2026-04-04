@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 
-import type { ChordSheetLine } from "@/stores/ChordSheetStore";
+import type { ChordSheetLine } from "@/stores/ChordSheetSegmentsStore";
 
 import ChordSheetPreviewLine from "./ChordSheetPreviewLine.vue";
 </script>

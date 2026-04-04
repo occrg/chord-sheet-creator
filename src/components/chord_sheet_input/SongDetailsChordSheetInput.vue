@@ -3,9 +3,9 @@ import { InputFieldSize } from "../reusable/InputField.vue";
 import InputField from "../reusable/InputField.vue";
 
 import { mapState } from "pinia";
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetDetailsStore = useChordSheetDetailsStore();
 </script>
 
 <template>
@@ -19,14 +19,14 @@ const chordSheetStore = useChordSheetStore();
           wrap-around">
             <InputField label="Title"
             id="song-title-input" 
-            :modelValue="chordSheetStore.title"
-            @update:modelValue="newValue => chordSheetStore.title = newValue"
+            :modelValue="chordSheetDetailsStore.title"
+            @update:modelValue="newValue => chordSheetDetailsStore.title = newValue"
             required>
             </InputField>
             <InputField label="Artist"
             id="song-artist-input" 
-            :modelValue="chordSheetStore.artist"
-            @update:modelValue="newValue => chordSheetStore.artist = newValue"
+            :modelValue="chordSheetDetailsStore.artist"
+            @update:modelValue="newValue => chordSheetDetailsStore.artist = newValue"
             required>
             </InputField>
         </div>
@@ -36,22 +36,22 @@ const chordSheetStore = useChordSheetStore();
           wrap-around">
             <InputField label="Key"
             id="song-key-input" 
-            :modelValue="chordSheetStore.key"
-            @update:modelValue="newValue => chordSheetStore.key = newValue"
+            :modelValue="chordSheetDetailsStore.key"
+            @update:modelValue="newValue => chordSheetDetailsStore.key = newValue"
             required
             :minSize="InputFieldSize.SMALL">
             </InputField>
             <InputField label="Bpm"
             id="song-bpm-input" 
-            :modelValue="chordSheetStore.bpm"
-            @update:modelValue="newValue => chordSheetStore.bpm = newValue"
+            :modelValue="chordSheetDetailsStore.bpm"
+            @update:modelValue="newValue => chordSheetDetailsStore.bpm = newValue"
             required
             :minSize="InputFieldSize.SMALL">
             </InputField>
             <InputField label="Time signature"
             id="song-time-signature-input" 
-            :modelValue="chordSheetStore.timeSignature"
-            @update:modelValue="newValue => chordSheetStore.timeSignature = newValue"
+            :modelValue="chordSheetDetailsStore.timeSignature"
+            @update:modelValue="newValue => chordSheetDetailsStore.timeSignature = newValue"
             required
             :minSize="InputFieldSize.SMALL">
             </InputField>
@@ -63,7 +63,7 @@ const chordSheetStore = useChordSheetStore();
 export default {
   name: "song-details-chord-sheet-input",
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature"])
+    ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"])
   },
   props: {
     completeProcessTrigger: Number

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { mapState } from "pinia";
 import { useDOMStore } from "@/stores/DOMStore";
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
-import type { ChordSheetData } from "@/stores/ChordSheetStore";
+import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
+import type { ChordSheetDetailsData } from "@/stores/ChordSheetDetailsStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
+import type { ChordSheetSegmentsData } from "@/stores/ChordSheetSegmentsStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -44,7 +46,8 @@ export default {
   name: "chord-sheet-controls",
   computed: {
     ...mapState(useDOMStore, ["chordSheetPreviewRef"]),
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
+    ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
+    ...mapState(useChordSheetSegmentsStore, ["segments"]),
     filename () {
       let cleanedTitle = this.title.replace(/[^0-9a-z ]/gi, '');
       let cleanedArtist = this.artist.replace(/[^0-9a-z ]/gi, '');

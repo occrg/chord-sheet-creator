@@ -3,9 +3,10 @@ import { InputType } from "../reusable/InputField.vue";
 import InputField from "../reusable/InputField.vue";
 
 import { mapActions } from "pinia";
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetSegmentsStore = useChordSheetSegmentsStore();
 </script>
 
 <template>
@@ -42,10 +43,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useChordSheetStore, ["storeChordSheetSegmentsFromPrefillInput"]),
+    ...mapActions(useChordSheetSegmentsStore, ["storeChordSheetSegmentsFromPrefillInput"]),
+    ...mapActions(useChordSheetDetailsStore, ["storeChordSheetDetailsFromPrefillInput"]),
     createChordSheet: function () {
       const parser = new DOMParser();
       try {
+        this.storeChordSheetDetailsFromPrefillInput(this.lyrics);
         this.storeChordSheetSegmentsFromPrefillInput(this.lyrics);
       } catch (err) {
         console.error(err);

@@ -10,10 +10,10 @@ import { IconChoice } from "../reusable/Icon.vue";
 
 import ChordInputLineInput from "./ChordInputLineInput.vue";
 
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
-import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
+import type { ChordSheetSegment } from "@/stores/ChordSheetSegmentsStore";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetSegementsStore = useChordSheetSegmentsStore();
 </script>
     
 <template>
@@ -37,7 +37,7 @@ const chordSheetStore = useChordSheetStore();
                 small-horizontal-gap">
                 <div class="touchable-area-height
                     touchable-area-width">
-                    <Button @buttonClicked="chordSheetStore.moveSegmentUp(segmentInd)"
+                    <Button @buttonClicked="chordSheetSegementsStore.moveSegmentUp(segmentInd)"
                         v-if="segmentInd!=0"
                         :buttonStyle="ButtonStyle.SECONDARY"
                         :iconChoice="IconChoice.CHEVRON_UP">
@@ -45,7 +45,7 @@ const chordSheetStore = useChordSheetStore();
                 </div>
                 <div class="touchable-area-height
                     touchable-area-width">
-                    <Button @buttonClicked="chordSheetStore.moveSegmentDown(segmentInd)"
+                    <Button @buttonClicked="chordSheetSegementsStore.moveSegmentDown(segmentInd)"
                         v-if="segmentInd!=segmentsLength-1"
                         :buttonStyle="ButtonStyle.SECONDARY"
                         :iconChoice="IconChoice.CHEVRON_DOWN">
@@ -53,12 +53,12 @@ const chordSheetStore = useChordSheetStore();
                 </div>
                 <div class="touchable-area-height
                     touchable-area-width">
-                    <Button @buttonClicked="chordSheetStore.deleteSegment(segmentInd)"
+                    <Button @buttonClicked="chordSheetSegementsStore.deleteSegment(segmentInd)"
                         :buttonStyle="ButtonStyle.SECONDARY"
                         :iconChoice="IconChoice.BIN">
                     </Button>
                 </div>
-                <Button @buttonClicked="chordSheetStore.addLineToEndOfSegment(segmentInd)"
+                <Button @buttonClicked="chordSheetSegementsStore.addLineToEndOfSegment(segmentInd)"
                     :buttonStyle="ButtonStyle.SECONDARY"
                     text="Line"
                     :iconChoice="IconChoice.PLUS">

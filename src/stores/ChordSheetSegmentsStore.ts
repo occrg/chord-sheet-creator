@@ -10,23 +10,13 @@ export interface ChordSheetSegment {
     segmentLines: ChordSheetLine[]
 }
 
-export interface ChordSheetData {
-    title: string,
-    artist: string,
-    key: string,
-    bpm: string,
-    timeSignature: string,
+export interface ChordSheetSegmentsData {
     segments: ChordSheetSegment[]
 }
 
-export const useChordSheetStore = defineStore("chord-sheet", {
+export const useChordSheetSegmentsStore = defineStore("chord-sheet-segments", {
     state: () => {
         return {
-            title: "" as string,
-            artist: "" as string,
-            key: "" as string,
-            bpm: "" as string,
-            timeSignature: "" as string,
             segments: [] as ChordSheetSegment[]
         }
     },
@@ -49,12 +39,7 @@ export const useChordSheetStore = defineStore("chord-sheet", {
             }
             return stringIsJsonParsable;
         },
-        storeChordSheetSegmentsFromJsonDataInput: function (jsonDataInput: ChordSheetData) {
-            this.title = jsonDataInput.title;
-            this.artist = jsonDataInput.artist;
-            this.key = jsonDataInput.key;
-            this.bpm = jsonDataInput.bpm;
-            this.timeSignature = jsonDataInput.timeSignature;
+        storeChordSheetSegmentsFromJsonDataInput: function (jsonDataInput: ChordSheetSegmentsData) {
             this.segments = jsonDataInput.segments;
         },
         storeChordSheetSegmentsFromLyrics: function (lyrics: string) {

@@ -3,21 +3,22 @@ import ChordSheetPreviewChunk from "./ChordSheetPreviewChunk.vue";
 import type { ChordSheetSegmentChunk } from "./ChordSheetPreviewChunk.vue";
 
 import { mapState, mapWritableState } from "pinia";
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
 import { useDOMStore } from "@/stores/DOMStore";
 
-import type { ChordSheetSegment } from "@/stores/ChordSheetStore";
+import type { ChordSheetSegment } from "@/stores/ChordSheetSegmentsStore";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetDetailsStore = useChordSheetDetailsStore();
 </script>
 
 <template>
   <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
     <!-- Do not add any style attribute to this div because it's removed upon download -->
     <div class="page-content">
-      <h1 v-if="title" id="song-title">{{ chordSheetStore.title }}</h1>
-      <h2 v-if="artist" id="song-artist">{{ chordSheetStore.artist }}</h2>
+      <h1 v-if="title" id="song-title">{{ chordSheetDetailsStore.title }}</h1>
+      <h2 v-if="artist" id="song-artist">{{ chordSheetDetailsStore.artist }}</h2>
       <p v-if="songDetailsText" id="song-details" 
         v-html="songDetailsText
         .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
@@ -49,7 +50,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(useChordSheetStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
+    ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"]),
+    ...mapState(useChordSheetSegmentsStore, ["segments"]),
     ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
     ...mapWritableState(useDOMStore, ["chordSheetPreviewRef"]),
     songDetailsText() {

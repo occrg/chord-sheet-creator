@@ -7,10 +7,10 @@ import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
 import { IconChoice } from "../reusable/Icon.vue";  
 
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
-import type { ChordSheetSegment, ChordSheetLine } from "@/stores/ChordSheetStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
+import type { ChordSheetSegment, ChordSheetLine } from "@/stores/ChordSheetSegmentsStore";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetSegementsStore = useChordSheetSegmentsStore();
 </script>
     
 <template>
@@ -42,7 +42,7 @@ const chordSheetStore = useChordSheetStore();
             small-horizontal-gap">
             <div class="touchable-area-height
                 touchable-area-width">
-                <Button @buttonClicked="chordSheetStore.moveLineUp(segmentInd, lineInd)"
+                <Button @buttonClicked="chordSheetSegementsStore.moveLineUp(segmentInd, lineInd)"
                     v-if="lineInd!=0"
                     :buttonStyle="ButtonStyle.SECONDARY"
                     :iconChoice="IconChoice.CHEVRON_UP">
@@ -50,7 +50,7 @@ const chordSheetStore = useChordSheetStore();
             </div>
             <div class="touchable-area-height
                 touchable-area-width">
-                <Button @buttonClicked="chordSheetStore.moveLineDown(segmentInd, lineInd)"
+                <Button @buttonClicked="chordSheetSegementsStore.moveLineDown(segmentInd, lineInd)"
                     v-if="lineInd!=segment.segmentLines.length-1"
                     :buttonStyle="ButtonStyle.SECONDARY"
                     :iconChoice="IconChoice.CHEVRON_DOWN">
@@ -58,7 +58,7 @@ const chordSheetStore = useChordSheetStore();
             </div>
             <div class="touchable-area-height
                 touchable-area-width">
-                <Button @buttonClicked="chordSheetStore.deleteLine(segmentInd, lineInd)"
+                <Button @buttonClicked="chordSheetSegementsStore.deleteLine(segmentInd, lineInd)"
                     :buttonStyle="ButtonStyle.SECONDARY"
                     :iconChoice="IconChoice.BIN">
                 </Button>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mapState } from "pinia";
-import { useChordSheetStore } from "@/stores/ChordSheetStore";
+import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -8,7 +8,7 @@ import { IconChoice } from "../reusable/Icon.vue";
 
 import ChordInputSectionInput from "./ChordInputSectionInput.vue";
 
-const chordSheetStore = useChordSheetStore();
+const chordSheetSegmentsStore = useChordSheetSegmentsStore();
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const chordSheetStore = useChordSheetStore();
         </div>
       </div>
     <div>
-      <Button @buttonClicked="chordSheetStore.addSegmentToEnd()"
+      <Button @buttonClicked="chordSheetSegmentsStore.addSegmentToEnd()"
         :buttonStyle="ButtonStyle.SECONDARY"
         text="Section"
         :iconChoice="IconChoice.PLUS">
@@ -49,7 +49,7 @@ const chordSheetStore = useChordSheetStore();
 export default {
   name: "chord-input",
   computed: {
-    ...mapState(useChordSheetStore, ["segments"])
+    ...mapState(useChordSheetSegmentsStore, ["segments"])
   },
   props: {
     completeProcessTrigger: Number
