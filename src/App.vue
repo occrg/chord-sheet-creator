@@ -4,6 +4,7 @@ import ChordSheetControls from "./components/chord_sheet_controls/ChordSheetCont
 import ChordSheetPreviewContainer from "./components/chord_sheet_preview/ChordSheetPreviewContainer.vue";
 import HeaderBar from "./components/header_bar/HeaderBar.vue";
 import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGenerator.vue";
+import ChordSheetGenerator from "./components/utilities/ChordSheetGenerator.vue";
 </script>
 
 <template>
@@ -28,6 +29,7 @@ import WindowPropertiesGenerator from "./components/utilities/WindowPropertiesGe
       <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
     </div>
     <WindowPropertiesGenerator></WindowPropertiesGenerator>
+    <ChordSheetGenerator></ChordSheetGenerator>
   </div>
 </template>
 

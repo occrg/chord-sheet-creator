@@ -30,6 +30,8 @@ None.
 ## To Do
 This is a list of things to do for the project, not including implementing the "future functionality" above.
 1. Fix typescript error with input fields.
+1. Move HTML and PDF generation to the ChordSheetGenerator and clean up CSS.
+1. Add a song details component so code isn't repeated in ChordSheetPreview and ChordSheetGenerator.
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
 1. Ensure step 3 works with small screen sizes.
 1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
