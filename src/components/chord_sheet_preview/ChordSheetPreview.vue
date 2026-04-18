@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import ChordSheetPreviewChunk from "./ChordSheetPreviewChunk.vue";
-import type { ChordSheetSegmentChunk } from "./ChordSheetPreviewChunk.vue";
 
 import { mapState, mapWritableState } from "pinia";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
@@ -21,7 +20,7 @@ const chordSheetDetailsStore = useChordSheetDetailsStore();
         v-html="songDetailsText
         .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
       </p>
-      <div v-if="chunks.length > 0 && pages.length > 0" id="chord-section" ref="chordSection">
+      <div v-if="chunks.length > 0 && pages.length > 0" class="chord-section" ref="chordSection">
         <ChordSheetPreviewChunk v-for="chunk in pages[0]" 
           :chunk="chunk">
         </ChordSheetPreviewChunk>
@@ -37,8 +36,7 @@ export default {
   name: "chord-sheet-preview",
   data () {
     return {
-      resizeObserver: null as ResizeObserver | null,
-      chunksSplitIntoPages: [] as ChordSheetSegmentChunk[][]
+      resizeObserver: null as ResizeObserver | null
     }
   },
   computed: {

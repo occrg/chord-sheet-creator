@@ -20,22 +20,24 @@ const chordSheetDetailsStore = useChordSheetDetailsStore();
                     v-html="songDetailsText
                     .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
                 </p>
-                <div v-if="pages.length > 0" id="chord-section" ref="chordSectionFirstPage">
-                    <ChordSheetPreviewChunk v-for="chunk in pages[0]" 
+                <div v-if="chordSheetGeneratorChunksInPages.length > 0" class="chord-section" ref="chordSectionFirstPage">
+                    <ChordSheetPreviewChunk v-for="chunk in chordSheetGeneratorChunksInPages[0]" 
                         :chunk="chunk">
                     </ChordSheetPreviewChunk>
                 </div>
             </div>
         </div>
-        <div class="page" v-for="page in pages">
-            <div class="page-content">
-                <div ref="chordSectionPostFirstPage">
-                <ChordSheetPreviewChunk v-for="chunk in page" 
-                    :chunk="chunk">
-                </ChordSheetPreviewChunk>
+        <template v-if="chordSheetGeneratorChunksInPages.length > 1">
+            <div class="page" v-for="pageNum in chordSheetGeneratorChunksInPages.length-1">
+                <div class="page-content">
+                    <div class="chord-section" ref="chordSectionPostFirstPage">
+                    <ChordSheetPreviewChunk v-for="chunk in chordSheetGeneratorChunksInPages[pageNum]" 
+                        :chunk="chunk">
+                    </ChordSheetPreviewChunk>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -44,7 +46,8 @@ export default {
     name: "chord-sheet-generator",
     data () {
     return {
-        chunksSplitIntoPages: [] as ChordSheetSegmentChunk[][]
+        chordSheetGeneratorChunksInPages: [[]] as ChordSheetSegmentChunk[][],
+        chordSectionElements: [] as HTMLElement[]
     }
     },
     computed: {
@@ -76,32 +79,69 @@ export default {
     },
     methods: {
         updatePageSplitOfChunksBasedOverflow: function () {
-            this.pages = [this.chunks];
-            const setIntervalId = setInterval(() => {
-                const chordSectionElement = this.$refs.chordSectionFirstPage;
-                if (chordSectionElement == null || !(chordSectionElement instanceof HTMLElement)) {
-                    throw new Error("Couldn't find chord section HTML element.");
-                }
-
-                if (chordSectionElement.scrollWidth > chordSectionElement.clientWidth) {
-                    if (this.pages[1] == null)
-                        this.pages[1] = []
-                    
-                    if (this.pages[0] == undefined || 
-                        this.pages[0].length < 1) {
-                        throw new Error(`Scroll width (${chordSectionElement.scrollWidth}) larger than client width 
-                            (${chordSectionElement.clientWidth}) even though there's no chunks on page.`);
+            this.chordSheetGeneratorChunksInPages = [this.chunks];
+            this.generateChordSectionElements();
+            const setIntervalId = setInterval(() => { this.updatePageSplitOfChunksForPage(0, setIntervalId) }, 5);
+        },
+        updatePageSplitOfChunksForPage: function (pageNum: number, setIntervalId: number) {
+            const chordSectionElement = this.chordSectionElements[pageNum];          
+            if (chordSectionElement == null || !(chordSectionElement instanceof HTMLElement)) {
+                throw new Error("Couldn't find chord section HTML element.");
+            }
+            
+            if (chordSectionElement.scrollWidth > chordSectionElement.clientWidth) {
+                if (this.chordSheetGeneratorChunksInPages[pageNum+1] == null) {
+                    this.addNewPage();
+                } else {
+                    if (this.chordSheetGeneratorChunksInPages[pageNum] == undefined || 
+                        this.chordSheetGeneratorChunksInPages[pageNum].length < 1) {
+                        throw new Error(`For page ${pageNum}, scroll width (${chordSectionElement.scrollWidth}) ` + 
+                            `larger than client width (${chordSectionElement.clientWidth}) even though there's ` + 
+                            `no chunks on page.`);
                     }
 
+                    if (this.chordSheetGeneratorChunksInPages[pageNum+1] == undefined)
+                        throw new Error(`Page ${pageNum+1}, doesn't exist despite needing to add a chunk to it. `);
+                    
                     // Can cast to ChordSheetSegment here since this.chunksSplitIntoPages is a list of lists of 
                     // ChordSheetSegmentChunks and this.chunksSplitIntoPages[0] has a length of 1 or more.
-                    const itemToMoveOntoNextPage = this.pages[0].pop() as ChordSheetSegmentChunk;
-                    this.pages[1].unshift(itemToMoveOntoNextPage);
+                    const itemToMoveOntoNextPage = this.chordSheetGeneratorChunksInPages[pageNum].pop() as ChordSheetSegmentChunk;
+                    // Can assert that this object isn't undefined becayse error is thrown above if it is.
+                    this.chordSheetGeneratorChunksInPages[pageNum+1]!.unshift(itemToMoveOntoNextPage);
                 }
-                if (chordSectionElement.scrollWidth == chordSectionElement.clientWidth) {
-                    clearInterval(setIntervalId);
+                
+            }
+            if (chordSectionElement.scrollWidth == chordSectionElement.clientWidth) {
+                if (pageNum+1 < this.chordSectionElements.length) {
+                    // Now this page is finished, move onto the next one.
+                    const setNextIntervalId = setInterval(() => { this.updatePageSplitOfChunksForPage(pageNum+1, setNextIntervalId) }, 5);
+                } else {
+                    // If there are no pages left after this one, make changes on the preview.
+                    this.pages = this.chordSheetGeneratorChunksInPages;
                 }
-            }, 10);
+                clearInterval(setIntervalId);
+                
+            }
+        },
+        addNewPage: function () {
+            this.chordSheetGeneratorChunksInPages.push([]);
+            setTimeout(this.generateChordSectionElements, 5);
+        },
+        generateChordSectionElements: function () {
+            if (this.$refs.chordSectionFirstPage == undefined 
+                || !(this.$refs.chordSectionFirstPage instanceof HTMLElement))
+                throw new Error("chordSectionFirstPage not of type HTMLElement.");
+
+            let chordSectionElements: HTMLElement[] = [this.$refs.chordSectionFirstPage];
+
+            if (this.$refs.chordSectionPostFirstPage) {
+                if (!(Symbol.iterator in (this.$refs.chordSectionPostFirstPage as Iterable<HTMLElement>)))
+                    throw new Error("chordSectionPostFirstPage references not returning as an iterable array.");
+                // Can assert that this object is a list of HTMLElements as checked above.
+                chordSectionElements.push(...this.$refs.chordSectionPostFirstPage as Iterable<HTMLElement>);
+            }
+            
+            this.chordSectionElements = chordSectionElements;
         }
     }
 }

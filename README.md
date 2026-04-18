@@ -35,6 +35,9 @@ This is a list of things to do for the project, not including implementing the "
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
 1. Ensure step 3 works with small screen sizes.
 1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
+1. Add maximum number of lines/sections to prevent slowing down on too many.
+1. Get rid of .vite and package-lock.json files from git.
+1. Validate inputs including JSON input to stop bad JSON breaking app.
 1. Add special formatting for chord lines including right margin for all chords and reduced letter spacing for chord symbols.
 1. Show thrown errors to end users.
 1. Use term "section" everywhere instead of "segment".
