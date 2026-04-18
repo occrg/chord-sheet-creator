@@ -5,14 +5,15 @@ import type { ChordSheetSegmentChunk } from "../chord_sheet_preview/ChordSheetPr
 import { mapState, mapWritableState } from "pinia";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
 import { useChordSheetAcrossPagesStore } from "@/stores/ChordSheetAcrossPagesStore";
-import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";    
+import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
+import { useDOMStore } from "@/stores/DOMStore";
 
 const chordSheetDetailsStore = useChordSheetDetailsStore();
 </script>
     
 <template>
     <div style="position:absolute; top:100vh">
-        <div class="page">
+        <div class="page" ref="chordSheetFirstPageRef">
             <div class="page-content">
                 <h1 v-if="title" id="song-title">{{ chordSheetDetailsStore.title }}</h1>
                 <h2 v-if="artist" id="song-artist">{{ chordSheetDetailsStore.artist }}</h2>
@@ -28,7 +29,8 @@ const chordSheetDetailsStore = useChordSheetDetailsStore();
             </div>
         </div>
         <template v-if="chordSheetGeneratorChunksInPages.length > 1">
-            <div class="page" v-for="pageNum in chordSheetGeneratorChunksInPages.length-1">
+            <div class="page" 
+                v-for="pageNum in chordSheetGeneratorChunksInPages.length-1" ref="chordSheetPostFirstPageRefs">
                 <div class="page-content">
                     <div class="chord-section" ref="chordSectionPostFirstPage">
                     <ChordSheetPreviewChunk v-for="chunk in chordSheetGeneratorChunksInPages[pageNum]" 
@@ -54,6 +56,7 @@ export default {
         ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"]),
         ...mapState(useChordSheetAcrossPagesStore, ["chunks"]),
         ...mapWritableState(useChordSheetAcrossPagesStore, ["pages"]),
+        ...mapWritableState(useDOMStore, ["chordSheetPageRefs"]),
         ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
         songDetailsText() {
             let songDetailsText = "";
@@ -125,7 +128,11 @@ export default {
         },
         addNewPage: function () {
             this.chordSheetGeneratorChunksInPages.push([]);
-            setTimeout(this.generateChordSectionElements, 5);
+            setTimeout(this.generateChordSheetDOMElements, 5);
+        },
+        generateChordSheetDOMElements: function () {
+            this.generateChordSectionElements();
+            this.generateChordSheetPageElements();
         },
         generateChordSectionElements: function () {
             if (this.$refs.chordSectionFirstPage == undefined 
@@ -142,6 +149,22 @@ export default {
             }
             
             this.chordSectionElements = chordSectionElements;
+        },
+        generateChordSheetPageElements: function () {
+            if (this.$refs.chordSheetFirstPageRef == undefined 
+                || !(this.$refs.chordSheetFirstPageRef instanceof HTMLElement))
+                throw new Error("chordSheetFirstPageRef not of type HTMLElement.");
+
+            let chordSheetPageElements: HTMLElement[] = [this.$refs.chordSheetFirstPageRef];
+
+            if (this.$refs.chordSheetPostFirstPageRefs) {
+                if (!(Symbol.iterator in (this.$refs.chordSheetPostFirstPageRefs as Iterable<HTMLElement>)))
+                    throw new Error("chordSheetPostFirstPageRefs references not returning as an iterable array.");
+                // Can assert that this object is a list of HTMLElements as checked above.
+                chordSheetPageElements.push(...this.$refs.chordSheetPostFirstPageRefs as Iterable<HTMLElement>);
+            }
+            
+            this.chordSheetPageRefs = chordSheetPageElements;
         }
     }
 }

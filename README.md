@@ -38,6 +38,7 @@ This is a list of things to do for the project, not including implementing the "
 1. Add maximum number of lines/sections to prevent slowing down on too many.
 1. Get rid of .vite and package-lock.json files from git.
 1. Validate inputs including JSON input to stop bad JSON breaking app.
+1. Refactor JSON output and input so repetition of interfaces isn't necessary.
 1. Add special formatting for chord lines including right margin for all chords and reduced letter spacing for chord symbols.
 1. Show thrown errors to end users.
 1. Use term "section" everywhere instead of "segment".

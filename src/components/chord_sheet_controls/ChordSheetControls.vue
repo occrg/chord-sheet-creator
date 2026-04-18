@@ -2,9 +2,8 @@
 import { mapState } from "pinia";
 import { useDOMStore } from "@/stores/DOMStore";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
-import type { ChordSheetDetailsData } from "@/stores/ChordSheetDetailsStore";
 import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
-import type { ChordSheetSegmentsData } from "@/stores/ChordSheetSegmentsStore";
+import type { ChordSheetSegment } from "@/stores/ChordSheetSegmentsStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -42,11 +41,20 @@ const CSS_CHORD_SHEET_DOWNLOAD_FILEPATH = "/public/chord_sheet_download.css";
 const HTML_EXTENSION = ".html";
 const JSON_EXTENSION = ".json";
 
+interface ChordSheetJsonFormat {
+    title: string,
+    artist: string,
+    key: string,
+    bpm: string,
+    timeSignature: string,
+    segments: ChordSheetSegment[]
+};
+
 export default {
   name: "chord-sheet-controls",
   computed: {
-    ...mapState(useDOMStore, ["chordSheetPreviewRef"]),
-    ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature", "segments"]),
+    ...mapState(useDOMStore, ["chordSheetPageRefs"]),
+    ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"]),
     ...mapState(useChordSheetSegmentsStore, ["segments"]),
     filename () {
       let cleanedTitle = this.title.replace(/[^0-9a-z ]/gi, '');
@@ -70,19 +78,19 @@ export default {
   },
   methods: {
     downloadHTML: async function () {
-      if (this.chordSheetPreviewRef == null)
+      if (this.chordSheetPageRefs == null)
         throw new Error("Chord sheet preview page element not found in storage");
-      let chordSheetPreviewForExport: HTMLElement = this.prepareElementForHTMLDownload(this.chordSheetPreviewRef);
+      let chordSheetPreviewForExport: HTMLElement = this.prepareElementForHTMLDownload(this.chordSheetPageRefs);
       let styledchordSheetPreviewForExport = await this.amendHTMLStyling(chordSheetPreviewForExport);
       this.downloadElementAsHTML(this.filename+HTML_EXTENSION, styledchordSheetPreviewForExport);
     },
     downloadData: function () {
-      if (this.chordSheetPreviewRef == null)
+      if (this.chordSheetPageRefs == null || this.chordSheetPageRefs.length == 0)
         throw new Error("Chord sheet preview page element not found in storage");
-      const chordSheetData: ChordSheetData = this.getChordSheetData();
+      const chordSheetData: ChordSheetJsonFormat = this.getChordSheetData();
       this.downloadJSON(this.filename+JSON_EXTENSION, chordSheetData);
     },
-    prepareElementForHTMLDownload: function (elementToDownload: HTMLElement): HTMLElement {
+    prepareElementForHTMLDownload: function (elementsToDownload: HTMLElement[]): HTMLElement {
       let htmlElement = document.createElement("html");
 
       let headElement = document.createElement("head");
@@ -90,8 +98,10 @@ export default {
       headElement.appendChild(styleElement);
       
       let bodyElement = document.createElement("body");
-      let elementToDownloadClone = elementToDownload.cloneNode(true) as HTMLElement;
-      bodyElement.appendChild(elementToDownloadClone);
+      for (let elementToDownload of elementsToDownload) {
+        let elementToDownloadClone = elementToDownload.cloneNode(true) as HTMLElement;
+        bodyElement.appendChild(elementToDownloadClone);
+      }
 
       htmlElement.appendChild(headElement);
       htmlElement.appendChild(bodyElement);
@@ -99,10 +109,6 @@ export default {
       return htmlElement;
     },
     amendHTMLStyling: async function (chordSheetPreviewForExport: HTMLElement): Promise<HTMLElement> {
-      // Removes style of page-content div as this change the size of content based on screen size in web app but HTML
-      // always shows as A4 size.
-      chordSheetPreviewForExport = this.removeStyleAttributeFromPageContentDiv(chordSheetPreviewForExport);
-
       // Adds CSS styles directly to HTML so file can be downloaded as one simple HTML file.
       try {
         chordSheetPreviewForExport = 
@@ -114,14 +120,6 @@ export default {
         throw new Error(errorMessage);
       }
 
-      return chordSheetPreviewForExport;
-    },
-    removeStyleAttributeFromPageContentDiv: function (chordSheetPreviewForExport: HTMLElement): HTMLElement {
-      const chordSheetPreviewPageContentElements = chordSheetPreviewForExport.getElementsByClassName("page-content");
-      if (chordSheetPreviewPageContentElements.length != 1)
-        throw new Error("Chord sheet preview page element not as expected");      
-      const chordSheetPreviewPageContentElement = chordSheetPreviewPageContentElements[0] as HTMLElement;
-      chordSheetPreviewPageContentElement.removeAttribute("style");
       return chordSheetPreviewForExport;
     },
     addCSSFileAsStyle: async function (filepath: string, elementToStyle: HTMLElement): Promise<HTMLElement> {
@@ -182,7 +180,7 @@ export default {
       downloadHelperElement.click();
       document.body.removeChild(downloadHelperElement); 
     },
-    getChordSheetData: function (): ChordSheetData {
+    getChordSheetData: function (): ChordSheetJsonFormat {
       return {
         title: this.title,
         artist: this.artist,

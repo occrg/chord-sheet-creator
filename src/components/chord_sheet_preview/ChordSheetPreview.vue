@@ -5,14 +5,12 @@ import { mapState, mapWritableState } from "pinia";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
 import { useChordSheetAcrossPagesStore } from "@/stores/ChordSheetAcrossPagesStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
-import { useDOMStore } from "@/stores/DOMStore";
 
 const chordSheetDetailsStore = useChordSheetDetailsStore();
 </script>
 
 <template>
   <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
-    <!-- Do not add any style attribute to this div because it's removed upon download -->
     <div class="page-content">
       <h1 v-if="title" id="song-title">{{ chordSheetDetailsStore.title }}</h1>
       <h2 v-if="artist" id="song-artist">{{ chordSheetDetailsStore.artist }}</h2>
@@ -44,7 +42,6 @@ export default {
     ...mapState(useChordSheetAcrossPagesStore, ["chunks"]),
     ...mapWritableState(useChordSheetAcrossPagesStore, ["pages"]),
     ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
-    ...mapWritableState(useDOMStore, ["chordSheetPreviewRef"]),
     songDetailsText() {
       let songDetailsText = "";
       if (this.key) {
@@ -68,7 +65,6 @@ export default {
     this.pages;
 
     this.setupResizeObserver();
-    this.addChordSheetPreviewRefToStore();
   },
   methods: {
     setupResizeObserver: function () {
@@ -88,11 +84,6 @@ export default {
       const chordSheetPreviewHeightMM = resizeObserverEntry.contentRect.height / this.pixelsInAMilimetre;
       const ratioOfChordSheetPreviewToA4 = chordSheetPreviewHeightMM / A4_HEIGHT_IN_MM;
       pageContentElement.style.zoom = `${ratioOfChordSheetPreviewToA4}`;
-    },
-    addChordSheetPreviewRefToStore: function () {
-      if (this.$refs.chordSheetPreviewPage == null)
-        throw new Error("Chord sheet preview page element not found for storage");
-      this.chordSheetPreviewRef = this.$refs.chordSheetPreviewPage as HTMLElement;
     }
   }
 }
