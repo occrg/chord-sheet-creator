@@ -9,8 +9,12 @@ import { useChordSheetAcrossPagesStore } from "./ChordSheetAcrossPagesStore";
 export const useChordSheetControlsStore = defineStore("chord-sheet-controls", () => {
     const chordSheetAcrossPagesStore = useChordSheetAcrossPagesStore();
     
-    let maxPage: ComputedRef<number> =
-        reactive(computed(() => Math.max(0, chordSheetAcrossPagesStore.pages.length-1)));
+    let maxPage: ComputedRef<number> = reactive(computed(() => {
+        let maxPage = 0;
+        if (chordSheetAcrossPagesStore.pages && chordSheetAcrossPagesStore.pages.length-1 > 0)
+            maxPage = chordSheetAcrossPagesStore.pages.length-1;
+        return maxPage; 
+    }));
     let userDisplayedMaxPage: ComputedRef<number> =
         reactive(computed(() => maxPage.value+1));
 
@@ -32,6 +36,6 @@ export const useChordSheetControlsStore = defineStore("chord-sheet-controls", ()
         currentlySelectedPage.value -= 1;
     }
 
-    return { userDisplayedMaxPage, currentlySelectedPage, userDisplayedCurrentlySelectedPage, incrementPage, 
+    return { maxPage, userDisplayedMaxPage, currentlySelectedPage, userDisplayedCurrentlySelectedPage, incrementPage, 
         decrementPage };
 })

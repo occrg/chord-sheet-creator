@@ -51,7 +51,7 @@ interface ChordSheetJsonFormat {
 };
 
 export default {
-  name: "chord-sheet-controls-page-switcher",
+  name: "chord-sheet-controls-download-buttons",
   computed: {
     ...mapState(useDOMStore, ["chordSheetPageRefs"]),
     ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"]),

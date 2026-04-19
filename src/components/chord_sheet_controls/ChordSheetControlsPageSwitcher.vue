@@ -8,29 +8,39 @@ import { IconChoice } from "../reusable/Icon.vue";
 </script>
 
 <template>
-    <div id="page-switch-buttons" 
-    class="horizontal-layout
-    small-horizontal-gap
-    medium-horizontal-padding">
-    <Button @buttonClicked="decrementPage"
-        :buttonStyle="ButtonStyle.SECONDARY"
-        :iconChoice="IconChoice.CHEVRON_LEFT">
-    </Button>
-    <div class="vertical-layout primary-middle key-text">
-        {{ userDisplayedCurrentlySelectedPage }} / {{userDisplayedMaxPage}}
-    </div>
-    <Button @buttonClicked="incrementPage"
-        :buttonStyle="ButtonStyle.SECONDARY"
-        :iconChoice="IconChoice.CHEVRON_RIGHT">
-    </Button>
+    <div v-if="maxPage > 0" 
+      id="page-switch-buttons" 
+      class="horizontal-layout
+      small-horizontal-gap
+      medium-horizontal-padding">
+      <div class="touchable-area-height
+      touchable-area-width">
+        <Button @buttonClicked="decrementPage"
+            v-if="currentlySelectedPage > 0"
+            :buttonStyle="ButtonStyle.SECONDARY"
+            :iconChoice="IconChoice.CHEVRON_LEFT">
+        </Button>
+      </div>
+      <div class="vertical-layout primary-middle key-text">
+          {{ userDisplayedCurrentlySelectedPage }} / {{userDisplayedMaxPage}}
+      </div>
+      <div class="touchable-area-height
+      touchable-area-width">
+        <Button @buttonClicked="incrementPage"
+            v-if="currentlySelectedPage < maxPage"
+            :buttonStyle="ButtonStyle.SECONDARY"
+            :iconChoice="IconChoice.CHEVRON_RIGHT">
+        </Button>
+      </div>
     </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: "chord-sheet-controls-download-buttons",
+  name: "chord-sheet-controls-page-switcher",
   computed: {
-    ...mapState(useChordSheetControlsStore, ["userDisplayedMaxPage", "userDisplayedCurrentlySelectedPage"])
+    ...mapState(useChordSheetControlsStore, 
+      ["maxPage", "userDisplayedMaxPage", "currentlySelectedPage", "userDisplayedCurrentlySelectedPage"])
   },
   methods: {
     ...mapActions(useChordSheetControlsStore, ["incrementPage", "decrementPage"])
