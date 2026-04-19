@@ -12,7 +12,6 @@ You can enter the lyrics and chords of a song to generate a chord sheet as a HTM
 1. Include button helpers for symbols and potentially common notation (flat, sharp).
 1. Host this online.
 1. Allow PDF download of finished chord sheet.
-1. Ability to cope with more than one page.
 1. About page explaining what the project is, why I did it and how.
 1. Full AAA accessibility.
 
@@ -34,6 +33,8 @@ This is a list of things to do for the project, not including implementing the "
 1. Add a song details component so code isn't repeated in ChordSheetPreview and ChordSheetGenerator.
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
 1. Ensure step 3 works with small screen sizes.
+1. Ensure page switcher buttons only show if they can be pressed.
+1. Ensure chord sheet controls work with small screen sizes.
 1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
 1. Add maximum number of lines/sections to prevent slowing down on too many.
 1. Get rid of .vite and package-lock.json files from git.

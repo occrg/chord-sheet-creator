@@ -4,8 +4,11 @@
   
   <template>
     <div class="vertical-layout primary-middle"
-      :class="{ 'rotate-180': ICONS_FLIPPED_VERTICALLY.includes(iconChoice) }">
-        <svg v-if="(iconChoice == IconChoice.CHEVRON_UP) || (iconChoice == IconChoice.CHEVRON_DOWN)" :width="ICON_SIZE_TO_WIDTH[iconSize]" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      :class="{
+      'rotate-180': iconChoice == IconChoice.CHEVRON_UP, 
+      'rotate-90': iconChoice == IconChoice.CHEVRON_LEFT, 
+      'rotate-270': iconChoice == IconChoice.CHEVRON_RIGHT }">
+        <svg v-if="(iconChoice == IconChoice.CHEVRON_UP) || (iconChoice == IconChoice.CHEVRON_DOWN) || (iconChoice == IconChoice.CHEVRON_LEFT) || (iconChoice == IconChoice.CHEVRON_RIGHT)" :width="ICON_SIZE_TO_WIDTH[iconSize]" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2 2L14 14L26 2" stroke="#3F1E00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <svg v-if="iconChoice == IconChoice.BIN" :width="ICON_SIZE_TO_WIDTH[iconSize]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,11 +32,11 @@
   export enum IconChoice {
     CHEVRON_UP,
     CHEVRON_DOWN,
+    CHEVRON_LEFT,
+    CHEVRON_RIGHT,
     BIN,
     PLUS
   }
-  
-  const ICONS_FLIPPED_VERTICALLY = [IconChoice.CHEVRON_UP];
   
   const ICON_SIZE_TO_WIDTH = {
       [IconSize.SMALL]: "1.5rem",

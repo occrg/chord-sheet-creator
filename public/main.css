@@ -298,8 +298,19 @@ p:not(:last-child) {
 }
 
 /* Transformation styles */
+.rotate-90 {
+    transform: rotate(90deg);
+    transform-origin: 50% 50%;
+}
+
 .rotate-180 {
     transform: rotate(180deg);
+    transform-origin: 50% 50%;
+}
+
+
+.rotate-270 {
+    transform: rotate(270deg);
     transform-origin: 50% 50%;
 }
 

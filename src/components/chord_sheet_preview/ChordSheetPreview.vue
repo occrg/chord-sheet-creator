@@ -5,6 +5,7 @@ import { mapState, mapWritableState } from "pinia";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
 import { useChordSheetAcrossPagesStore } from "@/stores/ChordSheetAcrossPagesStore";
 import { useWindowPropertiesStore } from "@/stores/WindowPropertiesStore";
+import { useChordSheetControlsStore } from "@/stores/ChordSheetControlsStore";
 
 const chordSheetDetailsStore = useChordSheetDetailsStore();
 </script>
@@ -12,14 +13,16 @@ const chordSheetDetailsStore = useChordSheetDetailsStore();
 <template>
   <div class="page close-to-back-shadow" ref="chordSheetPreviewPage">
     <div class="page-content">
-      <h1 v-if="title" id="song-title">{{ chordSheetDetailsStore.title }}</h1>
-      <h2 v-if="artist" id="song-artist">{{ chordSheetDetailsStore.artist }}</h2>
-      <p v-if="songDetailsText" id="song-details" 
-        v-html="songDetailsText
-        .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
-      </p>
+      <template v-if="currentlySelectedPage == 0">
+        <h1 v-if="title" id="song-title">{{ chordSheetDetailsStore.title }}</h1>
+        <h2 v-if="artist" id="song-artist">{{ chordSheetDetailsStore.artist }}</h2>
+        <p v-if="songDetailsText" id="song-details" 
+          v-html="songDetailsText
+          .replace(/(?<chord>[A-G]♭)/gi, `<span class='flat-chord'>$<chord></span>`)">
+        </p>
+      </template>
       <div v-if="chunks.length > 0 && pages.length > 0" class="chord-section" ref="chordSection">
-        <ChordSheetPreviewChunk v-for="chunk in pages[0]" 
+        <ChordSheetPreviewChunk v-for="chunk in pages[currentlySelectedPage]" 
           :chunk="chunk">
         </ChordSheetPreviewChunk>
       </div>
@@ -42,6 +45,7 @@ export default {
     ...mapState(useChordSheetAcrossPagesStore, ["chunks"]),
     ...mapWritableState(useChordSheetAcrossPagesStore, ["pages"]),
     ...mapState(useWindowPropertiesStore, ["pixelsInAMilimetre"]),
+    ...mapState(useChordSheetControlsStore, ["currentlySelectedPage"]),
     songDetailsText() {
       let songDetailsText = "";
       if (this.key) {
