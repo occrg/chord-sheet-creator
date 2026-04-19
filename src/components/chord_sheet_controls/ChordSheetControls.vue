@@ -4,6 +4,7 @@ import { useDOMStore } from "@/stores/DOMStore";
 import { useChordSheetDetailsStore } from "@/stores/ChordSheetDetailsStore";
 import { useChordSheetSegmentsStore } from "@/stores/ChordSheetSegmentsStore";
 import type { ChordSheetSegment } from "@/stores/ChordSheetSegmentsStore";
+import { useChordSheetAcrossPagesStore } from "@/stores/ChordSheetAcrossPagesStore";
 
 import { ButtonStyle } from "../reusable/Button.vue";
 import Button from "../reusable/Button.vue";
@@ -19,6 +20,7 @@ import Button from "../reusable/Button.vue";
       <div class="key-text vertical-layout primary-middle">Download:</div>
       <div id="download-buttons" 
         class="horizontal-layout
+        fill-space
         small-horizontal-gap">
         <Button
           @buttonClicked="downloadHTML"
@@ -30,6 +32,14 @@ import Button from "../reusable/Button.vue";
           :buttonStyle="ButtonStyle.PRIMARY"
           text="Data">
         </Button>
+      </div>
+      <div id="page-switch-buttons" 
+        class="horizontal-layout
+        small-horizontal-gap
+        medium-horizontal-padding">
+        <div class="vertical-layout primary-middle key-text">
+          1 / {{Math.max(1, pages.length)}}
+        </div>
       </div>
     </div>
 </template>
@@ -56,6 +66,7 @@ export default {
     ...mapState(useDOMStore, ["chordSheetPageRefs"]),
     ...mapState(useChordSheetDetailsStore, ["title", "artist", "key", "bpm", "timeSignature"]),
     ...mapState(useChordSheetSegmentsStore, ["segments"]),
+    ...mapState(useChordSheetAcrossPagesStore, ["pages"]),
     filename () {
       let cleanedTitle = this.title.replace(/[^0-9a-z ]/gi, '');
       let cleanedArtist = this.artist.replace(/[^0-9a-z ]/gi, '');
