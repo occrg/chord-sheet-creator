@@ -35,8 +35,8 @@ import { IconChoice } from "../reusable/Icon.vue";
 </template>
 
 <script lang="ts">
-const CSS_CHORD_SHEET_FILEPATH = "/public/chord_sheet.css";
-const CSS_CHORD_SHEET_DOWNLOAD_FILEPATH = "/public/chord_sheet_download.css";
+const CSS_CHORD_SHEET_FILEPATH = "/chord_sheet.css";
+const CSS_CHORD_SHEET_DOWNLOAD_FILEPATH = "/chord_sheet_download.css";
 
 const HTML_EXTENSION = ".html";
 const JSON_EXTENSION = ".json";
@@ -123,11 +123,7 @@ export default {
 
       return chordSheetPreviewForExport;
     },
-    addCSSFileAsStyle: async function (filepath: string, elementToStyle: HTMLElement): Promise<HTMLElement> {
-      const startOfCSSInCSSFile = `const __vite__css = "`;
-      const endOfCSSInCSSFileIndicator = `}"`;
-      const firstCharacterAfterEndOfCSSInCSSFile = `"`;
-      
+    addCSSFileAsStyle: async function (filepath: string, elementToStyle: HTMLElement): Promise<HTMLElement> {      
       const response = await fetch(filepath)
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
@@ -135,37 +131,11 @@ export default {
       
       const cssFileText = await response.text();
 
-      const afterStartOfCSSInCSSFileSplit: string[] = cssFileText.split(startOfCSSInCSSFile);
-      if (afterStartOfCSSInCSSFileSplit.length != 2)
-        throw new Error(`CSS file not in expected shape when splitting by 
-        startOfCSSInCSSFile: ${startOfCSSInCSSFile}. cssFileText: ${cssFileText}`);
-      const afterStartOfCSSInCSSFile: string = afterStartOfCSSInCSSFileSplit[1] as string;
-
-      const beforeEndOfCSSInCSSFileSplit: string[] = afterStartOfCSSInCSSFile.split(endOfCSSInCSSFileIndicator);
-      if (beforeEndOfCSSInCSSFileSplit.length != 2)
-        throw new Error(`CSS file not in expected shape when splitting by 
-        endOfCSSInCSSFileIndicator: ${endOfCSSInCSSFileIndicator}. 
-        afterStartOfCSSInCSSFile: ${afterStartOfCSSInCSSFile}`);
-      const beforeEndOfCSSInCSSFile: string = beforeEndOfCSSInCSSFileSplit[0] as string;
-      
-      // Adding back the part of the delimiter that is part of the CSS.
-      const endOfCSSInCSSFileIndicatorSplit: string[] = 
-      endOfCSSInCSSFileIndicator.split(firstCharacterAfterEndOfCSSInCSSFile);
-      if (endOfCSSInCSSFileIndicatorSplit.length < 2)
-        throw new Error(`Constants not as expected. 
-        Splitting endOfCSSInCSSFileIndicator: ${endOfCSSInCSSFileIndicator} by 
-        firstCharacterAfterEndOfCSSInCSSFile: ${firstCharacterAfterEndOfCSSInCSSFile}
-        doesn't result in a 2 or more element array.`);
-      const charactersToAddBackToCSSString: string = endOfCSSInCSSFileIndicatorSplit[0] as string;
-
-      const cssContentUnformatted = beforeEndOfCSSInCSSFile + charactersToAddBackToCSSString;
-            
       const styleElements = elementToStyle.getElementsByTagName("style");
       if (styleElements.length != 1)
         throw new Error("Constructed HTML element does not include exactly one style element");
       let styleElement = styleElements[0] as HTMLElement;
-      const cssContent = cssContentUnformatted.replace(/\\n|\\/g, "");
-      styleElement.innerHTML += cssContent;
+      styleElement.innerHTML += cssFileText;
 
       return elementToStyle;
     },
