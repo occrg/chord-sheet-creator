@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "reinstall-packages": "rm -rf node_modules && rm package-lock.json && npm i",
+    "reinstall-packages": "rm -rf node_modules && rm -f package-lock.json && npm i",
     "type-check": "vue-tsc --build",
     "build-only": "vite build",
     "build": "run-p type-check \"build-only {@}\" --",

@@ -9,7 +9,7 @@ You can enter the lyrics and chords of a song to generate a chord sheet as a HTM
 * Screen sizes from 320px to 1728px supported.
 
 ## Future functionality
-1. Include button helpers for symbols, potentially common notation (flat, sharp) and key changing chords.
+1. Include button helpers for symbols, potentially common notation (flat, sharp) and transposing chords.
 1. Allow PDF download of finished chord sheet.
 1. About page explaining what the project is, why I did it and how.
 1. Full AAA accessibility.
@@ -18,7 +18,7 @@ You can enter the lyrics and chords of a song to generate a chord sheet as a HTM
 None.
 
 ## Instructions
-1. Run the Vue project (see package.json for commands) or go to site where this project is hosted [online|https://chord-sheet-creator.netlify.app/].
+1. Run the Vue project (see package.json for commands) or go to site where this project is hosted [online](https://chord-sheet-creator.netlify.app/).
 1. Type in the title of the song and paste in the lyrics.
 1. Optionally, type in the artist, key, bpm, time signature of the song.
 1. Add the song's chords.
