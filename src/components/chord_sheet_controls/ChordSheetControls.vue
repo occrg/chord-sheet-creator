@@ -6,6 +6,9 @@ import ChordSheetControlsPageSwitcher from "./ChordSheetControlsPageSwitcher.vue
 <template>
     <div id="chord-sheet-controls" 
       class="horizontal-layout
+      wrap-around
+      primary-right
+      medium-vertical-gap
       medium-horizontal-gap
       primary-background-light
       large-vertical-padding

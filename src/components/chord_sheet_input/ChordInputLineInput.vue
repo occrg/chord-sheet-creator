@@ -16,6 +16,8 @@ const chordSheetSegementsStore = useChordSheetSegmentsStore();
 <template>
     <div :id="'chord-input-line-s'+segmentInd+'l'+lineInd"
         class="horizontal-layout
+        wrap-around
+        primary-right
         medium-horizontal-gap
         extra-small-vertical-gap">
         <div :id="'chord-input-line-lines-s'+segmentInd+'l'+lineInd"

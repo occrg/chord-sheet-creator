@@ -22,6 +22,8 @@ const chordSheetSegementsStore = useChordSheetSegmentsStore();
         small-vertical-gap">
         <div :id="'chord-input-section-section-'+segmentInd"
             class="horizontal-layout
+            wrap-around
+            primary-right
             medium-horizontal-gap
             extra-small-vertical-gap">
             <InputField label="Section Title"
