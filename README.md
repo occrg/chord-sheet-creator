@@ -35,7 +35,6 @@ This is a list of things to do for the project, not including implementing the "
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
 1. Ensure step 3 works with small screen sizes.
 1. Ensure chord sheet controls work with small screen sizes.
-1. Make it so header bar scrolls away for any screen width less than large.
 1. Ensure capitalisation is consistent in all field labels. See "Time signature" compared to "Chord Line".
 1. Add maximum number of lines/sections to prevent slowing down on too many.
 1. When changing a line, update each page as you go to make the preview more reactive.

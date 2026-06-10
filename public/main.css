@@ -336,6 +336,11 @@ textarea {
     resize: none;
 }
 
+@media (width > 1151px) {
+    .no-scroll-for-large {
+        overflow-y: visible;
+    }
+}
 
 @media (width <= 1151px) {
     .split-between-two {
@@ -351,7 +356,7 @@ textarea {
     }
 
     .no-scroll-for-non-large {
-        overflow-y: auto;
+        overflow-y: visible;
     }
 
     .no-top-padding-for-non-large {

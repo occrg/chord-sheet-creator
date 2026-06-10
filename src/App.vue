@@ -8,25 +8,29 @@ import ChordSheetGenerator from "./components/utilities/ChordSheetGenerator.vue"
 </script>
 
 <template>
-  <div id="app-container" 
-    class="vertical-layout
-    fix-to-screen-height
-    auto-screen-height-for-non-large
-    neutral-light-background">
-    <HeaderBar></HeaderBar>
-    <div id="content-container" 
-      class="horizontal-layout
-      split-between-two
-      fill-space
+  <div id="app-root">
+    <div id="app-content"
+      class="vertical-layout
+      fix-to-screen-height
+      auto-screen-height-for-non-large
+      neutral-light-background
       vertical-scroll
-      no-scroll-for-non-large">
-      <div id="chord-sheet-interactions" 
-        class="vertical-layout
-          fill-space">
-        <ChordSheetInput></ChordSheetInput>
-        <ChordSheetControls></ChordSheetControls>
+      no-scroll-for-large">
+      <HeaderBar></HeaderBar>
+      <div id="content-container" 
+        class="horizontal-layout
+        split-between-two
+        fill-space
+        vertical-scroll
+        no-scroll-for-non-large">
+        <div id="chord-sheet-interactions" 
+          class="vertical-layout
+            fill-space">
+          <ChordSheetInput></ChordSheetInput>
+          <ChordSheetControls></ChordSheetControls>
+        </div>
+        <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
       </div>
-      <ChordSheetPreviewContainer></ChordSheetPreviewContainer>
     </div>
     <WindowPropertiesGenerator></WindowPropertiesGenerator>
     <ChordSheetGenerator></ChordSheetGenerator>
@@ -46,10 +50,10 @@ body {
   margin: 0;
 }
 
-#app-container {
+#app-root {
   display: flex;
   flex-direction: column;
-  position:relative;
+  position: relative;
   height: 100vh;
   width: 100vw;
   overflow: clip;
