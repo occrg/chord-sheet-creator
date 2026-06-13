@@ -43,25 +43,71 @@ export const useChordSheetSegmentsStore = defineStore("chord-sheet-segments", {
             this.segments = jsonDataInput.segments;
         },
         storeChordSheetSegmentsFromLyrics: function (lyrics: string) {
-            let chordSheetSegmentsFromLyrics = lyrics.split("\n\n");
+            let cleanedUpLyrics = this.cleanUpLyricInput(lyrics);
+            let segmentSplitterString = this.createSegmentSplitterString(cleanedUpLyrics);
+            let chordSheetSegmentsFromLyrics = cleanedUpLyrics.split(segmentSplitterString);
+            
             this.segments = [];
             
-            chordSheetSegmentsFromLyrics.forEach((chordSheetSegmentFromLyrics, ind) => {
+            chordSheetSegmentsFromLyrics.forEach((segmentLineString, ind) => {
+                let segmentTitle: string = `Segment ${ind}`;
+
+                let chordSheetSegmentSplitIntoLines = segmentLineString.split("\n");
+
+                let findSegmentTitleResult = this.findSegmentTitle(chordSheetSegmentSplitIntoLines, ind);
+                if (findSegmentTitleResult) {
+                    segmentTitle = findSegmentTitleResult;
+                    chordSheetSegmentSplitIntoLines.shift();
+                }
+
                 let chordSheetSegment: ChordSheetSegment = {
-                    segmentTitle: `Segment ${ind}`,
+                    segmentTitle: segmentTitle,
                     segmentLines: []
                 }
                 
-                let chordSheetLinesFromLyrics = chordSheetSegmentFromLyrics.split("\n");
-                chordSheetLinesFromLyrics.forEach((chordSheetLineFromLyrics) => {
+                chordSheetSegmentSplitIntoLines.forEach((chordSheetLineInSegment) => {
                     chordSheetSegment.segmentLines.push({
                         chordLine: "",
-                        lyricLine: chordSheetLineFromLyrics
+                        lyricLine: chordSheetLineInSegment
                     });
                 });
                 
                 this.segments.push(chordSheetSegment);
             });
+        },
+        cleanUpLyricInput: function (lyrics: string): string {
+            const captureContentBeforeTrailingSpacesRegex = /([\w\W]+?) *$/gm;
+            let lyricsWithoutBlankLines = lyrics.replace(captureContentBeforeTrailingSpacesRegex, `$1`);
+
+            const leadingAndTrailingNewLinesRegex = /^[\r\n]+|[\r\n]+$/g;
+            let cleanedUpLyrics = lyricsWithoutBlankLines.replace(leadingAndTrailingNewLinesRegex, "");
+
+            return cleanedUpLyrics;
+        },
+        createSegmentSplitterString: function (lyrics: string): string {
+            return lyrics.includes("\n\n\n") ? "\n\n\n" : "\n\n";
+        },
+        findSegmentTitle: function (chordSheetSegmentSplitIntoLines: string[], 
+            chordSheetSegmentIndex: number): string | null {
+            let findSegmentTitleResult = null;
+            const segmentTitleRegex = /^\[([\w\W]+?)\]$/;
+
+            if (!(chordSheetSegmentSplitIntoLines.length > 0) || 
+                chordSheetSegmentSplitIntoLines[0] == null)
+                throw new Error(`Chord sheet segment (ind: ${chordSheetSegmentIndex}) ` + 
+                    `contains no lines when splitting.`);
+
+            let firstLineOfSegment: string = chordSheetSegmentSplitIntoLines[0];
+            let segmentTitleMatch = segmentTitleRegex.exec(firstLineOfSegment);
+
+            if (segmentTitleMatch != null) {
+                if (segmentTitleMatch[1] == null)
+                    throw new Error(`segmentTitleMatch for chordSheetSegment (ind: ${chordSheetSegmentIndex}) ` + 
+                    `appeared to match but array not in expected form`);
+                findSegmentTitleResult = segmentTitleMatch[1];
+            }
+
+            return findSegmentTitleResult;
         },
         moveSegmentUp: function (segmentInd: number) {            
             if (this.segments[segmentInd] == null)

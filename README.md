@@ -7,6 +7,7 @@ You can enter the lyrics and chords of a song to generate a chord sheet as a HTM
 
 ## Non-functional notes
 * Screen sizes from 320px to 1728px supported.
+* Currently only later versions of Google Chrome are supported as browsers.
 
 ## Future functionality
 1. Include button helpers for symbols, potentially common notation (flat, sharp) and transposing chords.
@@ -30,6 +31,8 @@ This is a list of things to do for the project, not including implementing the "
 1. Fix typescript error with input fields.
 1. Automatically detect lines in lyric submissions which are names of a segment or are chord lines. This should work well when copy and pasting from common chord sheet sites.
 1. Write more detail on how prefill works for both data input and lyric/chord sheet copy and paste.
+1. Recalculate chunk positioning when song details added too to avoid lyrics at end of sheet going missing in this case.
+1. Add more cases for segment titles based on the content of the line e.g. "Chorus", "Verse 2".
 1. Move HTML and PDF generation to the ChordSheetGenerator and clean up CSS.
 1. Add a song details component so code isn't repeated in ChordSheetPreview and ChordSheetGenerator.
 1. Add helper text into all accordion steps and ensure the padding is consistent and in its most maintainable form above and below accordion content.
@@ -38,6 +41,7 @@ This is a list of things to do for the project, not including implementing the "
 1. When changing a line, update each page as you go to make the preview more reactive.
 1. When changing a line, only update from the page that's being updated onwards to make the preview more reactive.
 1. Validate inputs including JSON input to stop bad JSON breaking app.
+1. Make app work on more browsers.
 1. Refactor JSON output and input so repetition of interfaces isn't necessary.
 1. Add special formatting for chord lines including right margin for all chords and reduced letter spacing for chord symbols.
 1. Show thrown errors to end users.
@@ -56,4 +60,5 @@ This is a list of things to do for the project, not including implementing the "
 1. Potentially: Use the Composition API over the Options API for Pinia.
 1. Potentially: Separate out accordion logic into own library. 
 1. Ensure long lines work well.
+1. Fix errors to make sure they aren't accidentally separated out onto new lines.
 1. Use consts wherever possible.
